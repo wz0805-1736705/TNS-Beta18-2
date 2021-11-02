@@ -24,7 +24,7 @@ function MainContent() {
   return (
     <main>
       {/* TODO: readjust the title position*/}
-      <div class="mt-5">
+      {/* <div className="mt-5">
         <h1>The Neighborhood Score</h1>
         <h3>Good {timeOfDay}, Discover your perfect neighborhood</h3>
         <p>
@@ -32,9 +32,19 @@ function MainContent() {
           <br />
           Let us empower you to find the community you love for FREE.
         </p>
-      </div>
+      </div> */}
       {/* Search Card */}
-      <div className="search">
+      <div
+        className="search"
+        styles={{
+          backgroundImage: "url(/search-background.jpg)",
+          backgroundPosition: "70% 35%",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "500px",
+        }}
+      >
         <SearchCard />
       </div>
 
@@ -50,7 +60,7 @@ function MainContent() {
         est nunc mauris elit sed ornare.
       </p> */}
       </div>
-      <h2 class="subtitle">City Insight: </h2>
+      {/* <h2 className="subtitle">City Insight: </h2> */}
       <div className="info">
         <InfoCard />
       </div>

@@ -77,7 +77,17 @@ export default class SearchCard extends Component {
 
   render() {
     return (
-      <div class="container">
+      <div
+        class="container"
+        styles={{
+          backgroundImage: "url(/search-background.jpg)",
+          backgroundPosition: "70% 35%",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "500px",
+        }}
+      >
         <div class="row height d-flex justify-content-center align-items-center">
           <div class="col-md-8">
             <div class="search">

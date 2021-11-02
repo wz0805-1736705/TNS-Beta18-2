@@ -79,6 +79,10 @@ body {
   background: gainsboro;
 }
 
+.div-with-bg {
+  background-image: "url(/search-background.jpg)";
+}
+
 /* img.footer_logo {
   position: sticky;
   height: 100px;
@@ -118,4 +122,16 @@ img.footer_logo {
   height: 50%;
   width: 50%;
   position: absolute;
+}
+
+div.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  max-height: 70vh;
+  background-size: cover;
+  background-image: "search-background";
 }

@@ -21,7 +21,6 @@ function Header() {
           <NavLink href="/about">About us</NavLink>
           <NavLink href="/neighborhood">Neighborhood</NavLink>
           <NavLink href="/quiz">Quiz</NavLink>
-          <NavLink href="/agent">Agent Finder</NavLink>
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           <NavLink href="/signIn">Sign In</NavLink>
