@@ -6,7 +6,7 @@ import simpleMap from "./components/Map";
 import signIn from "./components/SignIn";
 import signUp from "./components/SignUp";
 import aboutUs from "./components/About";
-import quiz from "./components/Quiz";
+import QuizWidget from "./components/Quiz";
 
 const Main = () => {
   return (
@@ -17,7 +17,7 @@ const Main = () => {
       <Route exact path="/neighborhood" component={simpleMap}></Route>
       <Route exact path="/signIn" component={signIn}></Route>
       <Route exact path="/signUp" component={signUp}></Route>
-      <Route exact path="/quiz" component={quiz}></Route>
+      <Route exact path="/quiz" component={QuizWidget}></Route>
       <Route exact path="/about" component={aboutUs}></Route>
     </Switch>
   );

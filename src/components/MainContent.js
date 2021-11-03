@@ -2,6 +2,7 @@
 import React from "react";
 import SearchCard from "./SearchCard";
 import InfoCard from "./InfoCard";
+import QuizButton from "./QuizButton";
 
 function MainContent() {
   // JS:
