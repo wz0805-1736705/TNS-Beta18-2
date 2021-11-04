@@ -1,6 +1,6 @@
 // to use JSX, import:
 import React from "react";
-import MapScript from "./MapScript"
+import MapScript from "./MapScript";
 import {
   Container,
   Row,
@@ -171,12 +171,12 @@ function CardData() {
 
 function SearchBar() {
   return (
-    <InputGroup style={{width: "12vw", marginRight: "5vw", marginLeft: "5vw"}}>
-    <FormControl 
-      className="mapsearch"
-      placeholder="Where to?"
-    />
-    </InputGroup>)
+    <InputGroup
+      style={{ width: "12vw", marginRight: "5vw", marginLeft: "5vw" }}
+    >
+      <FormControl className="mapsearch" placeholder="Where to?" />
+    </InputGroup>
+  );
 }
 
 function Filter({ type }) {

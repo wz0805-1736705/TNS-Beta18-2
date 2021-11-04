@@ -48,6 +48,15 @@ body {
   width: 40vh;
 }
 
+.s-box {
+  background-image: url("search-background.jpg");
+  background-position: 70% 35%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 100%;
+}
+
 .search {
   position: relative;
   box-shadow: 0 0 40px rgba(248, 246, 246, 0.1);
@@ -77,10 +86,6 @@ body {
   height: 50px;
   width: 110px;
   background: gainsboro;
-}
-
-.div-with-bg {
-  background-image: "url(/search-background.jpg)";
 }
 
 /* img.footer_logo {
@@ -122,16 +127,4 @@ img.footer_logo {
   height: 50%;
   width: 50%;
   position: absolute;
-}
-
-div.imageWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  max-height: 70vh;
-  background-size: cover;
-  background-image: "search-background";
 }

@@ -36,15 +36,15 @@ function MainContent() {
       </div> */}
       {/* Search Card */}
       <div
-        className="search"
-        styles={{
-          backgroundImage: "url(/search-background.jpg)",
-          backgroundPosition: "70% 35%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          width: "100%",
-          height: "500px",
-        }}
+        className="s-box"
+        // styles={{
+        //   backgroundImage: "url('/search-background.jpg')",
+        //   backgroundPosition: "70% 35%",
+        //   backgroundSize: "cover",
+        //   backgroundRepeat: "no-repeat",
+        //   // width: "300",
+        //   // height: "500px",
+        // }}
       >
         <SearchCard />
       </div>
