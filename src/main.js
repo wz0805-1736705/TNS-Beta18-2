@@ -6,7 +6,7 @@ import SimpleMap from "./components/Map";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import AboutUs from "./components/About";
-import Quiz from "./components/Quiz";
+import QuizWidget from "./components/Quiz";
 
 const Main = () => {
   return (
@@ -26,7 +26,7 @@ const Main = () => {
         <SignUp />
       </Route>
       <Route exact path="/quiz">
-        <Quiz />
+        <QuizWidget />
       </Route>
       <Route exact path="/about">
         <AboutUs />

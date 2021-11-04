@@ -4,17 +4,16 @@
   }
 
 .mapnavbar {
-
-    /* Filter_Navigation */
+  /* Filter_Navigation */
 
     width: 100vw;
     height: 12vh;
 
-    justify-content: flex-start;
-    /* left: 0px;
+  justify-content: flex-start;
+  /* left: 0px;
     top: 128px; */
 
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .mapsearch {
@@ -29,10 +28,10 @@
 
     position: relative;
 
-    /* Text_Grey */
-    border: 1px solid #404040;
-    box-sizing: border-box;
-    border-radius: 5px;
+  /* Text_Grey */
+  border: 1px solid #404040;
+  box-sizing: border-box;
+  border-radius: 5px;
 }
 
 .mapfilter {
@@ -56,7 +55,6 @@
     box-sizing: border-box;
     border-radius: 5px;
 
-    /* body1 */
 
     font-family: Avenir;
     font-style: normal;
@@ -65,35 +63,22 @@
     line-height: 33px;
     /* identical to box height */
 
-
-    /* Text_Grey */
-
-    color: #404040;
-
-
-    /* Inside Auto Layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 0px 18px;
-
 }
 
 .listcardimage {
-    position: relative;
-    left: 3.86%;
-    right: 82.3%;
-    top: 16.96%;
-    bottom: 16.72%;
+  position: relative;
+  left: 1vw;
+  right: 1vw;
+  top: 1vw;
+  bottom: 1vw;
 
     width: 10vh;
     height: 10vh;
 
-    flex-basis:auto;
+  flex-basis: auto;
 
-    /* background: url(.jpg); */
-    border-radius: 5px;
+  /* background: url(.jpg); */
+  border-radius: 5px;
 }
 
 .listcard {
@@ -119,13 +104,12 @@
     /* width: 980px;
     height: 872px; */
 
-
-    background-color: #cccccc;
-    /* background-image: url("mapplaceholder.png"); */
+  background-color: #cccccc;
+  /* background-image: url("mapplaceholder.png"); */
 }
 
 .sidelist {
-    /* background */
+  /* background */
 
     /* position: relative; */
     width: 37vw;
@@ -137,38 +121,40 @@
     align-items: flex-start;
     padding: 0px;
 
-    flex-basis:auto;
+  flex-basis: auto;
 
-    /* off - white */
-    background: #FAFAFA;
+  /* off - white */
+  background: #fafafa;
 }
 
 .cardtitle {
+  /* Auto Layout */
 
-/* Auto Layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
 
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
+  /* position: absolute; */
+  width: 88px;
+  height: 33px;
 
-    /* position: absolute; */
-    width: 88px;
-    height: 33px;
+  /* Header2 */
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 33px;
+  /* identical to box height */
 
-    /* Header2 */
-    font-family: Avenir;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 33px;
-    /* identical to box height */
-
-
-    color: #000000;
-
+  color: #000000;
 }
 
 .listcardbody {
-    align-content:space-around;
+  align-content: space-around;
+}
+
+.plus_button {
+  width: 5%;
+  height: 100%;
 }
