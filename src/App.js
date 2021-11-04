@@ -2,6 +2,9 @@ import "./App.css";
 import Main from "./main";
 import Header from "./components/Header";
 import React from "react";
+import database from './firebase.config';
+import { ref, onValue } from "firebase/database";
+
 // import config from "./config";
 // import Firebase from "firebase";
 

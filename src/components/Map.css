@@ -1,14 +1,14 @@
 .container {
     justify-content: flex-start;
+    margin: 0px;
   }
 
 .mapnavbar {
 
     /* Filter_Navigation */
 
-    position: relative;
-    width: 1920px;
-    height: 101px;
+    width: 100vw;
+    height: 12vh;
 
     justify-content: flex-start;
     /* left: 0px;
@@ -28,10 +28,6 @@
     padding: 10px 20px 10px 15px;
 
     position: relative;
-    width: 230px;
-    height: 53px;
-    /* left: 80px;
-    top: 24px; */
 
     /* Text_Grey */
     border: 1px solid #404040;
@@ -47,11 +43,11 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 10px 15px;
+    padding: 15px 15px;
 
     position: relative;
-    width: 224px;
-    height: 53px;
+    width: 13vw;
+    height: 5vh;
     /* left: 334px;
     top: 24px; */
 
@@ -65,7 +61,7 @@
     font-family: Avenir;
     font-style: normal;
     font-weight: normal;
-    font-size: 24px;
+    font-size: 1vw;
     line-height: 33px;
     /* identical to box height */
 
@@ -91,8 +87,8 @@
     top: 16.96%;
     bottom: 16.72%;
 
-    width: 128px;
-    height: 128px;
+    width: 10vh;
+    height: 10vh;
 
     flex-basis:auto;
 
@@ -101,15 +97,13 @@
 }
 
 .listcard {
-    position: relative;
-    width: 925px;
+    width: 37vw;
     height: 193px;
-
     display: flex;
+    margin: 10px;
+    /* margin: 16px 0px; */
 
-    margin: 16px 0px;
-
-    background-color:pink;
+    background-color:lightgrey;
     filter: drop-shadow(0px 4px 5px rgba(224, 120, 108, 0.25));
 }
 
@@ -118,8 +112,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
-
+    padding: 1vw;
+    width: 52vw;
+    height: 74vh;
     /* position: absolute; */
     /* width: 980px;
     height: 872px; */
@@ -133,14 +128,14 @@
     /* background */
 
     /* position: relative; */
-    width: 957px;
-    height: 851px;
-
+    width: 37vw;
+    height: 74vh;
+    margin-right: 0;
     /* Auto Layout */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 10px;
+    padding: 0px;
 
     flex-basis:auto;
 

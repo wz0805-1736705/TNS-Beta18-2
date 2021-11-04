@@ -10,6 +10,7 @@ import { Dropdown } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { Stack } from "react-bootstrap";
+import MapScript from "./MapScript"
 
 
 import "./Map.css";
@@ -31,7 +32,7 @@ export default function simpleMap() {
 function MapContainer() {
   return (
     <div className="mapcontainer">
-      <h1>Map Container</h1>
+      <MapScript />
     </div>
   )
 }
@@ -110,7 +111,7 @@ function CardData () {
 
 function SearchBar() {
   return (
-    <InputGroup>
+    <InputGroup style={{width: "12vw", marginRight: "5vw", marginLeft: "5vw"}}>
     <FormControl 
       className="mapsearch"
       placeholder="Where to?"
