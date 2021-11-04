@@ -55,6 +55,11 @@ body {
   background-repeat: no-repeat;
   height: 300px;
   width: 100%;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  /* font-size: 24px; */
+  /* line-height: 33px; */
 }
 
 .search {
@@ -106,12 +111,13 @@ img.footer_logo {
   /* background-color: red; */
 }
 
-.subtitle {
-  position: absolute;
-  width: 248px;
-  height: 90px;
-  left: -35px;
-  top: 450px;
+.find-belong {
+  height: 50px;
+  width: 30%;
+  text-align: left;
+  padding-left: 50px;
+  font-family: Avenir;
+  font-size: 20;
 }
 
 .video-responsive {
