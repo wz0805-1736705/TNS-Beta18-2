@@ -4,18 +4,6 @@ import SearchCard from "./SearchCard";
 import InfoCard from "./InfoCard";
 
 function MainContent() {
-  // JS:
-  const date = new Date();
-  const hours = date.getHours();
-  let timeOfDay;
-  if (hours < 12) {
-    timeOfDay = "morning";
-  } else if (hours >= 12 && hours < 17) {
-    timeOfDay = "afternoon";
-  } else {
-    timeOfDay = "night";
-  }
-
   // const styles = {
   //   color: "#4e5053",
   //   backgroundColor: "#ffffff"
@@ -50,9 +38,11 @@ function MainContent() {
           Nisi, est nunc mauris elit sed ornare.
         </p>
       </div>
-
-      <div className="city-insight">
-        {/* <h2>City Insight</h2> */}
+      <br />
+      <br />
+      <br />
+      <h2 className="city-insight">City Insight</h2>
+      <div>
         <InfoCard />
       </div>
     </main>

@@ -111,6 +111,14 @@ img.footer_logo {
   /* background-color: red; */
 }
 
+.city-insight {
+  position: relative;
+  text-align: left;
+  padding-left: 48px;
+  font-family: Avenir;
+  font-size: 20;
+}
+
 .find-belong {
   height: 50px;
   width: 30%;
@@ -158,7 +166,7 @@ img.footer_logo {
 }
 
 .card {
-  margin: 40px;
+  margin: 20px;
   position: relative;
   max-width: 480px;
   max-height: 500px;
@@ -166,7 +174,7 @@ img.footer_logo {
 
 .card img {
   width: 400px;
-  height: 450px;
+  height: 500px;
   object-fit: cover;
   display: block;
   position: relative;
@@ -192,7 +200,7 @@ img.footer_logo {
 .card:hover .card-desc {
   top: 70%;
   height: 100%;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 /* 
 h1 {
