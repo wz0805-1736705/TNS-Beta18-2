@@ -1,17 +1,12 @@
-import { createPopup } from "@typeform/embed";
-import { PopupButton } from "@typeform/embed-react";
-import "./Quiz.css";
+import { Sidetab /* or Popover */ } from "react-typeform-embed";
 
-// quiz popup button
 const QuizButton = () => {
   return (
-    <PopupButton
-      id="https://form.typeform.com/to/a5pkC39o"
-      className="my-button"
-    >
-      open form
-    </PopupButton>
+    <div className="sidetab" size={20}>
+      <Sidetab id="a5pkC39o" buttonText="Take the quiz!">
+        {/* <button className="btn">Open Sidetab</button> */}
+      </Sidetab>
+    </div>
   );
 };
-
 export default QuizButton;

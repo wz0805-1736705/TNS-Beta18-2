@@ -20,8 +20,7 @@ export default function SearchCard() {
               ></span>
             </button>
             <p class="text-right text-muted">
-              Unsure about your search? Take a{" "}
-              <a href="https://nhscore.typeform.com/to/a5pkC39o">free quiz</a>{" "}
+              Unsure about your search? Take a <a href="/quiz">free quiz</a>{" "}
               with us!
             </p>
           </div>
