@@ -35,34 +35,25 @@ function MainContent() {
         </p>
       </div> */}
       {/* Search Card */}
-      <div
-        className="search"
-        styles={{
-          backgroundImage: "url(/search-background.jpg)",
-          backgroundPosition: "70% 35%",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          width: "100%",
-          height: "500px",
-        }}
-      >
+      <div className="s-box">
         <SearchCard />
       </div>
 
       {/* Info Card */}
       {/* TODO: adjust the left padding */}
-      <div>
-        {/* <h2>Find Where You Belong</h2> */}
-        {/* <p>
-        {" "}
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus
-        volutpat, justo mauris. Sit ornare eros dolor eleifend odio mattis.
-        Pharetra eu sagittis ornare quisque facilisis varius eu eget urna. Nisi,
-        est nunc mauris elit sed ornare.
-      </p> */}
+      <div className="find-belong mt-4">
+        <h2>Find Where You Belong</h2>
+        <p>
+          {" "}
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut rhoncus
+          volutpat, justo mauris. Sit ornare eros dolor eleifend odio mattis.
+          Pharetra eu sagittis ornare quisque facilisis varius eu eget urna.
+          Nisi, est nunc mauris elit sed ornare.
+        </p>
       </div>
-      {/* <h2 className="subtitle">City Insight: </h2> */}
-      <div className="info">
+
+      <div className="city-insight">
+        {/* <h2>City Insight</h2> */}
         <InfoCard />
       </div>
     </main>

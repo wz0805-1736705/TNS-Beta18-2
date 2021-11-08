@@ -6,7 +6,7 @@ import "./Quiz.css";
 const QuizWidget = () => {
   return (
     <Widget
-      id="https://form.typeform.com/to/a5pkC39o"
+      id="https://nhscore.typeform.com/to/a5pkC39o"
       style={{ width: "100%", height: "100%" }}
       className="my-form"
     />

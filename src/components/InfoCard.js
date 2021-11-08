@@ -16,7 +16,6 @@ import React from "react";
 
 function InfoCard() {
   return (
-    //   TODO: optimize the code using for loop
     <div class="row row-cols-1 row-cols-md-3 g-4 m-5">
       <div class="col">
         <div class="card h-100">
