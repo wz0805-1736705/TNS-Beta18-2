@@ -1,5 +1,5 @@
 // to use JSX, import:
-import React from "react";
+import React, { Children } from "react";
 import {
   Container,
   Row,
@@ -11,12 +11,14 @@ import {
   Button,
   Card,
   Stack,
+  CardGroup,
 } from "react-bootstrap";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
+import { Compare } from "@material-ui/icons";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -36,11 +38,30 @@ const options = {
 
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
+  const [comparestatus, setComparestatus] = React.useState(true);
+
   return (
     <Container id="neighborContainer">
       <Row>
         <Col>
-          <MapNavBar />
+          <MapNavBar>
+            <SearchBar />
+            <Filter type={dropdownli[0]} />
+            <Filter type={dropdownli[1]} />
+            <Filter type={dropdownli[2]} />
+            <Filter type={dropdownli[3]} />
+            <Save />
+            <CompareButton>
+              <Button
+                onClick={() => {
+                  setComparestatus(!comparestatus);
+                }}
+                bsPrefix="compare"
+              >
+                Compare
+              </Button>{" "}
+            </CompareButton>
+          </MapNavBar>
         </Col>
       </Row>
       <Row id="mapAndList">
@@ -48,10 +69,39 @@ export default function SimpleMap() {
           <MapContainer setUsdata={setUsdata} />
         </Col>
         <Col>
-          <SideList data={usdata} />
+          <SideList>
+            {comparestatus ? (
+              <SideCardsPanel data={usdata} />
+            ) : (
+              <ComparePanel>
+                <CompareCard />
+                <CompareCard />
+              </ComparePanel>
+            )}
+          </SideList>
         </Col>
       </Row>
     </Container>
+  );
+}
+
+function ComparePanel({ children }) {
+  return (
+    <div>
+      <CardGroup className="compareCardGroup">{children}</CardGroup>
+    </div>
+  );
+}
+
+function CompareCard() {
+  return (
+    <div>
+      <Card style={{ width: "18rem" }}>
+        <img src="CardPlaceHolder.png" className="compareCardImage"></img>
+        <Card.Title>WA-1</Card.Title>
+        <Card.Body>Something Here</Card.Body>
+      </Card>
+    </div>
   );
 }
 
@@ -70,7 +120,7 @@ function MapContainer(props) {
 
   function popupRender() {
     let rows = [];
-    console.log(child.Zipcode);
+    // console.log(child.Zipcode);
     rows.push(<h3>{child.neighborhood_name}</h3>);
     Object.entries(child).forEach((entry) => {
       if (entry[0] != "neighborhood_name") {
@@ -117,51 +167,22 @@ function MapContainer(props) {
 
 let dropdownli = ["School Quality", "Percent Married", "Crime Rate", "More"];
 
-function MapNavBar() {
+function MapNavBar(props) {
   return (
     <Container className="mapnavbar">
-      <Stack direction="horizontal">
-        <div>
-          <SearchBar />
-        </div>
-        <div>
-          <Filter type={dropdownli[0]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[1]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[2]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[3]} />
-        </div>
-        <div>
-          <Save />
-        </div>
-        <div>
-          <Compare />
-        </div>
-      </Stack>
+      <Stack direction="horizontal">{props.children}</Stack>
     </Container>
   );
 }
 
 function SideList(props) {
-  console.log(props.data);
-  return (
-    <div className="sidelist">
-      {props.data ? sideListRender(props.data) : null}
-    </div>
-  );
+  // console.log(props.data);
+  return <div className="sidelist">{props.children}</div>;
 }
 
-function sideListRender(data) {
-  let row = [];
-  data.forEach((val) => {
-    row.push(<SideListCard data={val} />);
-  });
-  return row;
+//want to integrate the data into sidelist
+function SideCardsPanel(props) {
+  return props.data.map((item) => <SideListCard data={item} />);
 }
 
 function SideListCard(props) {
@@ -210,6 +231,7 @@ function SideListCard(props) {
   );
 }
 
+// TODO Add Selected Feature
 // function SideListCard () {
 //   return (
 //     <Stack direction="horizontal" className="listcard">
@@ -301,10 +323,6 @@ function Save() {
   );
 }
 
-function Compare() {
-  return (
-    <div>
-      <Button bsPrefix="compare">Compare</Button>{" "}
-    </div>
-  );
+function CompareButton(props) {
+  return <div>{props.children}</div>;
 }
