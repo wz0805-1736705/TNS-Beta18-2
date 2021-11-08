@@ -1,6 +1,6 @@
 .container {
   justify-content: flex-start;
-  margin: 0px;
+  margin: 0;
 }
 
 .mapnavbar {
@@ -78,7 +78,9 @@
   /* background: url(.jpg); */
   border-radius: 5px;
 }
-
+.col {
+  display: flex;
+}
 .listcard {
   width: 37vw;
   height: 193px;
@@ -155,4 +157,15 @@
 .plus_button {
   width: 5%;
   height: 100%;
+}
+
+#mapAndList {
+  width: 100vw;
+  margin-left: 0 auto;
+}
+
+#neighborContainer {
+  width: 100vw;
+  margin-left: 3vw;
+  margin-right: 3vw;
 }
