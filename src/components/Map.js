@@ -1,5 +1,5 @@
 // to use JSX, import:
-import React from "react";
+import React, { Component } from "react";
 import {
   Container,
   Row,
@@ -12,30 +12,29 @@ import {
   Card,
   Stack,
 } from "react-bootstrap";
-import {
-  GoogleMap,
-  useLoadScript,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
+import Pagination from "./Pagination";
+// import Pagination from "react-bootstrap/Pagination";
 
-const apiKey = 'AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM';
+const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
-    width: '50vw',
-    height: '70vh',
+  width: "50vw",
+  height: "70vh",
 };
 // const center = {
 //     lat: 47,
 //     lng: -122,
 // };
 const options = {
-    styles: mapStyles,
-    disableDefaultUI: true,
-    zoomControl: true,
-}
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
 
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
@@ -48,53 +47,74 @@ export default function SimpleMap() {
       </Row>
       <Row id="mapAndList">
         <Col>
-          <MapContainer setUsdata={setUsdata}/>
+          <MapContainer setUsdata={setUsdata} />
         </Col>
         <Col>
-          <SideList data={usdata}/>
+          <SideList data={usdata} />
         </Col>
+        <Page data={usdata} />
       </Row>
     </Container>
   );
 }
 
 function MapContainer(props) {
-  
   const { isLoaded, loadError } = useLoadScript({
-  googleMapsApiKey: apiKey,
-  libraries,
+    googleMapsApiKey: apiKey,
+    libraries,
   });
   const [buttonPopup, setButtonPopup] = React.useState(false);
   const [child, setChild] = React.useState(null);
   const [clicked, setClicked] = React.useState(false);
-  const [center, setCenter] = React.useState({lat: 47, lng: -122});
+  const [center, setCenter] = React.useState({ lat: 47, lng: -122 });
 
   if (!isLoaded) return "Loading Maps";
   if (loadError) return "Error loading maps";
 
   function popupRender() {
-      let rows = [];
-      console.log(child.Zipcode);
-      rows.push(<h3>{child.neighborhood_name}</h3>);
-      Object.entries(child).forEach(entry => {
-          if (entry[0] != "neighborhood_name") {
-              if (entry[1] != null) {
-                  rows.push(<p>{entry[0]}: {entry[1]}</p>)
-              }
-          }
-      });
-      return rows;
+    let rows = [];
+    // console.log(child.Zipcode);
+    rows.push(<h3>{child.neighborhood_name}</h3>);
+    Object.entries(child).forEach((entry) => {
+      if (entry[0] !== "neighborhood_name") {
+        if (entry[1] != null) {
+          rows.push(
+            <p>
+              {entry[0]}: {entry[1]}
+            </p>
+          );
+        }
+      }
+    });
+    return rows;
   }
   return (
-    
-      <div className="mapcontainer">
-        <GoogleMap mapContainerStyle={mapContainerStyle} zoom={7} center={center} options={options}>
-            <Polygons stateName="Washington" zipCode="98610" setUSData={props.setUsdata} setChild={setChild} setClicked={setClicked} setButtonPopup={setButtonPopup} setCenter={setCenter}/>
-            <PopUp trigger={buttonPopup} setTrigger={setButtonPopup} setChildren={setChild} setClick={setClicked}>
-                {clicked ? popupRender() : null}
-            </PopUp>
-        </GoogleMap>
-      </div>
+    <div className="mapcontainer">
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        zoom={7}
+        center={center}
+        options={options}
+      >
+        <Polygons
+          stateName="Washington"
+          zipCode="98610"
+          setUSData={props.setUsdata}
+          setChild={setChild}
+          setClicked={setClicked}
+          setButtonPopup={setButtonPopup}
+          setCenter={setCenter}
+        />
+        <PopUp
+          trigger={buttonPopup}
+          setTrigger={setButtonPopup}
+          setChildren={setChild}
+          setClick={setClicked}
+        >
+          {clicked ? popupRender() : null}
+        </PopUp>
+      </GoogleMap>
+    </div>
   );
 }
 
@@ -127,20 +147,54 @@ function MapNavBar() {
   );
 }
 
+// Pagination Component
+class Page extends Component {
+  constructor(props) {
+    super(props);
+    // console.log(this.props.data);
+    var exampleItems = this.props.data ? sideListRender(this.props.data) : null;
+    this.state = {
+      exampleItems: exampleItems,
+      pageOfItems: [],
+    };
+    this.onChangePage = this.onChangePage.bind(this);
+  }
+  onChangePage(pageOfItems) {
+    // update state with new page of items
+    this.setState({ pageOfItems: pageOfItems });
+  }
+  // <div key={item.id}>{item.name}</div>
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <div className="text-center">
+            {this.state.pageOfItems.map((item) => console.log(item))}
+            <Pagination
+              items={this.state.exampleItems}
+              onChangePage={this.onChangePage}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
 function SideList(props) {
-  console.log(props.data);
   return (
     <div className="sidelist">
       {props.data ? sideListRender(props.data) : null}
+      {/* console.log(props.data) */}
     </div>
   );
 }
 
 function sideListRender(data) {
   let row = [];
-  data.forEach(val => {
-    row.push(<SideListCard data={val}/>);
-  })
+  data.forEach((val) => {
+    row.push(<SideListCard data={val} />);
+  });
   return row;
 }
 
@@ -150,20 +204,38 @@ function SideListCard(props) {
       <img src="CardPlaceHolder.png" className="listcardimage" />
       <Container>
         <Row>
-          <h1 style={{ alignSelf: "flex-start" }}>{props.data.neighborhood_name}</h1>
+          <h1 style={{ alignSelf: "flex-start" }}>
+            {props.data.neighborhood_name}
+          </h1>
         </Row>
         <Row>
           <Col>
-            <CardData title="Median Home Value" data={[props.data.median_home_value]}/>
+            <CardData
+              title="Median Home Value"
+              data={[props.data.median_home_value]}
+            />
           </Col>
           <Col>
-            <CardData title="Number of Schools" data={[props.data.elem_number_schools, props.data.middle_number_schools, props.data.high_number_schools]}/>
+            <CardData
+              title="Number of Schools"
+              data={[
+                props.data.elem_number_schools,
+                props.data.middle_number_schools,
+                props.data.high_number_schools,
+              ]}
+            />
           </Col>
           <Col>
-            <CardData title="Safety Rate" data={[props.data.crime_frequency]}/>
+            <CardData title="Safety Rate" data={[props.data.crime_frequency]} />
           </Col>
           <Col>
-            <CardData title="Politics" data={[props.data.percent_republican, props.data.percent_democrat]}/>
+            <CardData
+              title="Politics"
+              data={[
+                props.data.percent_republican,
+                props.data.percent_democrat,
+              ]}
+            />
           </Col>
         </Row>
       </Container>
@@ -192,13 +264,13 @@ function SideListCard(props) {
 
 function CardData(props) {
   var val = 0;
-  if (props.title == "Median Home Value") {
+  if (props.title === "Median Home Value") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
       val = props.data[0];
     }
-  } else if (props.title == "Number of Schools") {
+  } else if (props.title === "Number of Schools") {
     if (!props.data[0] && !props.data[1] && !props.data[2]) {
       val = "Unavailable";
     } else {
@@ -212,17 +284,17 @@ function CardData(props) {
         val += props.data[2];
       }
     }
-  } else if (props.title == "Safety Rate") {
+  } else if (props.title === "Safety Rate") {
     if (!props.data[0]) {
-      val = "Unavailable"
+      val = "Unavailable";
     } else {
       val = (1 - props.data[0]) * 100;
     }
   } else {
     if (!props.data[0] || !props.data[1]) {
-      val = "Unavailable"
+      val = "Unavailable";
     } else {
-      val = props.data[0] > props.data[1] ? "Republican" : "Democrat"
+      val = props.data[0] > props.data[1] ? "Republican" : "Democrat";
     }
   }
   return (

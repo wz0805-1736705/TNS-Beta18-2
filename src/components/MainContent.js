@@ -11,16 +11,6 @@ function MainContent() {
 
   return (
     <main>
-      {/* TODO: readjust the title position*/}
-      {/* <div className="mt-5">
-        <h1>The Neighborhood Score</h1>
-        <h3>Good {timeOfDay}, Discover your perfect neighborhood</h3>
-        <p>
-          The most powerful, personalized neighborhood discovery platform.
-          <br />
-          Let us empower you to find the community you love for FREE.
-        </p>
-      </div> */}
       {/* Search Card */}
       <div className="s-box">
         <SearchCard />
