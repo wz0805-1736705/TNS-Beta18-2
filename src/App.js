@@ -2,8 +2,9 @@ import "./App.css";
 import Main from "./main";
 import Header from "./components/Header";
 import React from "react";
-import database from './firebase.config';
+import database from "./firebase.config";
 import { ref, onValue } from "firebase/database";
+import QuizButton from "./components/QuizButton";
 
 // import config from "./config";
 // import Firebase from "firebase";
@@ -75,6 +76,7 @@ function App() {
     <div className="App">
       <Header />
       <Main />
+      <QuizButton />
     </div>
   );
 }

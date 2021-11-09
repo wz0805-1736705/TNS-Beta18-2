@@ -1,16 +1,8 @@
 import React from "react";
-// import "@typeform/embed/build/css/popup.css";
-import { Widget } from "@typeform/embed-react";
-import "./Quiz.css";
+import { Widget } from "react-typeform-embed";
 
 const QuizWidget = () => {
-  return (
-    <Widget
-      id="https://nhscore.typeform.com/to/a5pkC39o"
-      style={{ width: "100%", height: "100%" }}
-      className="my-form"
-    />
-  );
+  return <Widget id="a5pkC39o" height={700} />;
 };
 
 // class Quiz extends React.Component {
