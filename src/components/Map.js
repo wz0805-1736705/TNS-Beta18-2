@@ -54,7 +54,7 @@ export default function SimpleMap() {
     } else {
       //delete it from list
       setComparelist(
-        comparelist.filter((item) => item.neighborhood_name != nname)
+        comparelist.filter((item) => item.neighborhood_name !== nname)
       );
     }
   }
