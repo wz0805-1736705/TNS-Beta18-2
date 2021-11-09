@@ -1,5 +1,5 @@
 // to use JSX, import:
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   Stack,
+  CardGroup,
 } from "react-bootstrap";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
@@ -38,11 +39,48 @@ const options = {
 
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
+  const [comparestatus, setComparestatus] = React.useState(true);
+  const [comparelist, setComparelist] = useState([]);
+
+  // cardCompareStatus = []
+  // usdata.forEach(item => cardCompareStatus.push({item.neighborhood_name : false}))
+
+  const [checked, setChecked] = useState(false);
+
+  function switchCompare(nname) {
+    if (!checked) {
+      const found = usdata.find((item) => item.neighborhood_name === nname);
+      setComparelist([...comparelist, found]);
+    } else {
+      //delete it from list
+      setComparelist(
+        comparelist.filter((item) => item.neighborhood_name != nname)
+      );
+    }
+  }
+
   return (
     <Container id="neighborContainer">
       <Row>
         <Col>
-          <MapNavBar />
+          <MapNavBar>
+            <SearchBar />
+            <Filter type={dropdownli[0]} />
+            <Filter type={dropdownli[1]} />
+            <Filter type={dropdownli[2]} />
+            <Filter type={dropdownli[3]} />
+            <Save />
+            <CompareButton>
+              <Button
+                onClick={() => {
+                  setComparestatus(!comparestatus);
+                }}
+                className="compare"
+              >
+                {comparestatus ? "Compare" : "Back"}
+              </Button>{" "}
+            </CompareButton>
+          </MapNavBar>
         </Col>
       </Row>
       <Row id="mapAndList">
@@ -55,6 +93,42 @@ export default function SimpleMap() {
         <Page data={usdata} />
       </Row>
     </Container>
+  );
+}
+
+function ComparePanel({ children }) {
+  return (
+    <div>
+      <CardGroup className="compareCardGroup">{children}</CardGroup>
+    </div>
+  );
+}
+
+function CompareCard({ data }) {
+  // console.log(data);
+  return (
+    <div>
+      <Card style={{ width: "18rem" }}>
+        <img src="CardPlaceHolder.png" className="compareCardImage"></img>
+        <Card.Title>{data.neighborhood_name}</Card.Title>
+        <Card.Body>
+          <CardData title="Median Home Value" data={[data.median_home_value]} />
+          <CardData
+            title="Number of Schools"
+            data={[
+              data.elem_number_schools,
+              data.middle_number_schools,
+              data.high_number_schools,
+            ]}
+          />
+          <CardData title="Safety Rate" data={[data.crime_frequency]} />
+          <CardData
+            title="Politics"
+            data={[data.percent_republican, data.percent_democrat]}
+          />
+        </Card.Body>
+      </Card>
+    </div>
   );
 }
 
@@ -120,35 +194,16 @@ function MapContainer(props) {
 
 let dropdownli = ["School Quality", "Percent Married", "Crime Rate", "More"];
 
-function MapNavBar() {
+function MapNavBar(props) {
   return (
     <Container className="mapnavbar">
-      <Stack direction="horizontal">
-        <div>
-          <SearchBar />
-        </div>
-        <div>
-          <Filter type={dropdownli[0]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[1]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[2]} />
-        </div>
-        <div>
-          <Filter type={dropdownli[3]} />
-        </div>
-        <div>
-          <Save />
-        </div>
-      </Stack>
+      <Stack direction="horizontal">{props.children}</Stack>
     </Container>
   );
 }
 
 // Pagination Component
-class Page extends Component {
+class Page extends React.Component {
   constructor(props) {
     super(props);
     // console.log(this.props.data);
@@ -199,6 +254,7 @@ function sideListRender(data) {
 }
 
 function SideListCard(props) {
+  // console.log(props.data);
   return (
     <Stack direction="horizontal" className="listcard">
       <img src="CardPlaceHolder.png" className="listcardimage" />
@@ -239,7 +295,7 @@ function SideListCard(props) {
           </Col>
         </Row>
       </Container>
-      <Button id="plus-button">Plus</Button>{" "}
+      {props.children}
     </Stack>
   );
 }
@@ -333,4 +389,8 @@ function Save() {
       <Button variant="outline-danger">Save Search</Button>{" "}
     </>
   );
+}
+
+function CompareButton(props) {
+  return <div>{props.children}</div>;
 }
