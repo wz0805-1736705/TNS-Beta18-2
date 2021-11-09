@@ -1,5 +1,5 @@
 // to use JSX, import:
-import React, { Children } from "react";
+import React, { useReducer, useState } from "react";
 import {
   Container,
   Row,
@@ -13,12 +13,12 @@ import {
   Stack,
   CardGroup,
 } from "react-bootstrap";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
-import { Compare } from "@material-ui/icons";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -39,6 +39,24 @@ const options = {
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
   const [comparestatus, setComparestatus] = React.useState(true);
+  const [comparelist, setComparelist] = useState([]);
+
+  // cardCompareStatus = []
+  // usdata.forEach(item => cardCompareStatus.push({item.neighborhood_name : false}))
+
+  const [checked, setChecked] = useState(false);
+
+  function switchCompare(nname) {
+    if (!checked) {
+      const found = usdata.find((item) => item.neighborhood_name === nname);
+      setComparelist([...comparelist, found]);
+    } else {
+      //delete it from list
+      setComparelist(
+        comparelist.filter((item) => item.neighborhood_name != nname)
+      );
+    }
+  }
 
   return (
     <Container id="neighborContainer">
@@ -56,9 +74,9 @@ export default function SimpleMap() {
                 onClick={() => {
                   setComparestatus(!comparestatus);
                 }}
-                bsPrefix="compare"
+                className="compare"
               >
-                Compare
+                {comparestatus ? "Compare" : "Back"}
               </Button>{" "}
             </CompareButton>
           </MapNavBar>
@@ -71,11 +89,26 @@ export default function SimpleMap() {
         <Col>
           <SideList>
             {comparestatus ? (
-              <SideCardsPanel data={usdata} />
+              <SideCardsPanel>
+                {usdata.map((item) => (
+                  <SideListCard key={item.neighborhood_name} data={item}>
+                    <ToggleButton
+                      onClick={() => switchCompare(item.neighborhood_name)}
+                      id="plus-button"
+                      checked={checked}
+                      type="checkbox"
+                      onChange={(e) => setChecked(e.currentTarget.checked)}
+                    >
+                      {checked ? "-" : "+"}
+                    </ToggleButton>{" "}
+                  </SideListCard>
+                ))}
+              </SideCardsPanel>
             ) : (
               <ComparePanel>
-                <CompareCard />
-                <CompareCard />
+                {comparelist.map((card) => (
+                  <CompareCard key={card.neighborhood_name} data={card} />
+                ))}
               </ComparePanel>
             )}
           </SideList>
@@ -93,13 +126,29 @@ function ComparePanel({ children }) {
   );
 }
 
-function CompareCard() {
+function CompareCard({ data }) {
+  // console.log(data);
   return (
     <div>
       <Card style={{ width: "18rem" }}>
         <img src="CardPlaceHolder.png" className="compareCardImage"></img>
-        <Card.Title>WA-1</Card.Title>
-        <Card.Body>Something Here</Card.Body>
+        <Card.Title>{data.neighborhood_name}</Card.Title>
+        <Card.Body>
+          <CardData title="Median Home Value" data={[data.median_home_value]} />
+          <CardData
+            title="Number of Schools"
+            data={[
+              data.elem_number_schools,
+              data.middle_number_schools,
+              data.high_number_schools,
+            ]}
+          />
+          <CardData title="Safety Rate" data={[data.crime_frequency]} />
+          <CardData
+            title="Politics"
+            data={[data.percent_republican, data.percent_democrat]}
+          />
+        </Card.Body>
       </Card>
     </div>
   );
@@ -181,11 +230,12 @@ function SideList(props) {
 }
 
 //want to integrate the data into sidelist
-function SideCardsPanel(props) {
-  return props.data.map((item) => <SideListCard data={item} />);
+function SideCardsPanel({ children }) {
+  return <div>{children}</div>;
 }
 
 function SideListCard(props) {
+  // console.log(props.data);
   return (
     <Stack direction="horizontal" className="listcard">
       <img src="CardPlaceHolder.png" className="listcardimage" />
@@ -226,12 +276,11 @@ function SideListCard(props) {
           </Col>
         </Row>
       </Container>
-      <Button id="plus-button">Plus</Button>{" "}
+      {props.children}
     </Stack>
   );
 }
 
-// TODO Add Selected Feature
 // function SideListCard () {
 //   return (
 //     <Stack direction="horizontal" className="listcard">
