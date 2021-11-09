@@ -13,13 +13,12 @@ import {
   Stack,
   CardGroup,
 } from "react-bootstrap";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
-import Pagination from "./Pagination";
-// import Pagination from "react-bootstrap/Pagination";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -54,7 +53,7 @@ export default function SimpleMap() {
     } else {
       //delete it from list
       setComparelist(
-        comparelist.filter((item) => item.neighborhood_name !== nname)
+        comparelist.filter((item) => item.neighborhood_name != nname)
       );
     }
   }
@@ -88,9 +87,32 @@ export default function SimpleMap() {
           <MapContainer setUsdata={setUsdata} />
         </Col>
         <Col>
-          <SideList data={usdata} />
+          <SideList>
+            {comparestatus ? (
+              <SideCardsPanel>
+                {usdata.map((item) => (
+                  <SideListCard key={item.neighborhood_name} data={item}>
+                    <ToggleButton
+                      onClick={() => switchCompare(item.neighborhood_name)}
+                      id="plus-button"
+                      checked={checked}
+                      type="checkbox"
+                      onChange={(e) => setChecked(e.currentTarget.checked)}
+                    >
+                      {checked ? "-" : "+"}
+                    </ToggleButton>{" "}
+                  </SideListCard>
+                ))}
+              </SideCardsPanel>
+            ) : (
+              <ComparePanel>
+                {comparelist.map((card) => (
+                  <CompareCard key={card.neighborhood_name} data={card} />
+                ))}
+              </ComparePanel>
+            )}
+          </SideList>
         </Col>
-        <Page data={usdata} />
       </Row>
     </Container>
   );
@@ -150,7 +172,7 @@ function MapContainer(props) {
     // console.log(child.Zipcode);
     rows.push(<h3>{child.neighborhood_name}</h3>);
     Object.entries(child).forEach((entry) => {
-      if (entry[0] !== "neighborhood_name") {
+      if (entry[0] != "neighborhood_name") {
         if (entry[1] != null) {
           rows.push(
             <p>
@@ -202,55 +224,14 @@ function MapNavBar(props) {
   );
 }
 
-// Pagination Component
-class Page extends React.Component {
-  constructor(props) {
-    super(props);
-    // console.log(this.props.data);
-    var exampleItems = this.props.data ? sideListRender(this.props.data) : null;
-    this.state = {
-      exampleItems: exampleItems,
-      pageOfItems: [],
-    };
-    this.onChangePage = this.onChangePage.bind(this);
-  }
-  onChangePage(pageOfItems) {
-    // update state with new page of items
-    this.setState({ pageOfItems: pageOfItems });
-  }
-  // <div key={item.id}>{item.name}</div>
-  render() {
-    return (
-      <div>
-        <div className="container">
-          <div className="text-center">
-            {this.state.pageOfItems.map((item) => console.log(item))}
-            <Pagination
-              items={this.state.exampleItems}
-              onChangePage={this.onChangePage}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
 function SideList(props) {
-  return (
-    <div className="sidelist">
-      {props.data ? sideListRender(props.data) : null}
-      {/* console.log(props.data) */}
-    </div>
-  );
+  // console.log(props.data);
+  return <div className="sidelist">{props.children}</div>;
 }
 
-function sideListRender(data) {
-  let row = [];
-  data.forEach((val) => {
-    row.push(<SideListCard data={val} />);
-  });
-  return row;
+//want to integrate the data into sidelist
+function SideCardsPanel({ children }) {
+  return <div>{children}</div>;
 }
 
 function SideListCard(props) {
@@ -320,13 +301,13 @@ function SideListCard(props) {
 
 function CardData(props) {
   var val = 0;
-  if (props.title === "Median Home Value") {
+  if (props.title == "Median Home Value") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
       val = props.data[0];
     }
-  } else if (props.title === "Number of Schools") {
+  } else if (props.title == "Number of Schools") {
     if (!props.data[0] && !props.data[1] && !props.data[2]) {
       val = "Unavailable";
     } else {
@@ -340,7 +321,7 @@ function CardData(props) {
         val += props.data[2];
       }
     }
-  } else if (props.title === "Safety Rate") {
+  } else if (props.title == "Safety Rate") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
