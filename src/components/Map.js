@@ -1,5 +1,5 @@
 // to use JSX, import:
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -13,12 +13,13 @@ import {
   Stack,
   CardGroup,
 } from "react-bootstrap";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
+import Pagination from "./Pagination";
+// import Pagination from "react-bootstrap/Pagination";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -53,7 +54,7 @@ export default function SimpleMap() {
     } else {
       //delete it from list
       setComparelist(
-        comparelist.filter((item) => item.neighborhood_name != nname)
+        comparelist.filter((item) => item.neighborhood_name !== nname)
       );
     }
   }
@@ -87,32 +88,9 @@ export default function SimpleMap() {
           <MapContainer setUsdata={setUsdata} />
         </Col>
         <Col>
-          <SideList>
-            {comparestatus ? (
-              <SideCardsPanel>
-                {usdata.map((item) => (
-                  <SideListCard key={item.neighborhood_name} data={item}>
-                    <ToggleButton
-                      onClick={() => switchCompare(item.neighborhood_name)}
-                      id="plus-button"
-                      checked={checked}
-                      type="checkbox"
-                      onChange={(e) => setChecked(e.currentTarget.checked)}
-                    >
-                      {checked ? "-" : "+"}
-                    </ToggleButton>{" "}
-                  </SideListCard>
-                ))}
-              </SideCardsPanel>
-            ) : (
-              <ComparePanel>
-                {comparelist.map((card) => (
-                  <CompareCard key={card.neighborhood_name} data={card} />
-                ))}
-              </ComparePanel>
-            )}
-          </SideList>
+          <SideList data={usdata} />
         </Col>
+        <Page data={usdata} />
       </Row>
     </Container>
   );
@@ -169,21 +147,78 @@ function MapContainer(props) {
 
   function popupRender() {
     let rows = [];
-    // console.log(child.Zipcode);
-    rows.push(<h3>{child.neighborhood_name}</h3>);
-    Object.entries(child).forEach((entry) => {
-      if (entry[0] != "neighborhood_name") {
-        if (entry[1] != null) {
-          rows.push(
-            <p>
-              {entry[0]}: {entry[1]}
-            </p>
-          );
-        }
-      }
-    });
-    return rows;
+    console.log(child);
+    let res = <div id="neighborPopup">
+                <h1 id="neighborName">{child.neighborhood_name}</h1>
+                <h2 id="neighborLocation">Location:</h2>
+                  <h4>State</h4>
+                    <h5>{child.State}</h5>
+                  <h4>Population Density</h4>
+                    <h5>{checkIfValueExist(child.pop_density_per_sqmi)}</h5>
+                <h2 id="neighborLocation">Investability:</h2>
+                  <h4>Last Year Home Appreciation Percent</h4>
+                    <h5>{checkIfValueExist(child.last_year_home_appreciation_percent)}</h5>
+                <h2 id="neighborLocation">Demographic:</h2>
+                  <h4>Percent Married</h4>
+                    <h5>{getSumOfNumbers(child.percent_married)}%</h5>
+                  <h4>Percent Boomer</h4>
+                    <h5>{getSumOfNumbers(child.Boomer_percent)}%</h5>
+                <h2 id="neighborLocation">Education Quality:</h2>
+                  <h4>Number of Schools</h4>
+                    <h5>{parseInt(checkIfValueExist(child.elem_number_schools)) + parseInt(checkIfValueExist(child.middle_number_schools)) + parseInt(checkIfValueExist(child.high_number_schools))}</h5>
+                  <h4>Average Math Proficiency Percent</h4>
+                    <h5>{getSumOfNumbers(child.elem_avg_math_proficiency_percent, child.middle_avg_math_proficiency_percent, child.high_avg_math_proficiency_percent)}%</h5>
+                  <h4>Average Language Proficiency Percent</h4>
+                    <h5>{getSumOfNumbers(child.elem_avg_la_proficiency_percent, child.middle_avg_la_proficiency_percent, child.high_avg_la_proficiency_percent)}%</h5>
+                <h2 id="neighborLocation">Safety &amp; Crime:</h2>
+                  <h4>Crime Rate:</h4>
+                    <h5>{checkIfValueExist(child.crime_frequency)}</h5>
+                <h2 id="neighborLocation">Politics:</h2>
+                  <h4>Percent Democrat:</h4>
+                    <h5>{checkIfValueExist(child.percent_democrat)}%</h5>
+                  <h4>Percent Republican:</h4>
+                    <h5>{checkIfValueExist(child.percent_republican)}%</h5>
+              </div>;
+
+    // Object.entries(child).forEach((entry, i) => {
+    //   if (entry[0] !== "neighborhood_name") {
+    //     if (entry[1] != null) {
+    //       rows.push(
+    //         <p>
+    //           {entry[0]}: {entry[1]}
+    //         </p>
+    //       );
+    //     }
+    //   }
+    // });
+    return res;
   }
+
+  function checkIfValueExist(val) {
+    if (!val) {
+      return "Unavailable"
+    } else {
+      return val;
+    }
+  }
+
+  function getSumOfNumbers(...val) {
+    if (!val || val.length === 0) {
+      return 0;
+    }
+    let sum = 0;
+    let count = 0;
+    for (let i = 0; i < val.length; i++) {
+      if (!val[i]) {
+        sum += 0;
+      } else {
+        sum += parseInt(val[i]);
+        count++;
+      }
+    }
+    return Math.floor(sum * 100 / count) / 100;
+  }
+
   return (
     <div className="mapcontainer">
       <GoogleMap
@@ -224,14 +259,55 @@ function MapNavBar(props) {
   );
 }
 
-function SideList(props) {
-  // console.log(props.data);
-  return <div className="sidelist">{props.children}</div>;
+// Pagination Component
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    // console.log(this.props.data);
+    var exampleItems = this.props.data ? sideListRender(this.props.data) : null;
+    this.state = {
+      exampleItems: exampleItems,
+      pageOfItems: [],
+    };
+    this.onChangePage = this.onChangePage.bind(this);
+  }
+  onChangePage(pageOfItems) {
+    // update state with new page of items
+    this.setState({ pageOfItems: pageOfItems });
+  }
+  // <div key={item.id}>{item.name}</div>
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <div className="text-center">
+            {/* {this.state.pageOfItems.map((item) => console.log(item))} */}
+            <Pagination
+              items={this.state.exampleItems}
+              onChangePage={this.onChangePage}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
-//want to integrate the data into sidelist
-function SideCardsPanel({ children }) {
-  return <div>{children}</div>;
+function SideList(props) {
+  return (
+    <div className="sidelist">
+      {props.data ? sideListRender(props.data) : null}
+      {/* console.log(props.data) */}
+    </div>
+  );
+}
+
+function sideListRender(data) {
+  let row = [];
+  data.forEach((val) => {
+    row.push(<SideListCard data={val} />);
+  });
+  return row;
 }
 
 function SideListCard(props) {
@@ -301,13 +377,13 @@ function SideListCard(props) {
 
 function CardData(props) {
   var val = 0;
-  if (props.title == "Median Home Value") {
+  if (props.title === "Median Home Value") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
       val = props.data[0];
     }
-  } else if (props.title == "Number of Schools") {
+  } else if (props.title === "Number of Schools") {
     if (!props.data[0] && !props.data[1] && !props.data[2]) {
       val = "Unavailable";
     } else {
@@ -321,7 +397,7 @@ function CardData(props) {
         val += props.data[2];
       }
     }
-  } else if (props.title == "Safety Rate") {
+  } else if (props.title === "Safety Rate") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
