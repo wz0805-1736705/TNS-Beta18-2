@@ -146,8 +146,6 @@ function MapContainer(props) {
   if (loadError) return "Error loading maps";
 
   function popupRender() {
-    let rows = [];
-    console.log(child);
     let res = <div id="neighborPopup">
                 <h1 id="neighborName">{child.neighborhood_name}</h1>
                 <h2 id="neighborLocation">Location:</h2>
@@ -179,18 +177,6 @@ function MapContainer(props) {
                   <h4>Percent Republican:</h4>
                     <h5>{checkIfValueExist(child.percent_republican)}%</h5>
               </div>;
-
-    // Object.entries(child).forEach((entry, i) => {
-    //   if (entry[0] !== "neighborhood_name") {
-    //     if (entry[1] != null) {
-    //       rows.push(
-    //         <p>
-    //           {entry[0]}: {entry[1]}
-    //         </p>
-    //       );
-    //     }
-    //   }
-    // });
     return res;
   }
 
@@ -281,7 +267,7 @@ class Page extends React.Component {
       <div>
         <div className="container">
           <div className="text-center">
-            {/* {this.state.pageOfItems.map((item) => console.log(item))} */}
+            {this.state.pageOfItems.map((item) => console.log(item))}
             <Pagination
               items={this.state.exampleItems}
               onChangePage={this.onChangePage}
