@@ -39,36 +39,12 @@ const options = {
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
   const [comparestatus, setComparestatus] = React.useState(true);
-  const [comparelist, setComparelist] = useState([]);
-
-  // cardCompareStatus = []
-  // usdata.forEach(item => cardCompareStatus.push({item.neighborhood_name : false}))
-
-  const [checked, setChecked] = useState(false);
-
-  function switchCompare(nname) {
-    if (!checked) {
-      const found = usdata.find((item) => item.neighborhood_name === nname);
-      setComparelist([...comparelist, found]);
-    } else {
-      //delete it from list
-      setComparelist(
-        comparelist.filter((item) => item.neighborhood_name !== nname)
-      );
-    }
-  }
 
   return (
     <Container id="neighborContainer">
       <Row>
         <Col>
           <MapNavBar>
-            <SearchBar />
-            <Filter type={dropdownli[0]} />
-            <Filter type={dropdownli[1]} />
-            <Filter type={dropdownli[2]} />
-            <Filter type={dropdownli[3]} />
-            <Save />
             <CompareButton>
               <Button
                 onClick={() => {
@@ -87,31 +63,7 @@ export default function SimpleMap() {
           <MapContainer setUsdata={setUsdata} />
         </Col>
         <Col>
-          <SideList>
-            {comparestatus ? (
-              <SideCardsPanel>
-                {usdata.map((item) => (
-                  <SideListCard key={item.neighborhood_name} data={item}>
-                    <ToggleButton
-                      onClick={() => switchCompare(item.neighborhood_name)}
-                      id="plus-button"
-                      checked={checked}
-                      type="checkbox"
-                      onChange={(e) => setChecked(e.currentTarget.checked)}
-                    >
-                      {checked ? "-" : "+"}
-                    </ToggleButton>{" "}
-                  </SideListCard>
-                ))}
-              </SideCardsPanel>
-            ) : (
-              <ComparePanel>
-                {comparelist.map((card) => (
-                  <CompareCard key={card.neighborhood_name} data={card} />
-                ))}
-              </ComparePanel>
-            )}
-          </SideList>
+          <SideList comparestatus={comparestatus} usdata={usdata} />
         </Col>
       </Row>
     </Container>
@@ -286,14 +238,67 @@ let dropdownli = ["School Quality", "Percent Married", "Crime Rate", "More"];
 function MapNavBar(props) {
   return (
     <Container className="mapnavbar">
-      <Stack direction="horizontal">{props.children}</Stack>
+      <Stack direction="horizontal">
+        <SearchBar />
+        <Filter type={dropdownli[0]} />
+        <Filter type={dropdownli[1]} />
+        <Filter type={dropdownli[2]} />
+        <Filter type={dropdownli[3]} />
+        <Save />
+        {props.children}
+      </Stack>
     </Container>
   );
 }
 
-function SideList(props) {
+function SideList({ usdata, comparestatus }) {
   // console.log(props.data);
-  return <div className="sidelist">{props.children}</div>;
+  // cardCompareStatus = []
+  // usdata.forEach(item => cardCompareStatus.push({item.neighborhood_name : false}))
+
+  const [comparelist, setComparelist] = useState([]);
+
+  const [checked, setChecked] = useState(false);
+
+  function switchCompare(nname) {
+    if (!checked) {
+      const found = usdata.find((item) => item.neighborhood_name === nname);
+      setComparelist([...comparelist, found]);
+    } else {
+      //delete it from list
+      setComparelist(
+        comparelist.filter((item) => item.neighborhood_name !== nname)
+      );
+    }
+  }
+
+  return (
+    <div>
+      {comparestatus ? (
+        <SideCardsPanel>
+          {usdata.map((item) => (
+            <SideListCard key={item.neighborhood_name} data={item}>
+              <ToggleButton
+                onClick={() => switchCompare(item.neighborhood_name)}
+                id="plus-button"
+                checked={checked}
+                type="checkbox"
+                onChange={(e) => setChecked(e.currentTarget.checked)}
+              >
+                {checked ? "-" : "+"}
+              </ToggleButton>{" "}
+            </SideListCard>
+          ))}
+        </SideCardsPanel>
+      ) : (
+        <ComparePanel>
+          {comparelist.map((card) => (
+            <CompareCard key={card.neighborhood_name} data={card} />
+          ))}
+        </ComparePanel>
+      )}
+    </div>
+  );
 }
 
 //want to integrate the data into sidelist
