@@ -1,0 +1,206 @@
+/* TODO: Update font-family */
+
+/* TODO: Adjusts all absolute position */
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  margin: 10px auto;
+  padding: 5px 30px;
+  width: 1000px;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 33px;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: "Roboto", sans-serif;
+  font-weight: 1000;
+  font-size: 24px;
+}
+
+.body {
+  margin: 2;
+}
+
+.Card.Img {
+  width: 60%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.height {
+  height: 40vh;
+}
+.width {
+  width: 40vh;
+}
+
+.s-box {
+  background-image: url("./images/search-background.jpg");
+  background-position: 70% 35%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 350px;
+  width: 100%;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  /* font-size: 24px; */
+  /* line-height: 33px; */
+}
+
+.search {
+  position: relative;
+  box-shadow: 0 0 40px rgba(248, 246, 246, 0.1);
+}
+
+.search input {
+  height: 60px;
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+}
+
+.search input:focus {
+  box-shadow: none;
+  border: 2px solid gainsboro;
+}
+
+.search .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+}
+
+.search button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 50px;
+  width: 110px;
+  background: gainsboro;
+}
+
+/* img.footer_logo {
+  position: sticky;
+  height: 100px;
+  top: calc(100vh - 100px);
+  opacity: 0.3;
+} */
+
+img.footer_logo {
+  position: relative;
+  margin-top: -180px;
+  /* negative value of footer height */
+  height: 80%;
+  width: 100%;
+  opacity: 0.3;
+  clear: both;
+  /* background-color: red; */
+}
+
+.city-insight {
+  position: relative;
+  text-align: left;
+  padding-left: 48px;
+  font-family: Avenir;
+  font-size: 20;
+}
+
+.find-belong {
+  height: 50px;
+  width: 30%;
+  text-align: left;
+  padding-left: 50px;
+  font-family: Avenir;
+  font-size: 20;
+}
+
+.video-responsive {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+
+.video-responsive iframe {
+  left: 25%;
+  top: 5%;
+  height: 50%;
+  width: 50%;
+  position: absolute;
+}
+
+/* info card */
+
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #34495e;
+} */
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  margin: 20px;
+  position: relative;
+  max-width: 480px;
+  max-height: 500px;
+}
+
+.card img {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+
+.card-desc {
+  display: block;
+  font-size: 2.5rem;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  top: 100%;
+  bottom: 0;
+  opacity: 0;
+  padding: 18px 8%;
+  background-color: white;
+  overflow-y: scroll;
+  transition: 0.8s ease;
+  text-align: left;
+  font-family: "Avenir";
+}
+
+.card:hover .card-desc {
+  top: 70%;
+  height: 100%;
+  opacity: 0.8;
+}
+/* 
+h1 {
+  font-size: 2.8rem;
+  color: #fff;
+  margin: 40px 0 20px 0;
+  text-align: center;
+} */
