@@ -19,6 +19,7 @@ import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
+import Pagination from "./Pagination";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -65,6 +66,7 @@ export default function SimpleMap() {
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
         </Col>
+        <Page data={usdata} />
       </Row>
     </Container>
   );
@@ -295,7 +297,7 @@ function SideList({ usdata, comparestatus }) {
             <SideListCard
               key={item.neighborhood_name}
               data={item}
-              switchCompare={switchCompare}
+              // switchCompare={switchCompare}
             >
               <ToggleButton
                 onClick={() => switchCompare(item.neighborhood_name)}
@@ -456,4 +458,47 @@ function Save() {
 
 function CompareButton(props) {
   return <div>{props.children}</div>;
+}
+
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    // var exampleItems = [...Array(150).keys()].map((i) => ({
+    //   id: i + 1,
+    //   name: "Item " + (i + 1),
+    // }));
+
+    var exampleItems = sideListRender(this.props.data);
+    this.state = {
+      exampleItems: exampleItems,
+      pageOfItems: [],
+    };
+    this.onChangePage = this.onChangePage.bind(this);
+  }
+
+  onChangePage(pageOfItems) {
+    // update state with new page of items
+    this.setState({ pageOfItems: pageOfItems });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <div className="text-center">
+            {this.state.pageOfItems.map((item) => (
+              <SideListCard key={item.neighborhood_name} data={item}>
+                item.neighborhood_name
+              </SideListCard>
+            ))}
+            <Pagination
+              items={this.state.exampleItems}
+              onChangePage={this.onChangePage}
+            />
+          </div>
+        </div>
+        <hr />
+      </div>
+    );
+  }
 }

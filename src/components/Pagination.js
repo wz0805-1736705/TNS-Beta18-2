@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+<<<<<<< HEAD
 // const Pagination = ({ postsPerPage, totalPosts }) => {
 //   const pageNumbers = [];
 //   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -20,6 +21,8 @@ import PropTypes from "prop-types";
 //   );
 // };
 
+=======
+>>>>>>> f39eb6682579d649b60a91cbd4a705139e02e8ff
 const propTypes = {
   items: PropTypes.array.isRequired,
   onChangePage: PropTypes.func.isRequired,
