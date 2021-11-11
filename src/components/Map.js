@@ -253,22 +253,37 @@ function MapNavBar(props) {
 
 function SideList({ usdata, comparestatus }) {
   // console.log(props.data);
-  // cardCompareStatus = []
-  // usdata.forEach(item => cardCompareStatus.push({item.neighborhood_name : false}))
+
+  let cardCompareStatus = new Map();
+  usdata.forEach((item) =>
+    cardCompareStatus.set(item.neighborhood_name, false)
+  );
 
   const [comparelist, setComparelist] = useState([]);
+  const [checkedstatus, setCheckedbutton] = useState(cardCompareStatus); // create new status when clicked now? does this work?
 
-  const [checked, setChecked] = useState(false);
+  // check usdata, if empty add a return statement to render a empty div
+  if (usdata === []) {
+    return <div />;
+  }
+
+  console.log("usdata", usdata); //it loaded two times?
+
+  console.log("button list", checkedstatus);
 
   function switchCompare(nname) {
-    if (!checked) {
-      const found = usdata.find((item) => item.neighborhood_name === nname);
+    const found = usdata.find((item) => item.neighborhood_name === nname);
+    // console.log(checkedbutton);
+
+    if (checkedstatus.get(nname)) {
       setComparelist([...comparelist, found]);
+      setCheckedbutton(checkedstatus.set(nname, false));
     } else {
       //delete it from list
       setComparelist(
         comparelist.filter((item) => item.neighborhood_name !== nname)
       );
+      setCheckedbutton(checkedstatus.set(nname, true));
     }
   }
 
@@ -277,15 +292,19 @@ function SideList({ usdata, comparestatus }) {
       {comparestatus ? (
         <SideCardsPanel>
           {usdata.map((item) => (
-            <SideListCard key={item.neighborhood_name} data={item}>
+            <SideListCard
+              key={item.neighborhood_name}
+              data={item}
+              switchCompare={switchCompare}
+            >
               <ToggleButton
                 onClick={() => switchCompare(item.neighborhood_name)}
                 id="plus-button"
-                checked={checked}
+                checked={checkedstatus.get(item.neighborhood_name)}
                 type="checkbox"
-                onChange={(e) => setChecked(e.currentTarget.checked)}
+                // onChange={(e) => setCheckedbutton(e.currentTarget.checked)}
               >
-                {checked ? "-" : "+"}
+                {checkedstatus.get(item.neighborhood_name) ? "-" : "+"}
               </ToggleButton>{" "}
             </SideListCard>
           ))}
@@ -316,6 +335,7 @@ function sideListRender(data) {
 
 function SideListCard(props) {
   // console.log(props.data);
+
   return (
     <Stack direction="horizontal" className="listcard">
       <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
@@ -360,24 +380,6 @@ function SideListCard(props) {
     </Stack>
   );
 }
-
-// function SideListCard () {
-//   return (
-//     <Stack direction="horizontal" className="listcard">
-//       <img src="CardPlaceHolder.png" className="listcardimage"/>
-//       <Container>
-//         <Row><h1 style={{alignSelf: "flex-start"}}>WA-01</h1></Row>
-//         <Row>
-//         <Col><CardData /></Col>
-//         <Col><CardData /></Col>
-//         <Col><CardData /></Col>
-//         <Col><CardData /></Col>
-//         </Row>
-//       </Container>
-//       <Button>Plus</Button>{' '}
-//     </Stack>
-// )
-// }
 
 function CardData(props) {
   var val = 0;
