@@ -53,7 +53,7 @@ export default function SimpleMap() {
     } else {
       //delete it from list
       setComparelist(
-        comparelist.filter((item) => item.neighborhood_name != nname)
+        comparelist.filter((item) => item.neighborhood_name !== nname)
       );
     }
   }
@@ -131,7 +131,11 @@ function CompareCard({ data }) {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
-        <img src="CardPlaceHolder.png" className="compareCardImage"></img>
+        <img
+          src="CardPlaceHolder.png"
+          alt=""
+          className="compareCardImage"
+        ></img>
         <Card.Title>{data.neighborhood_name}</Card.Title>
         <Card.Body>
           <CardData title="Median Home Value" data={[data.median_home_value]} />
@@ -309,7 +313,7 @@ function SideListCard(props) {
   // console.log(props.data);
   return (
     <Stack direction="horizontal" className="listcard">
-      <img src="CardPlaceHolder.png" className="listcardimage" />
+      <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
       <Container>
         <Row>
           <h1 style={{ alignSelf: "flex-start" }}>
@@ -372,13 +376,13 @@ function SideListCard(props) {
 
 function CardData(props) {
   var val = 0;
-  if (props.title == "Median Home Value") {
+  if (props.title === "Median Home Value") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
       val = props.data[0];
     }
-  } else if (props.title == "Number of Schools") {
+  } else if (props.title === "Number of Schools") {
     if (!props.data[0] && !props.data[1] && !props.data[2]) {
       val = "Unavailable";
     } else {
@@ -392,7 +396,7 @@ function CardData(props) {
         val += props.data[2];
       }
     }
-  } else if (props.title == "Safety Rate") {
+  } else if (props.title === "Safety Rate") {
     if (!props.data[0]) {
       val = "Unavailable";
     } else {
