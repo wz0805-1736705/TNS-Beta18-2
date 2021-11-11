@@ -168,21 +168,83 @@ function MapContainer(props) {
   if (loadError) return "Error loading maps";
 
   function popupRender() {
-    let rows = [];
-    // console.log(child.Zipcode);
-    rows.push(<h3>{child.neighborhood_name}</h3>);
-    Object.entries(child).forEach((entry) => {
-      if (entry[0] != "neighborhood_name") {
-        if (entry[1] != null) {
-          rows.push(
-            <p>
-              {entry[0]}: {entry[1]}
-            </p>
-          );
-        }
+    let res = (
+      <div id="neighborPopup">
+        <h1 id="neighborName">{child.neighborhood_name}</h1>
+        <h2 id="neighborLocation">Location:</h2>
+        <h4>State</h4>
+        <h5>{child.State}</h5>
+        <h4>Population Density</h4>
+        <h5>{checkIfValueExist(child.pop_density_per_sqmi)}</h5>
+        <h2 id="neighborLocation">Investability:</h2>
+        <h4>Last Year Home Appreciation Percent</h4>
+        <h5>{checkIfValueExist(child.last_year_home_appreciation_percent)}</h5>
+        <h2 id="neighborLocation">Demographic:</h2>
+        <h4>Percent Married</h4>
+        <h5>{getSumOfNumbers(child.percent_married)}%</h5>
+        <h4>Percent Boomer</h4>
+        <h5>{getSumOfNumbers(child.Boomer_percent)}%</h5>
+        <h2 id="neighborLocation">Education Quality:</h2>
+        <h4>Number of Schools</h4>
+        <h5>
+          {parseInt(checkIfValueExist(child.elem_number_schools)) +
+            parseInt(checkIfValueExist(child.middle_number_schools)) +
+            parseInt(checkIfValueExist(child.high_number_schools))}
+        </h5>
+        <h4>Average Math Proficiency Percent</h4>
+        <h5>
+          {getSumOfNumbers(
+            child.elem_avg_math_proficiency_percent,
+            child.middle_avg_math_proficiency_percent,
+            child.high_avg_math_proficiency_percent
+          )}
+          %
+        </h5>
+        <h4>Average Language Proficiency Percent</h4>
+        <h5>
+          {getSumOfNumbers(
+            child.elem_avg_la_proficiency_percent,
+            child.middle_avg_la_proficiency_percent,
+            child.high_avg_la_proficiency_percent
+          )}
+          %
+        </h5>
+        <h2 id="neighborLocation">Safety &amp; Crime:</h2>
+        <h4>Crime Rate:</h4>
+        <h5>{checkIfValueExist(child.crime_frequency)}</h5>
+        <h2 id="neighborLocation">Politics:</h2>
+        <h4>Percent Democrat:</h4>
+        <h5>{checkIfValueExist(child.percent_democrat)}%</h5>
+        <h4>Percent Republican:</h4>
+        <h5>{checkIfValueExist(child.percent_republican)}%</h5>
+      </div>
+    );
+    return res;
+  }
+
+  function checkIfValueExist(val) {
+    if (!val) {
+      return "Unavailable";
+    } else {
+      return val;
+    }
+  }
+
+  function getSumOfNumbers(...val) {
+    if (!val || val.length === 0) {
+      return 0;
+    }
+    let sum = 0;
+    let count = 0;
+    for (let i = 0; i < val.length; i++) {
+      if (!val[i]) {
+        sum += 0;
+      } else {
+        sum += parseInt(val[i]);
+        count++;
       }
-    });
-    return rows;
+    }
+    return Math.floor((sum * 100) / count) / 100;
   }
   return (
     <div className="mapcontainer">
