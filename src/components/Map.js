@@ -297,6 +297,14 @@ function SideCardsPanel({ children }) {
   return <div>{children}</div>;
 }
 
+function sideListRender(data) {
+  let row = [];
+  data.forEach((val) => {
+    row.push(<SideListCard data={val} />);
+  });
+  return row;
+}
+
 function SideListCard(props) {
   // console.log(props.data);
   return (
