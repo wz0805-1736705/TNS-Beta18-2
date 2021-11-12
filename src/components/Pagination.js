@@ -1,28 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-<<<<<<< HEAD
-// const Pagination = ({ postsPerPage, totalPosts }) => {
-//   const pageNumbers = [];
-//   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-//     pageNumbers.push(i);
-//   }
-//   return (
-//     <div>
-//       <ul className="pagination">
-//         {pageNumbers.map((number) => {
-//           <li key={number} className="page-item">
-//             <a href="!#" className="page-link"></a>
-//             {number}
-//           </li>;
-//         })}
-//       </ul>
-//     </div>
-//   );
-// };
-
-=======
->>>>>>> f39eb6682579d649b60a91cbd4a705139e02e8ff
 const propTypes = {
   items: PropTypes.array.isRequired,
   onChangePage: PropTypes.func.isRequired,
@@ -32,7 +10,7 @@ const propTypes = {
 
 const defaultProps = {
   initialPage: 1,
-  pageSize: 10,
+  pageSize: 4,
 };
 
 class Pagination extends React.Component {

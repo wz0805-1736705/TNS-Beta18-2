@@ -28,6 +28,10 @@
     "react-scripts": "4.0.3",
     "react-typeform-embed": "^1.0.7",
     "start": "^5.1.0",
+<<<<<<< HEAD
+=======
+    "use-between": "^0.1.0",
+>>>>>>> 7fe5632 (add input parsing)
     "web-vitals": "^1.1.2"
   },
   "scripts": {

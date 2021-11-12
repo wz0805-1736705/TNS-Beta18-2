@@ -20,6 +20,7 @@ import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
 import Pagination from "./Pagination";
+import UserInput from "./SearchCard";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -71,6 +72,7 @@ export default function SimpleMap() {
     </Container>
   );
 }
+
 
 function ComparePanel({ children }) {
   return (
