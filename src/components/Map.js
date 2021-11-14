@@ -41,12 +41,14 @@ const options = {
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
   const [comparestatus, setComparestatus] = React.useState(true);
-
+  const [schoolQuality, setSchoolQuality] = React.useState(0);
+  const [pctMarried, setPctMarried] = React.useState(0);
+  const [crimeRate, setCrimeRate] = React.useState(0);
   return (
     <Container id="neighborContainer">
       <Row>
         <Col>
-          <MapNavBar>
+          <MapNavBar setSchoolQuality={setSchoolQuality} setPctMarried={setPctMarried} setCrimeRate={setCrimeRate}>
             <CompareButton>
               <Button
                 onClick={() => {
@@ -62,7 +64,7 @@ export default function SimpleMap() {
       </Row>
       <Row id="mapAndList">
         <Col>
-          <MapContainer setUsdata={setUsdata} />
+          <MapContainer setUsdata={setUsdata} schoolQuality={schoolQuality} pctMarried={pctMarried} crimeRate={crimeRate}/>
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
@@ -217,7 +219,10 @@ function MapContainer(props) {
       >
         <Polygons
           stateName="Washington"
-          zipCode="98610"
+          zipCode=""
+          school={props.schoolQuality}
+          married={props.pctMarried}
+          crime={props.crimeRate}
           setUSData={props.setUsdata}
           setChild={setChild}
           setClicked={setClicked}
@@ -237,17 +242,16 @@ function MapContainer(props) {
   );
 }
 
-let dropdownli = ["School Quality", "Percent Married", "Crime Rate", "More"];
-
 function MapNavBar(props) {
+  console.log(props);
   return (
     <Container className="mapnavbar">
       <Stack direction="horizontal">
         <SearchBar />
-        <Filter type={dropdownli[0]} />
-        <Filter type={dropdownli[1]} />
-        <Filter type={dropdownli[2]} />
-        <Filter type={dropdownli[3]} />
+        <Filter type={"School Quality"} code={1} setVal={props.setSchoolQuality}/>
+        <Filter type={"Percent Married"} code={2} setVal={props.setPctMarried}/>
+        <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate}/>
+        <ResetFilter resetSchool={props.setSchoolQuality} resetMarried={props.setPctMarried} resetCrime={props.setCrimeRate}/>
         <Save />
         {props.children}
       </Stack>
@@ -270,10 +274,6 @@ function SideList({ usdata, comparestatus }) {
   if (usdata === []) {
     return <div />;
   }
-
-  console.log("usdata", usdata); //it loaded two times?
-
-  console.log("button list", checkedstatus);
 
   function switchCompare(nname) {
     const found = usdata.find((item) => item.neighborhood_name === nname);
@@ -437,15 +437,35 @@ function SearchBar() {
     </InputGroup>
   );
 }
-
-function Filter({ type }) {
+// onClick={() => switchCompare(item.neighborhood_name)}
+function Filter(props) {
   return (
     <>
-      <DropdownButton title={type} bsPrefix="mapfilter">
-        <Dropdown.Item eventKey="1">Low</Dropdown.Item>
-        <Dropdown.Item eventKey="2">Medium</Dropdown.Item>
-        <Dropdown.Item eventKey="3">High</Dropdown.Item>
+      <DropdownButton title={props.type} bsPrefix="mapfilter">
+        <Dropdown.Item eventKey="1" onClick={() => props.setVal(filterOnClick(1))}>Low</Dropdown.Item>
+        <Dropdown.Item eventKey="2" onClick={() => props.setVal(filterOnClick(2))}>Medium</Dropdown.Item>
+        <Dropdown.Item eventKey="3" onClick={() => props.setVal(filterOnClick(3))}>High</Dropdown.Item>
       </DropdownButton>
+    </>
+  );
+}
+function filterOnClick(level) {
+    if (level === 1) {
+      console.log(1);
+      return 1;
+    } else if (level === 2) {
+      console.log(34);
+      return 34;
+    } else {
+      console.log(67);
+      return 67;
+    }
+}
+
+function ResetFilter(props) {
+  return (
+    <>
+      <Button variant="outline-danger" onClick={() => {props.resetSchool(0); props.resetMarried(0); props.resetCrime(0)}}>Reset Filters</Button>{" "}
     </>
   );
 }
