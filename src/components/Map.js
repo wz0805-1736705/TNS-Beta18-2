@@ -219,7 +219,7 @@ function MapContainer(props) {
       >
         <Polygons
           stateName="Washington"
-          zipCode=""
+          zipCode="" // 98610
           school={props.schoolQuality}
           married={props.pctMarried}
           crime={props.crimeRate}
