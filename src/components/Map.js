@@ -20,6 +20,9 @@ import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
 import Pagination from "./Pagination";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import stateCenter from "../data/stateCenter.js";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -27,10 +30,6 @@ const mapContainerStyle = {
   width: "50vw",
   height: "70vh",
 };
-// const center = {
-//     lat: 47,
-//     lng: -122,
-// };
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
@@ -40,12 +39,51 @@ const options = {
 export default function SimpleMap() {
   const [usdata, setUsdata] = React.useState([]);
   const [comparestatus, setComparestatus] = React.useState(true);
+  const [schoolQuality, setSchoolQuality] = React.useState(0);
+  const [pctMarried, setPctMarried] = React.useState(0);
+  const [crimeRate, setCrimeRate] = React.useState(0);
 
+  // Input from the search bar
+  const location = useLocation();
+
+  var center = { lat: 31, lng: -100 };
+  var zoomLevel = 6;
+  var stateName = "Texas";
+  var zipcode = "";
+  if (location.state) {
+    if (location.state.state.length > 0) {
+      stateName = location.state.state.toUpperCase();
+      if (stateName.length === 2) {
+        stateName = stateCenter[stateName]["state"];
+      } else {
+        stateName = stateName.toLowerCase();
+        var stateNameArr = stateName.split(" ");
+        stateName = "";
+        stateNameArr.forEach((element) => {
+          stateName += element.charAt(0).toUpperCase() + element.slice(1) + " ";
+        });
+        stateName = stateName.substring(0, stateName.length - 1);
+      }
+      center = {
+        lat: parseFloat(stateCenter[stateName]["latitude"]),
+        lng: parseFloat(stateCenter[stateName]["longitude"]),
+      };
+      zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
+    }
+    if (location.state.zipcode.length > 0) {
+      zipcode = location.state.zipcode;
+    }
+  }
   return (
     <Container id="neighborContainer">
       <Row>
+        <Page data={usdata} />
         <Col>
-          <MapNavBar>
+          <MapNavBar
+            setSchoolQuality={setSchoolQuality}
+            setPctMarried={setPctMarried}
+            setCrimeRate={setCrimeRate}
+          >
             <CompareButton>
               <Button
                 onClick={() => {
@@ -61,12 +99,20 @@ export default function SimpleMap() {
       </Row>
       <Row id="mapAndList">
         <Col>
-          <MapContainer setUsdata={setUsdata} />
+          <MapContainer
+            setUsdata={setUsdata}
+            schoolQuality={schoolQuality}
+            pctMarried={pctMarried}
+            crimeRate={crimeRate}
+            center={center}
+            zoomLevel={zoomLevel}
+            stateName={stateName}
+            zipcode={zipcode}
+          />
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
         </Col>
-        <Page data={usdata} />
       </Row>
     </Container>
   );
@@ -120,7 +166,8 @@ function MapContainer(props) {
   const [buttonPopup, setButtonPopup] = React.useState(false);
   const [child, setChild] = React.useState(null);
   const [clicked, setClicked] = React.useState(false);
-  const [center, setCenter] = React.useState({ lat: 47, lng: -122 });
+  const [center, setCenter] = React.useState(props.center);
+  const [closePopup, setClosePopup] = React.useState(false);
 
   if (!isLoaded) return "Loading Maps";
   if (loadError) return "Error loading maps";
@@ -209,24 +256,30 @@ function MapContainer(props) {
     <div className="mapcontainer">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={7}
+        zoom={props.zoomLevel}
         center={center}
         options={options}
       >
         <Polygons
-          stateName="Washington"
-          zipCode="98610"
+          stateName={props.stateName}
+          zipCode={props.zipcode}
+          school={props.schoolQuality}
+          married={props.pctMarried}
+          crime={props.crimeRate}
           setUSData={props.setUsdata}
           setChild={setChild}
           setClicked={setClicked}
           setButtonPopup={setButtonPopup}
           setCenter={setCenter}
+          closePopup={closePopup}
+          setClosePopup={setClosePopup}
         />
         <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
           setChildren={setChild}
           setClick={setClicked}
+          setClosePopup={setClosePopup}
         >
           {clicked ? popupRender() : null}
         </PopUp>
@@ -235,17 +288,28 @@ function MapContainer(props) {
   );
 }
 
-let dropdownli = ["School Quality", "Percent Married", "Crime Rate", "More"];
-
 function MapNavBar(props) {
+  // console.log(props);
   return (
     <Container className="mapnavbar">
       <Stack direction="horizontal">
-        <SearchBar />
-        <Filter type={dropdownli[0]} />
-        <Filter type={dropdownli[1]} />
-        <Filter type={dropdownli[2]} />
-        <Filter type={dropdownli[3]} />
+        {/* <SearchBar /> */}
+        <Filter
+          type={"School Quality"}
+          code={1}
+          setVal={props.setSchoolQuality}
+        />
+        <Filter
+          type={"Percent Married"}
+          code={2}
+          setVal={props.setPctMarried}
+        />
+        <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
+        <ResetFilter
+          resetSchool={props.setSchoolQuality}
+          resetMarried={props.setPctMarried}
+          resetCrime={props.setCrimeRate}
+        />
         <Save />
         {props.children}
       </Stack>
@@ -289,7 +353,6 @@ function SideList({ usdata, comparestatus }) {
       setCheckedbutton(checkedstatus.set(nname, true));
     }
   }
-
   return (
     <div>
       {comparestatus ? (
@@ -333,6 +396,7 @@ function sideListRender(data) {
   data.forEach((val) => {
     row.push(<SideListCard data={val} />);
   });
+  console.log(row);
   return row;
 }
 
@@ -427,24 +491,92 @@ function CardData(props) {
   );
 }
 
-function SearchBar() {
-  return (
-    <InputGroup
-      style={{ width: "12vw", marginRight: "5vw", marginLeft: "5vw" }}
-    >
-      <FormControl className="mapsearch" placeholder="Where to?" />
-    </InputGroup>
-  );
-}
-
-function Filter({ type }) {
+// onClick={() => switchCompare(item.neighborhood_name)}
+function Filter(props) {
+  if (props.code === 3) {
+    return (
+      <>
+        <DropdownButton title={props.type} bsPrefix="mapfilter">
+          <Dropdown.Item
+            eventKey="1"
+            onClick={() => props.setVal(crimeFilterOnClick(1))}
+          >
+            Low
+          </Dropdown.Item>
+          <Dropdown.Item
+            eventKey="2"
+            onClick={() => props.setVal(crimeFilterOnClick(2))}
+          >
+            Medium
+          </Dropdown.Item>
+          <Dropdown.Item
+            eventKey="3"
+            onClick={() => props.setVal(crimeFilterOnClick(3))}
+          >
+            High
+          </Dropdown.Item>
+        </DropdownButton>
+      </>
+    );
+  }
   return (
     <>
-      <DropdownButton title={type} bsPrefix="mapfilter">
-        <Dropdown.Item eventKey="1">Low</Dropdown.Item>
-        <Dropdown.Item eventKey="2">Medium</Dropdown.Item>
-        <Dropdown.Item eventKey="3">High</Dropdown.Item>
+      <DropdownButton title={props.type} bsPrefix="mapfilter">
+        <Dropdown.Item
+          eventKey="1"
+          onClick={() => props.setVal(filterOnClick(1))}
+        >
+          Low
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="2"
+          onClick={() => props.setVal(filterOnClick(2))}
+        >
+          Medium
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="3"
+          onClick={() => props.setVal(filterOnClick(3))}
+        >
+          High
+        </Dropdown.Item>
       </DropdownButton>
+    </>
+  );
+}
+function filterOnClick(level) {
+  if (level === 1) {
+    return 1;
+  } else if (level === 2) {
+    return 34;
+  } else {
+    return 67;
+  }
+}
+
+function crimeFilterOnClick(level) {
+  if (level === 1) {
+    return 34;
+  } else if (level === 2) {
+    return 67;
+  } else {
+    return 100;
+  }
+}
+
+function ResetFilter(props) {
+  return (
+    <>
+      <Button
+        variant="outline-danger"
+        onClick={() => {
+          props.resetSchool(0);
+          props.resetMarried(0);
+          props.resetCrime(0);
+        }}
+      >
+        Reset Filters
+      </Button>{" "}
     </>
   );
 }
@@ -464,22 +596,31 @@ function CompareButton(props) {
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    // var exampleItems = [...Array(150).keys()].map((i) => ({
-    //   id: i + 1,
-    //   name: "Item " + (i + 1),
-    // }));
-
-    var exampleItems = sideListRender(this.props.data);
     this.state = {
-      exampleItems: exampleItems,
+      exampleItems: {},
       pageOfItems: [],
     };
+
     this.onChangePage = this.onChangePage.bind(this);
   }
 
   onChangePage(pageOfItems) {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
+  }
+  // componentDidUpdate() {
+  //   this.setState({
+  //     exampleItems: sideListRender(this.props.data),
+  //     pageOfItems: [],
+  //   });
+  // }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        exampleItems: sideListRender(this.props.data),
+        pageOfItems: [],
+      });
+    }, 1000);
   }
 
   render() {
@@ -488,9 +629,10 @@ class Page extends React.Component {
         <div className="container">
           <div className="text-center">
             {this.state.pageOfItems.map((item) => (
-              <SideListCard key={item.neighborhood_name} data={item}>
-                item.neighborhood_name
-              </SideListCard>
+              <SideListCard
+                key={item.props.data.neighborhood_name}
+                data={item.props.data}
+              ></SideListCard>
             ))}
             <Pagination
               items={this.state.exampleItems}
