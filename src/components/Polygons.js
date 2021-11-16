@@ -27,7 +27,7 @@ export default function Polygons(props) {
         setUsdata(data);
       });
     } else {
-      dbRef = ref(database, "/");
+      dbRef = ref(database, "Texas/");
       onValue(dbRef, (snapshot) => {
         var data = snapshot.val();
         if (props.school > 0 || props.married > 0 || props.crime > 0) {
@@ -36,7 +36,7 @@ export default function Polygons(props) {
         setUsdata(data);
       });
     }
-  }, [props.school, props.married, props.crime]);
+  }, [props.school, props.married, props.crime, props.closePopup]);
 
   let rows = [];
   props.setUSData(usdata);
@@ -54,20 +54,29 @@ export default function Polygons(props) {
       { lat: latitude + 0.05, lng: longitude - 0.05 },
       { lat: latitude - 0.05, lng: longitude - 0.05 },
     ];
+
+    function handleOnClick(e) {
+      console.log(this.options);
+      this.setOptions({ fillOpacity: 0.85 });
+      props.setButtonPopup(true);
+      props.setChild(innerData);
+      props.setClicked(true);
+      props.setCenter({ lat: latitude, lng: longitude });
+    }
     rows.push(
       <Polygon
         key={d.neighborhood_name}
         paths={rectCoords}
-        onClick={() => {
-          props.setButtonPopup(true);
-          props.setChild(innerData);
-          props.setClicked(true);
-          props.setCenter({ lat: latitude, lng: longitude });
-        }}
+        options={{fillColor: "#40c7c7", strokeColor: "#329999", strokeWeight: 1}}
+        onClick={handleOnClick}
+        //onMouseOver={handleMouseOver}
+        //onMouseOut={handleMouseOut}
+        
       ></Polygon>
     );
   });
 
+  
   function filterRes(data) {
     if (props.school > 0 && props.married > 0 && props.crime > 0) {
       
@@ -77,7 +86,7 @@ export default function Polygons(props) {
         let marriedR = (element.percent_married);
         let crimeR = (element.crime_frequency);
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR >= props.crime);
+        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
       });
 
     } else if (props.school > 0 && props.married > 0) {
@@ -96,7 +105,7 @@ export default function Polygons(props) {
         let languagePro = (element.elem_avg_la_proficiency_percent + element.middle_avg_la_proficiency_percent + element.high_avg_la_proficiency_percent) / 3;
         let crimeR = (element.crime_frequency);
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!crimeR || isNaN(crimeR) || crimeR >= props.crime);
+        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
       });
 
     } else if (props.married > 0 && props.crime > 0) {
@@ -104,7 +113,7 @@ export default function Polygons(props) {
       return data.filter((element) => {
         let marriedR = (element.percent_married);
         let crimeR = (element.crime_frequency);
-        return (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR >= props.crime);
+        return (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
       });
 
     } else if (props.school > 0) {
@@ -127,7 +136,7 @@ export default function Polygons(props) {
 
       return data.filter((element) => {
         let crimeR = (element.crime_frequency);
-        return (!crimeR || isNaN(crimeR) || crimeR >= props.crime);
+        return (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
       });
       
     }

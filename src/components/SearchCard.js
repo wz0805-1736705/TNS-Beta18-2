@@ -39,7 +39,7 @@ const SearchCard = (props) => {
                     name="city"
                     type="text"
                     value={state.city}
-                    class="form-control"
+                    className="form-control"
                     onChange={handleInputChange}
                   ></input>
                 </label>
@@ -51,7 +51,7 @@ const SearchCard = (props) => {
                     name="state"
                     type="text"
                     value={state.state}
-                    class="form-control"
+                    className="form-control"
                     onChange={handleInputChange}
                   ></input>
                 </label>
@@ -63,7 +63,7 @@ const SearchCard = (props) => {
                     name="zipcode"
                     type="text"
                     value={state.zipcode}
-                    class="form-control"
+                    className="form-control"
                     onChange={handleInputChange}
                   ></input>
                 </label>
