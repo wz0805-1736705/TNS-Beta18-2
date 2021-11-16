@@ -54,17 +54,20 @@ export default function SimpleMap() {
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
       if (stateName.length === 2) {
-        stateName = stateCenter[stateName]['state'];
+        stateName = stateCenter[stateName]["state"];
       } else {
         stateName = stateName.toLowerCase();
         var stateNameArr = stateName.split(" ");
         stateName = "";
-        stateNameArr.forEach(element => {
+        stateNameArr.forEach((element) => {
           stateName += element.charAt(0).toUpperCase() + element.slice(1) + " ";
-        })
+        });
         stateName = stateName.substring(0, stateName.length - 1);
       }
-      center = { lat: parseFloat(stateCenter[stateName]["latitude"]), lng: parseFloat(stateCenter[stateName]["longitude"])};
+      center = {
+        lat: parseFloat(stateCenter[stateName]["latitude"]),
+        lng: parseFloat(stateCenter[stateName]["longitude"]),
+      };
       zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
     }
     if (location.state.zipcode.length > 0) {
@@ -74,6 +77,7 @@ export default function SimpleMap() {
   return (
     <Container id="neighborContainer">
       <Row>
+        <Page data={usdata} />
         <Col>
           <MapNavBar
             setSchoolQuality={setSchoolQuality}
@@ -102,14 +106,13 @@ export default function SimpleMap() {
             crimeRate={crimeRate}
             center={center}
             zoomLevel={zoomLevel}
-            stateName = {stateName}
-            zipcode = {zipcode}
+            stateName={stateName}
+            zipcode={zipcode}
           />
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
         </Col>
-        <Page data={usdata} />
       </Row>
     </Container>
   );
@@ -168,7 +171,7 @@ function MapContainer(props) {
 
   if (!isLoaded) return "Loading Maps";
   if (loadError) return "Error loading maps";
-  
+
   function popupRender() {
     let res = (
       <div id="neighborPopup">
@@ -286,10 +289,11 @@ function MapContainer(props) {
 }
 
 function MapNavBar(props) {
-  console.log(props);
+  // console.log(props);
   return (
     <Container className="mapnavbar">
       <Stack direction="horizontal">
+        {/* <SearchBar /> */}
         <Filter
           type={"School Quality"}
           code={1}
@@ -314,8 +318,6 @@ function MapNavBar(props) {
 }
 
 function SideList({ usdata, comparestatus }) {
-  // console.log(props.data);
-
   let cardCompareStatus = new Map();
   usdata.forEach((item) =>
     cardCompareStatus.set(item.neighborhood_name, false)
@@ -344,7 +346,6 @@ function SideList({ usdata, comparestatus }) {
       setCheckedbutton(checkedstatus.set(nname, true));
     }
   }
-
   return (
     <div>
       {comparestatus ? (
@@ -588,26 +589,31 @@ function CompareButton(props) {
 class Page extends React.Component {
   constructor(props) {
     super(props);
-    // var exampleItems = [...Array(150).keys()].map((i) => ({
-    //   id: i + 1,
-    //   name: "Item " + (i + 1),
-    // }));
-
-    var exampleItems = sideListRender(this.props.data);
-    // console.log(exampleItems);
-
     this.state = {
-      exampleItems: exampleItems,
+      exampleItems: {},
       pageOfItems: [],
     };
+
     this.onChangePage = this.onChangePage.bind(this);
-    // console.log(this.state);
   }
 
   onChangePage(pageOfItems) {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
-    console.log(this.state);
+  }
+  // componentDidUpdate() {
+  //   this.setState({
+  //     exampleItems: sideListRender(this.props.data),
+  //     pageOfItems: [],
+  //   });
+  // }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        exampleItems: sideListRender(this.props.data),
+        pageOfItems: [],
+      });
+    }, 1000);
   }
 
   render() {
@@ -615,10 +621,10 @@ class Page extends React.Component {
       <div>
         <div className="container">
           <div className="text-center">
-            {this.state.exampleItems.map((item) => (
+            {this.state.pageOfItems.map((item) => (
               <SideListCard
-                key={item.neighborhood_name}
-                data={item}
+                key={item.props.data.neighborhood_name}
+                data={item.props.data}
               ></SideListCard>
             ))}
             <Pagination
