@@ -1,6 +1,5 @@
 /* TODO: Update font-family */
 
-/* TODO: Adjusts all absolute position */
 h1 {
   font-size: 48px;
 }
@@ -48,9 +47,10 @@ body {
   width: 40vh;
 }
 
+/* Search */
 .s-box {
   background-image: url("./images/search-background.jpg");
-  background-position: 70% 35%;
+  background-position: 70% 33%;
   background-size: cover;
   background-repeat: no-repeat;
   height: 350px;
@@ -58,19 +58,32 @@ body {
   font-family: Avenir;
   font-style: normal;
   font-weight: normal;
-  /* font-size: 24px; */
-  /* line-height: 33px; */
 }
 
 .search {
   position: relative;
   box-shadow: 0 0 40px rgba(248, 246, 246, 0.1);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
 }
 
 .search input {
   height: 60px;
   text-indent: 25px;
   border: 2px solid #d6d4d4;
+  width: 300%;
+
+  order: 0;
+  flex: 1 1 auto;
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
 }
 
 .search input:focus {
@@ -87,18 +100,16 @@ body {
 .search button {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 50px;
   height: 50px;
-  width: 110px;
+  width: 12%;
   background: gainsboro;
-}
 
-/* img.footer_logo {
-  position: sticky;
-  height: 100px;
-  top: calc(100vh - 100px);
-  opacity: 0.3;
-} */
+  padding: 8px 16px;
+  min-height: 48px;
+  min-width: 10px;
+  word-wrap: nowrap;
+}
 
 img.footer_logo {
   position: relative;
