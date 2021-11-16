@@ -22,6 +22,7 @@ import "./Map.css";
 import Pagination from "./Pagination";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import stateCenter from "../data/stateCenter.js";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -29,10 +30,6 @@ const mapContainerStyle = {
   width: "50vw",
   height: "70vh",
 };
-// const center = {
-//     lat: 47,
-//     lng: -122,
-// };
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
@@ -48,12 +45,32 @@ export default function SimpleMap() {
 
   // Input from the search bar
   const location = useLocation();
-  // useEffect(() => {
-  //   console.log(location.pathname);
-  //   console.log(location.state);
-  //   console.log(location.state.city);
-  // }, [location]);
 
+  var center = { lat: 31, lng: -100 };
+  var zoomLevel = 6;
+  var stateName = "Texas";
+  var zipcode = "";
+  if (location.state) {
+    if (location.state.state.length > 0) {
+      stateName = location.state.state.toUpperCase();
+      if (stateName.length === 2) {
+        stateName = stateCenter[stateName]['state'];
+      } else {
+        stateName = stateName.toLowerCase();
+        var stateNameArr = stateName.split(" ");
+        stateName = "";
+        stateNameArr.forEach(element => {
+          stateName += element.charAt(0).toUpperCase() + element.slice(1) + " ";
+        })
+        stateName = stateName.substring(0, stateName.length - 1);
+      }
+      center = { lat: parseFloat(stateCenter[stateName]["latitude"]), lng: parseFloat(stateCenter[stateName]["longitude"])};
+      zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
+    }
+    if (location.state.zipcode.length > 0) {
+      zipcode = location.state.zipcode;
+    }
+  }
   return (
     <Container id="neighborContainer">
       <Row>
@@ -83,6 +100,10 @@ export default function SimpleMap() {
             schoolQuality={schoolQuality}
             pctMarried={pctMarried}
             crimeRate={crimeRate}
+            center={center}
+            zoomLevel={zoomLevel}
+            stateName = {stateName}
+            zipcode = {zipcode}
           />
         </Col>
         <Col>
@@ -142,11 +163,12 @@ function MapContainer(props) {
   const [buttonPopup, setButtonPopup] = React.useState(false);
   const [child, setChild] = React.useState(null);
   const [clicked, setClicked] = React.useState(false);
-  const [center, setCenter] = React.useState({ lat: 47, lng: -122 });
+  const [center, setCenter] = React.useState(props.center);
+  const [closePopup, setClosePopup] = React.useState(false);
 
   if (!isLoaded) return "Loading Maps";
   if (loadError) return "Error loading maps";
-
+  
   function popupRender() {
     let res = (
       <div id="neighborPopup">
@@ -231,13 +253,13 @@ function MapContainer(props) {
     <div className="mapcontainer">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={7}
+        zoom={props.zoomLevel}
         center={center}
         options={options}
       >
         <Polygons
-          stateName="Washington"
-          zipCode="98610" // 98610
+          stateName={props.stateName}
+          zipCode={props.zipcode}
           school={props.schoolQuality}
           married={props.pctMarried}
           crime={props.crimeRate}
@@ -246,12 +268,15 @@ function MapContainer(props) {
           setClicked={setClicked}
           setButtonPopup={setButtonPopup}
           setCenter={setCenter}
+          closePopup={closePopup}
+          setClosePopup={setClosePopup}
         />
         <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
           setChildren={setChild}
           setClick={setClicked}
+          setClosePopup={setClosePopup}
         >
           {clicked ? popupRender() : null}
         </PopUp>
@@ -265,7 +290,6 @@ function MapNavBar(props) {
   return (
     <Container className="mapnavbar">
       <Stack direction="horizontal">
-        <SearchBar />
         <Filter
           type={"School Quality"}
           code={1}
@@ -459,17 +483,34 @@ function CardData(props) {
   );
 }
 
-function SearchBar() {
-  return (
-    <InputGroup
-      style={{ width: "12vw", marginRight: "5vw", marginLeft: "5vw" }}
-    >
-      <FormControl className="mapsearch" placeholder="Where to?" />
-    </InputGroup>
-  );
-}
 // onClick={() => switchCompare(item.neighborhood_name)}
 function Filter(props) {
+  if (props.code === 3) {
+    return (
+      <>
+        <DropdownButton title={props.type} bsPrefix="mapfilter">
+          <Dropdown.Item
+            eventKey="1"
+            onClick={() => props.setVal(crimeFilterOnClick(1))}
+          >
+            Low
+          </Dropdown.Item>
+          <Dropdown.Item
+            eventKey="2"
+            onClick={() => props.setVal(crimeFilterOnClick(2))}
+          >
+            Medium
+          </Dropdown.Item>
+          <Dropdown.Item
+            eventKey="3"
+            onClick={() => props.setVal(crimeFilterOnClick(3))}
+          >
+            High
+          </Dropdown.Item>
+        </DropdownButton>
+      </>
+    );
+  }
   return (
     <>
       <DropdownButton title={props.type} bsPrefix="mapfilter">
@@ -497,14 +538,21 @@ function Filter(props) {
 }
 function filterOnClick(level) {
   if (level === 1) {
-    console.log(1);
     return 1;
   } else if (level === 2) {
-    console.log(34);
     return 34;
   } else {
-    console.log(67);
     return 67;
+  }
+}
+
+function crimeFilterOnClick(level) {
+  if (level === 1) {
+    return 34;
+  } else if (level === 2) {
+    return 67;
+  } else {
+    return 100;
   }
 }
 
