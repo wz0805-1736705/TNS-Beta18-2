@@ -256,35 +256,36 @@ function MapNavBar(props) {
 function SideList({ usdata, comparestatus }) {
   // console.log(props.data);
 
-  let cardCompareStatus = new Map();
-  usdata.forEach((item) =>
-    cardCompareStatus.set(item.neighborhood_name, false)
-  );
-
   const [comparelist, setComparelist] = useState([]);
-  const [checkedstatus, setCheckedbutton] = useState(cardCompareStatus); // create new status when clicked now? does this work?
+
+  const [checkedstatus, setCheckedbutton] = useState(new Map());
 
   // check usdata, if empty add a return statement to render a empty div
   if (usdata === []) {
     return <div />;
   }
 
-  console.log("usdata", usdata); //it loaded two times?
+  // console.log("usdata", usdata);
 
-  console.log("button list", checkedstatus);
+  // console.log("button list", checkedstatus);
 
+  //TODO: fix the focus of plus swiching to top when clicked on in lower items
+  //TODO: limit how many cards can be added to compare function
   function switchCompare(nname) {
     const found = usdata.find((item) => item.neighborhood_name === nname);
-    // console.log(checkedbutton);
+    // console.log(found);
 
-    if (checkedstatus.get(nname)) {
-      setComparelist([...comparelist, found]);
-      setCheckedbutton(checkedstatus.set(nname, false));
-    } else {
-      //delete it from list
+    if (checkedstatus.get(nname) === true) {
+      // console.log("if have record, check status:", checkedstatus.get(nname));
+      // console.log("list before change", comparelist);
       setComparelist(
         comparelist.filter((item) => item.neighborhood_name !== nname)
       );
+      // console.log("list after change", comparelist);
+      setCheckedbutton(checkedstatus.set(nname, false));
+      // console.log("check status after change", checkedstatus);
+    } else {
+      setComparelist([...comparelist, found]);
       setCheckedbutton(checkedstatus.set(nname, true));
     }
   }
