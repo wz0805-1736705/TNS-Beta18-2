@@ -45,12 +45,14 @@ export default function SimpleMap() {
   const [schoolQuality, setSchoolQuality] = React.useState(0);
   const [pctMarried, setPctMarried] = React.useState(0);
   const [crimeRate, setCrimeRate] = React.useState(0);
+
+  // Input from the search bar
   const location = useLocation();
-  useEffect(() => {
-    console.log(location.pathname);
-    console.log(location.state);
-    console.log(location.state.city);
-  }, [location]);
+  // useEffect(() => {
+  //   console.log(location.pathname);
+  //   console.log(location.state);
+  //   console.log(location.state.city);
+  // }, [location]);
 
   return (
     <Container id="neighborContainer">
