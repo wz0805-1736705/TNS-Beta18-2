@@ -13,11 +13,11 @@ const Main = () => {
     <Switch>
       {" "}
       {/* The Switch decides which component to show based on the current URL.*/}
-      <Route exact path="/">
-        <MyInfo />
+      <Route component={MyInfo} exact={true} path="/">
+        {/* <MyInfo /> */}
       </Route>
-      <Route exact path="/neighborhood">
-        <SimpleMap/>
+      <Route component={SimpleMap} exact path="/neighborhood">
+        {/* <SimpleMap /> */}
       </Route>
       <Route exact path="/signIn">
         <SignIn />

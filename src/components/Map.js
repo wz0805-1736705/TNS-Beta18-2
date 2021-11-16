@@ -20,7 +20,8 @@ import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
 import Pagination from "./Pagination";
-import UserInput from "./SearchCard";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -44,11 +45,22 @@ export default function SimpleMap() {
   const [schoolQuality, setSchoolQuality] = React.useState(0);
   const [pctMarried, setPctMarried] = React.useState(0);
   const [crimeRate, setCrimeRate] = React.useState(0);
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location.pathname);
+    console.log(location.state);
+    console.log(location.state.city);
+  }, [location]);
+
   return (
     <Container id="neighborContainer">
       <Row>
         <Col>
-          <MapNavBar setSchoolQuality={setSchoolQuality} setPctMarried={setPctMarried} setCrimeRate={setCrimeRate}>
+          <MapNavBar
+            setSchoolQuality={setSchoolQuality}
+            setPctMarried={setPctMarried}
+            setCrimeRate={setCrimeRate}
+          >
             <CompareButton>
               <Button
                 onClick={() => {
@@ -64,7 +76,12 @@ export default function SimpleMap() {
       </Row>
       <Row id="mapAndList">
         <Col>
-          <MapContainer setUsdata={setUsdata} schoolQuality={schoolQuality} pctMarried={pctMarried} crimeRate={crimeRate}/>
+          <MapContainer
+            setUsdata={setUsdata}
+            schoolQuality={schoolQuality}
+            pctMarried={pctMarried}
+            crimeRate={crimeRate}
+          />
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
@@ -74,7 +91,6 @@ export default function SimpleMap() {
     </Container>
   );
 }
-
 
 function ComparePanel({ children }) {
   return (
@@ -219,7 +235,7 @@ function MapContainer(props) {
       >
         <Polygons
           stateName="Washington"
-          zipCode="" // 98610
+          zipCode="98610" // 98610
           school={props.schoolQuality}
           married={props.pctMarried}
           crime={props.crimeRate}
@@ -248,10 +264,22 @@ function MapNavBar(props) {
     <Container className="mapnavbar">
       <Stack direction="horizontal">
         <SearchBar />
-        <Filter type={"School Quality"} code={1} setVal={props.setSchoolQuality}/>
-        <Filter type={"Percent Married"} code={2} setVal={props.setPctMarried}/>
-        <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate}/>
-        <ResetFilter resetSchool={props.setSchoolQuality} resetMarried={props.setPctMarried} resetCrime={props.setCrimeRate}/>
+        <Filter
+          type={"School Quality"}
+          code={1}
+          setVal={props.setSchoolQuality}
+        />
+        <Filter
+          type={"Percent Married"}
+          code={2}
+          setVal={props.setPctMarried}
+        />
+        <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
+        <ResetFilter
+          resetSchool={props.setSchoolQuality}
+          resetMarried={props.setPctMarried}
+          resetCrime={props.setCrimeRate}
+        />
         <Save />
         {props.children}
       </Stack>
@@ -334,6 +362,7 @@ function sideListRender(data) {
   data.forEach((val) => {
     row.push(<SideListCard data={val} />);
   });
+  console.log(row);
   return row;
 }
 
@@ -442,30 +471,54 @@ function Filter(props) {
   return (
     <>
       <DropdownButton title={props.type} bsPrefix="mapfilter">
-        <Dropdown.Item eventKey="1" onClick={() => props.setVal(filterOnClick(1))}>Low</Dropdown.Item>
-        <Dropdown.Item eventKey="2" onClick={() => props.setVal(filterOnClick(2))}>Medium</Dropdown.Item>
-        <Dropdown.Item eventKey="3" onClick={() => props.setVal(filterOnClick(3))}>High</Dropdown.Item>
+        <Dropdown.Item
+          eventKey="1"
+          onClick={() => props.setVal(filterOnClick(1))}
+        >
+          Low
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="2"
+          onClick={() => props.setVal(filterOnClick(2))}
+        >
+          Medium
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="3"
+          onClick={() => props.setVal(filterOnClick(3))}
+        >
+          High
+        </Dropdown.Item>
       </DropdownButton>
     </>
   );
 }
 function filterOnClick(level) {
-    if (level === 1) {
-      console.log(1);
-      return 1;
-    } else if (level === 2) {
-      console.log(34);
-      return 34;
-    } else {
-      console.log(67);
-      return 67;
-    }
+  if (level === 1) {
+    console.log(1);
+    return 1;
+  } else if (level === 2) {
+    console.log(34);
+    return 34;
+  } else {
+    console.log(67);
+    return 67;
+  }
 }
 
 function ResetFilter(props) {
   return (
     <>
-      <Button variant="outline-danger" onClick={() => {props.resetSchool(0); props.resetMarried(0); props.resetCrime(0)}}>Reset Filters</Button>{" "}
+      <Button
+        variant="outline-danger"
+        onClick={() => {
+          props.resetSchool(0);
+          props.resetMarried(0);
+          props.resetCrime(0);
+        }}
+      >
+        Reset Filters
+      </Button>{" "}
     </>
   );
 }
@@ -491,16 +544,20 @@ class Page extends React.Component {
     // }));
 
     var exampleItems = sideListRender(this.props.data);
+    // console.log(exampleItems);
+
     this.state = {
       exampleItems: exampleItems,
       pageOfItems: [],
     };
     this.onChangePage = this.onChangePage.bind(this);
+    // console.log(this.state);
   }
 
   onChangePage(pageOfItems) {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
+    console.log(this.state);
   }
 
   render() {
@@ -508,10 +565,11 @@ class Page extends React.Component {
       <div>
         <div className="container">
           <div className="text-center">
-            {this.state.pageOfItems.map((item) => (
-              <SideListCard key={item.neighborhood_name} data={item}>
-                item.neighborhood_name
-              </SideListCard>
+            {this.state.exampleItems.map((item) => (
+              <SideListCard
+                key={item.neighborhood_name}
+                data={item}
+              ></SideListCard>
             ))}
             <Pagination
               items={this.state.exampleItems}
