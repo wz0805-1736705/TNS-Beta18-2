@@ -10,11 +10,13 @@ export default function Polygons(props) {
     if (props.zipCode && props.zipCode.length > 0) {
       dbRef = ref(database, props.stateName + "/");
       onValue(dbRef, (snapshot) => {
-        var data = snapshot.val().filter(element => element.Zipcode == props.zipCode)
+        var data = snapshot
+          .val()
+          .filter((element) => element.Zipcode === props.zipCode);
         if (props.school > 0 || props.married > 0 || props.crime > 0) {
           data = filterRes(data);
         }
-        console.log(data);
+        // console.log(data);
         setUsdata(data);
       });
     } else if (props.stateName && props.stateName.length > 0) {
@@ -67,82 +69,114 @@ export default function Polygons(props) {
       <Polygon
         key={d.neighborhood_name}
         paths={rectCoords}
-        options={{fillColor: "#40c7c7", strokeColor: "#329999", strokeWeight: 1}}
+        options={{
+          fillColor: "#40c7c7",
+          strokeColor: "#329999",
+          strokeWeight: 1,
+        }}
         onClick={handleOnClick}
         //onMouseOver={handleMouseOver}
         //onMouseOut={handleMouseOut}
-        
       ></Polygon>
     );
   });
 
-  
   function filterRes(data) {
     if (props.school > 0 && props.married > 0 && props.crime > 0) {
-      
       return data.filter((element) => {
-        let mathPro = (element.elem_avg_math_proficiency_percent + element.middle_avg_math_proficiency_percent + element.high_avg_math_proficiency_percent) / 3;
-        let languagePro = (element.elem_avg_la_proficiency_percent + element.middle_avg_la_proficiency_percent + element.high_avg_la_proficiency_percent) / 3;
-        let marriedR = (element.percent_married);
-        let crimeR = (element.crime_frequency);
+        let mathPro =
+          (element.elem_avg_math_proficiency_percent +
+            element.middle_avg_math_proficiency_percent +
+            element.high_avg_math_proficiency_percent) /
+          3;
+        let languagePro =
+          (element.elem_avg_la_proficiency_percent +
+            element.middle_avg_la_proficiency_percent +
+            element.high_avg_la_proficiency_percent) /
+          3;
+        let marriedR = element.percent_married;
+        let crimeR = element.crime_frequency;
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
+        return (
+          (!eduPro || isNaN(eduPro) || eduPro >= props.school) &&
+          (!marriedR || isNaN(marriedR) || marriedR >= props.married) &&
+          (!crimeR || isNaN(crimeR) || crimeR <= props.crime)
+        );
       });
-
     } else if (props.school > 0 && props.married > 0) {
-
       return data.filter((element) => {
-        let mathPro = (element.elem_avg_math_proficiency_percent + element.middle_avg_math_proficiency_percent + element.high_avg_math_proficiency_percent) / 3;
-        let languagePro = (element.elem_avg_la_proficiency_percent + element.middle_avg_la_proficiency_percent + element.high_avg_la_proficiency_percent) / 3;
-        let marriedR = (element.percent_married);
+        let mathPro =
+          (element.elem_avg_math_proficiency_percent +
+            element.middle_avg_math_proficiency_percent +
+            element.high_avg_math_proficiency_percent) /
+          3;
+        let languagePro =
+          (element.elem_avg_la_proficiency_percent +
+            element.middle_avg_la_proficiency_percent +
+            element.high_avg_la_proficiency_percent) /
+          3;
+        let marriedR = element.percent_married;
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!marriedR || isNaN(marriedR) || marriedR >= props.married);
+        return (
+          (!eduPro || isNaN(eduPro) || eduPro >= props.school) &&
+          (!marriedR || isNaN(marriedR) || marriedR >= props.married)
+        );
       });
     } else if (props.school > 0 && props.crime > 0) {
-
       return data.filter((element) => {
-        let mathPro = (element.elem_avg_math_proficiency_percent + element.middle_avg_math_proficiency_percent + element.high_avg_math_proficiency_percent) / 3;
-        let languagePro = (element.elem_avg_la_proficiency_percent + element.middle_avg_la_proficiency_percent + element.high_avg_la_proficiency_percent) / 3;
-        let crimeR = (element.crime_frequency);
+        let mathPro =
+          (element.elem_avg_math_proficiency_percent +
+            element.middle_avg_math_proficiency_percent +
+            element.high_avg_math_proficiency_percent) /
+          3;
+        let languagePro =
+          (element.elem_avg_la_proficiency_percent +
+            element.middle_avg_la_proficiency_percent +
+            element.high_avg_la_proficiency_percent) /
+          3;
+        let crimeR = element.crime_frequency;
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
+        return (
+          (!eduPro || isNaN(eduPro) || eduPro >= props.school) &&
+          (!crimeR || isNaN(crimeR) || crimeR <= props.crime)
+        );
       });
-
     } else if (props.married > 0 && props.crime > 0) {
-
       return data.filter((element) => {
-        let marriedR = (element.percent_married);
-        let crimeR = (element.crime_frequency);
-        return (!marriedR || isNaN(marriedR) || marriedR >= props.married) && (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
+        let marriedR = element.percent_married;
+        let crimeR = element.crime_frequency;
+        return (
+          (!marriedR || isNaN(marriedR) || marriedR >= props.married) &&
+          (!crimeR || isNaN(crimeR) || crimeR <= props.crime)
+        );
       });
-
     } else if (props.school > 0) {
-
       return data.filter((element) => {
-        let mathPro = (element.elem_avg_math_proficiency_percent + element.middle_avg_math_proficiency_percent + element.high_avg_math_proficiency_percent) / 3;
-        let languagePro = (element.elem_avg_la_proficiency_percent + element.middle_avg_la_proficiency_percent + element.high_avg_la_proficiency_percent) / 3;
+        let mathPro =
+          (element.elem_avg_math_proficiency_percent +
+            element.middle_avg_math_proficiency_percent +
+            element.high_avg_math_proficiency_percent) /
+          3;
+        let languagePro =
+          (element.elem_avg_la_proficiency_percent +
+            element.middle_avg_la_proficiency_percent +
+            element.high_avg_la_proficiency_percent) /
+          3;
         let eduPro = (mathPro + languagePro) / 2;
-        return (!eduPro || isNaN(eduPro) || eduPro >= props.school);
+        return !eduPro || isNaN(eduPro) || eduPro >= props.school;
       });
-
     } else if (props.married > 0) {
-
       return data.filter((element) => {
-        let marriedR = (element.percent_married);
-        return (!marriedR || isNaN(marriedR) || marriedR >= props.married);
+        let marriedR = element.percent_married;
+        return !marriedR || isNaN(marriedR) || marriedR >= props.married;
       });
-
     } else if (props.crime > 0) {
-
       return data.filter((element) => {
-        let crimeR = (element.crime_frequency);
-        return (!crimeR || isNaN(crimeR) || crimeR <= props.crime);
+        let crimeR = element.crime_frequency;
+        return !crimeR || isNaN(crimeR) || crimeR <= props.crime;
       });
-      
     }
   }
 
   return rows;
 }
-
-

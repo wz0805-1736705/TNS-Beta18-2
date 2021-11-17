@@ -4,14 +4,13 @@ import {
   Container,
   Row,
   Col,
-  InputGroup,
-  FormControl,
   DropdownButton,
   Dropdown,
   Button,
   Card,
   Stack,
   CardGroup,
+  Navbar,
 } from "react-bootstrap";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
@@ -20,7 +19,6 @@ import mapStyles from "./mapStyles";
 import Polygons from "./Polygons";
 import "./Map.css";
 import Pagination from "./Pagination";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import stateCenter from "../data/stateCenter.js";
 
@@ -75,28 +73,23 @@ export default function SimpleMap() {
     }
   }
   return (
-    <Container id="neighborContainer">
-      <Row>
-        <Page data={usdata} />
-        <Col>
-          <MapNavBar
-            setSchoolQuality={setSchoolQuality}
-            setPctMarried={setPctMarried}
-            setCrimeRate={setCrimeRate}
+    <div>
+      <MapNavBar
+        setSchoolQuality={setSchoolQuality}
+        setPctMarried={setPctMarried}
+        setCrimeRate={setCrimeRate}
+      >
+        <CompareButton>
+          <Button
+            onClick={() => {
+              setComparestatus(!comparestatus);
+            }}
+            className="compare"
           >
-            <CompareButton>
-              <Button
-                onClick={() => {
-                  setComparestatus(!comparestatus);
-                }}
-                className="compare"
-              >
-                {comparestatus ? "Compare" : "Back"}
-              </Button>{" "}
-            </CompareButton>
-          </MapNavBar>
-        </Col>
-      </Row>
+            {comparestatus ? "Compare" : "Back"}
+          </Button>{" "}
+        </CompareButton>
+      </MapNavBar>
       <Row id="mapAndList">
         <Col>
           <MapContainer
@@ -112,9 +105,10 @@ export default function SimpleMap() {
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
+          <Page data={usdata} />
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 
@@ -291,29 +285,32 @@ function MapContainer(props) {
 function MapNavBar(props) {
   // console.log(props);
   return (
-    <Container className="mapnavbar">
+    <Navbar className="mapnavbar" expand="lg">
       <Stack direction="horizontal">
         {/* <SearchBar /> */}
-        <Filter
-          type={"School Quality"}
-          code={1}
-          setVal={props.setSchoolQuality}
-        />
-        <Filter
-          type={"Percent Married"}
-          code={2}
-          setVal={props.setPctMarried}
-        />
-        <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
-        <ResetFilter
-          resetSchool={props.setSchoolQuality}
-          resetMarried={props.setPctMarried}
-          resetCrime={props.setCrimeRate}
-        />
-        <Save />
-        {props.children}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Filter
+            type={"School Quality"}
+            code={1}
+            setVal={props.setSchoolQuality}
+          />
+          <Filter
+            type={"Percent Married"}
+            code={2}
+            setVal={props.setPctMarried}
+          />
+          <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
+          <ResetFilter
+            resetSchool={props.setSchoolQuality}
+            resetMarried={props.setPctMarried}
+            resetCrime={props.setCrimeRate}
+          />
+          <Save />
+          {props.children}
+        </Navbar.Collapse>
       </Stack>
-    </Container>
+    </Navbar>
   );
 }
 
@@ -491,12 +488,12 @@ function CardData(props) {
   );
 }
 
-// onClick={() => switchCompare(item.neighborhood_name)}
 function Filter(props) {
   if (props.code === 3) {
     return (
       <>
         <DropdownButton title={props.type} bsPrefix="mapfilter">
+          {/* bsPrefix="mapfilter" */}
           <Dropdown.Item
             eventKey="1"
             onClick={() => props.setVal(crimeFilterOnClick(1))}

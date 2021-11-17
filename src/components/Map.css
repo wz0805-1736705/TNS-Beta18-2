@@ -5,14 +5,11 @@
 
 .mapnavbar {
   /* Filter_Navigation */
-
-  width: 100vw;
+  /* width: 100vw;
   height: 12vh;
-
-  justify-content: flex-start;
+  justify-content: flex-start; */
   /* left: 0px;
   top: 128px; */
-
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
@@ -35,8 +32,6 @@
 }
 
 .mapfilter {
-  /* school_quality */
-
   /* Auto Layout */
   display: flex;
   flex-direction: row;
@@ -47,8 +42,6 @@
   position: relative;
   width: 13vw;
   height: 5vh;
-  /* left: 334px;
-  top: 24px; */
 
   /* Text_Grey */
   border: 1px solid #404040;
