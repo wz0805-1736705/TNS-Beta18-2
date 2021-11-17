@@ -105,7 +105,6 @@ export default function SimpleMap() {
         </Col>
         <Col>
           <SideList comparestatus={comparestatus} usdata={usdata} />
-          <Page data={usdata} />
         </Col>
       </Row>
     </div>
@@ -354,23 +353,11 @@ function SideList({ usdata, comparestatus }) {
     <div>
       {comparestatus ? (
         <SideCardsPanel>
-          {usdata.map((item) => (
-            <SideListCard
-              key={item.neighborhood_name}
-              data={item}
-              // switchCompare={switchCompare}
-            >
-              <ToggleButton
-                onClick={() => switchCompare(item.neighborhood_name)}
-                id="plus-button"
-                checked={checkedstatus.get(item.neighborhood_name)}
-                type="checkbox"
-                // onChange={(e) => setCheckedbutton(e.currentTarget.checked)}
-              >
-                {checkedstatus.get(item.neighborhood_name) ? "-" : "+"}
-              </ToggleButton>{" "}
-            </SideListCard>
-          ))}
+          <Page
+            data={usdata}
+            switchCompare={switchCompare}
+            checkedstatus={checkedstatus}
+          ></Page>
         </SideCardsPanel>
       ) : (
         <ComparePanel>
@@ -393,7 +380,7 @@ function sideListRender(data) {
   data.forEach((val) => {
     row.push(<SideListCard data={val} />);
   });
-  console.log(row);
+  // console.log(row);
   return row;
 }
 
@@ -629,7 +616,25 @@ class Page extends React.Component {
               <SideListCard
                 key={item.props.data.neighborhood_name}
                 data={item.props.data}
-              ></SideListCard>
+              >
+                <ToggleButton
+                  onClick={() =>
+                    this.props.switchCompare(item.props.data.neighborhood_name)
+                  }
+                  id="plus-button"
+                  checked={this.props.checkedstatus.get(
+                    item.props.data.neighborhood_name
+                  )}
+                  type="checkbox"
+                  // onChange={(e) => setCheckedbutton(e.currentTarget.checked)}
+                >
+                  {this.props.checkedstatus.get(
+                    item.props.data.neighborhood_name
+                  )
+                    ? "-"
+                    : "+"}
+                </ToggleButton>{" "}
+              </SideListCard>
             ))}
             <Pagination
               items={this.state.exampleItems}
