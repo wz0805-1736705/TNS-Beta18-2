@@ -50,6 +50,7 @@ export default function SimpleMap() {
   var zoomLevel = 6;
   var stateName = "Texas";
   var zipcode = "";
+  // 98610
   if (location.state) {
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
@@ -618,19 +619,21 @@ class Page extends React.Component {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
   }
+
   // componentDidUpdate() {
-  //   this.setState({
-  //     exampleItems: sideListRender(this.props.data),
-  //     pageOfItems: [],
-  //   });
+  //   setTimeout(() => {
+  //     this.setState({
+  //       exampleItems: sideListRender(this.props.data),
+  //       pageOfItems: [],
+  //     });
+  //   }, 500);
   // }
+
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        exampleItems: sideListRender(this.props.data),
-        pageOfItems: [],
-      });
-    }, 1000);
+    this.setState({
+      exampleItems: sideListRender(this.props.data),
+      pageOfItems: [],
+    });
   }
 
   render() {
