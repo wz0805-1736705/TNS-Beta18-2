@@ -1,8 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-// TODO: adjust the color theme of footer
-// TODO: add footer to the stylesheet
 function Footer() {
   return (
     <div class="footer-basic">
