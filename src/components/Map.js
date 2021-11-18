@@ -12,6 +12,7 @@ import {
   CardGroup,
   Navbar,
 } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
@@ -21,6 +22,7 @@ import "./Map.css";
 import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
 import stateCenter from "../data/stateCenter.js";
+import { ModelTraining } from "@mui/icons-material";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
@@ -111,10 +113,19 @@ export default function SimpleMap() {
   );
 }
 
-function ComparePanel({ children }) {
+function ComparePanel({ comparelist }) {
   return (
     <div>
-      <CardGroup className="compareCardGroup">{children}</CardGroup>
+      {/* <CardGroup className="compareCardGroup">{children}</CardGroup> */}
+      <CardGroup className="compareCardGroup">
+        {comparelist.length > 0 ? (
+          comparelist.map((card) => (
+            <CompareCard key={card.neighborhood_name} data={card} />
+          ))
+        ) : (
+          <h1>Add something to compare!</h1>
+        )}
+      </CardGroup>
     </div>
   );
 }
@@ -314,11 +325,14 @@ function MapNavBar(props) {
 }
 
 function SideList({ usdata, comparestatus }) {
-  // console.log(props.data);
-
+  // what's currently displayed in compare function
   const [comparelist, setComparelist] = useState([]);
 
+  // track if any items added to commpare list
   const [checkedstatus, setCheckedbutton] = useState(new Map());
+
+  // decide whether to show "can only compare two items"
+  const [showalert, setShowalert] = useState(false);
 
   // check usdata, if empty add a return statement to render a empty div
   if (usdata === []) {
@@ -331,41 +345,53 @@ function SideList({ usdata, comparestatus }) {
 
   //TODO: fix the focus of plus swiching to top when clicked on in lower items
   //TODO: limit how many cards can be added to compare function
+
+  /**
+   * Switch the checked status of this neighbourhood and add/substract it to comparelist
+   * @param {String} nname Name of the neighbourhood
+   */
   function switchCompare(nname) {
     const found = usdata.find((item) => item.neighborhood_name === nname);
-    // console.log(found);
 
     if (checkedstatus.get(nname) === true) {
-      // console.log("if have record, check status:", checkedstatus.get(nname));
-      // console.log("list before change", comparelist);
+      // n exists, substract it
       setComparelist(
         comparelist.filter((item) => item.neighborhood_name !== nname)
       );
-      // console.log("list after change", comparelist);
       setCheckedbutton(checkedstatus.set(nname, false));
-      // console.log("check status after change", checkedstatus);
     } else {
-      setComparelist([...comparelist, found]);
-      setCheckedbutton(checkedstatus.set(nname, true));
+      // check if the list is full
+      if (comparelist.length === 2) {
+        setShowalert(true);
+        console.log(showalert);
+      } else {
+        //n does not exist, add it
+        setComparelist([...comparelist, found]);
+        setCheckedbutton(checkedstatus.set(nname, true));
+      }
     }
   }
+
   return (
     <div>
-      {comparestatus ? (
-        <SideCardsPanel>
-          <Page
-            data={usdata}
-            switchCompare={switchCompare}
-            checkedstatus={checkedstatus}
-          ></Page>
-        </SideCardsPanel>
-      ) : (
-        <ComparePanel>
-          {comparelist.map((card) => (
-            <CompareCard key={card.neighborhood_name} data={card} />
-          ))}
-        </ComparePanel>
-      )}
+      <CompareAlert showalert={showalert} setShowalert={setShowalert} />
+      <div>
+        {comparestatus ? (
+          <SideCardsPanel>
+            <Page
+              data={usdata}
+              switchCompare={switchCompare}
+              checkedstatus={checkedstatus}
+            ></Page>
+          </SideCardsPanel>
+        ) : (
+          <ComparePanel comparelist={comparelist}>
+            {/* {comparelist.map((card) => (
+              <CompareCard key={card.neighborhood_name} data={card} />
+            ))} */}
+          </ComparePanel>
+        )}
+      </div>
     </div>
   );
 }
@@ -646,4 +672,30 @@ class Page extends React.Component {
       </div>
     );
   }
+}
+
+function CompareAlert({ showalert, setShowalert }) {
+  const handleClose = () => setShowalert(false);
+
+  console.log(showalert);
+
+  return (
+    <div>
+      <Modal show={showalert} onHide={handleClose} centered animation={false}>
+        <Modal.Header closeButton>
+          {/* <Modal.Title>Cannot Enter More Than Two Neighbourhoods</Modal.Title> */}
+        </Modal.Header>
+
+        <Modal.Body>
+          <h1>Cannot Compare More Than Two Neighbourhoods</h1>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
 }
