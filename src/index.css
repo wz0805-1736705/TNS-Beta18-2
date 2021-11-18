@@ -181,7 +181,8 @@ body {
   max-height: 500px;
 }
 
-.card img {
+/* This somehow also affected compare list image */
+.infocardimage {
   width: 400px;
   height: 500px;
   object-fit: cover;

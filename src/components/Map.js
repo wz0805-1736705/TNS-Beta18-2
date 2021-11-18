@@ -145,11 +145,11 @@ function CompareCard({ data }) {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
-        <img
+        <Card.Img
           src="CardPlaceHolder.png"
           alt=""
-          className="compareCardImage"
-        ></img>
+          className="listcardimage"
+        ></Card.Img>
         <Card.Title>{data.neighborhood_name}</Card.Title>
         <Card.Body>
           <CardData title="Median Home Value" data={[data.median_home_value]} />
