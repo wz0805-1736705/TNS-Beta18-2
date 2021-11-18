@@ -10,10 +10,8 @@ import { HashRouter, Route, Link } from "react-router-dom";
 // React.render(WHAT DO I WANT TO RENDER, WHERE DO I WANT TO RENDER IT, document.getElementById('root'))
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
-      {/* <BrowserRouter> */}
+    <HashRouter basename="/">
       <App />
-      {/* </BrowserRouter> */}
     </HashRouter>
   </React.StrictMode>,
   document.getElementById("root")
