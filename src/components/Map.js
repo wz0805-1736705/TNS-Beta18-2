@@ -14,7 +14,6 @@ import {
   Nav,
   Modal,
 } from "react-bootstrap";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
@@ -28,7 +27,7 @@ const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
   width: "45vw",
-  height: "100%",
+  height: "100vh",
 };
 //TODO change it to adjust according to the screen.
 
@@ -53,7 +52,7 @@ export default function SimpleMap() {
   var stateName;
   var zipcode;
   if (location.state) {
-    console.log('enter');
+    console.log("enter");
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
       if (stateName.length === 2) {
@@ -79,7 +78,7 @@ export default function SimpleMap() {
   } else {
     stateName = "Texas";
     zoomLevel = 6;
-    center = { lat: 31, lng: -100 }
+    center = { lat: 31, lng: -100 };
     zipcode = "";
   }
   return (
