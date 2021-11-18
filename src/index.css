@@ -5,7 +5,7 @@ h1 {
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 36px;
 }
 
 p.about {
@@ -27,7 +27,7 @@ body {
   background-color: #e5e5e5;
   font-family: "Roboto", sans-serif;
   font-weight: 1000;
-  font-size: 24px;
+  font-size: 32px;
 }
 
 .body {
@@ -116,16 +116,14 @@ body {
   align-self: auto; */
 }
 
-img.footer_logo {
+/* img.footer_logo {
   position: relative;
   margin-top: -180px;
-  /* negative value of footer height */
   height: 80%;
   width: 100%;
   opacity: 0.3;
   clear: both;
-  /* background-color: red; */
-}
+} */
 
 .city-insight {
   position: relative;
@@ -213,10 +211,29 @@ img.footer_logo {
   height: 100%;
   opacity: 0.8;
 }
-/* 
-h1 {
-  font-size: 2.8rem;
-  color: #fff;
-  margin: 40px 0 20px 0;
+
+/* footer */
+
+footer {
+  padding-top: 5vh;
+  padding-bottom: 2vh;
+}
+
+.wrap {
+  text-align: center;
+}
+
+/* .copyright {
   text-align: center;
 } */
+
+.logo {
+  height: 4vh;
+}
+
+.footer_annotate {
+  float: left;
+  text-align: left;
+  font-family: Avenir;
+  font-size: 20;
+}

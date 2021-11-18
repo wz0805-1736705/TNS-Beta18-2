@@ -1,50 +1,46 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 
 function Footer() {
   return (
-    <div class="footer-basic">
+    <div className="container my-5">
       <footer>
-        {/* <p class="footer_annotate">
-          Empowering you to live in a community you love.
-        </p> */}
-        {/* <div class="social">
-          <a href="#">
-            <i class="icon ion-social-instagram"></i>
+        <div className="social">
+          {/* FB */}
+          <a className="btn  btn-floating m-1" href="#">
+            <img
+              className="logo"
+              src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/online_social_media_facebook-128.png"
+            />
           </a>
-          <a href="#">
-            <i class="icon ion-social-snapchat"></i>
+          {/* TWITTER */}
+          <a className="btn  btn-floating m-1" href="#">
+            <img
+              className="logo"
+              src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/twitter_online_social_media-128.png"
+            />
           </a>
-          <a href="#">
-            <i class="icon ion-social-twitter"></i>
+          {/* INS */}
+          <a className="btn  btn-floating m-1" href="#">
+            <img
+              className="logo"
+              src="https://cdn2.iconfinder.com/data/icons/black-white-social-media/32/instagram_online_social_media_photo-128.png"
+            />
           </a>
-          <a href="#">
-            <i class="icon ion-social-facebook"></i>
-          </a>
-        </div> */}
-        {/* <ul class="list-inline">
-          <li class="list-inline-item">
-            <a href="#">Home</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Services</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">About</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Terms</a>
-          </li>
-          <li class="list-inline-item">
-            <a href="#">Privacy Policy</a>
-          </li>
-        </ul> */}
-        <p class="copyright">© 2021 The Neighborhood Score</p>
+        </div>
+        <div className="row">
+          <p className="col-md-4">
+            Empowering you to live in a community you love.
+          </p>
+          <p className="col-md-4">© 2021 The Neighborhood Score</p>
+          {/* <img
+            alt=""
+            src="Copy of TNS-logo-dark.png"
+            width="125"
+            height="35"
+            className=""
+          /> */}
+        </div>
       </footer>
-      <Helmet>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-      </Helmet>
     </div>
   );
 }
