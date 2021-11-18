@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { useRef, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { withRouter } from "react-router-dom";
 
 const SearchCard = (props) => {
@@ -10,11 +10,16 @@ const SearchCard = (props) => {
   });
 
   const handleOnSubmit = (event) => {
-    event.preventDefault();
-    props.history.push({
-      pathname: "/neighborhood",
-      state,
-    });
+    var stateInput = document.querySelector('#stateInput').value;
+    if (!stateInput || stateInput.length < 2) {
+      alert("Please enter valid state name.");
+    } else {
+      event.preventDefault();
+      props.history.push({
+        pathname: "/neighborhood",
+        state,
+      });
+    }
   };
 
   const handleInputChange = (event) => {
@@ -45,6 +50,7 @@ const SearchCard = (props) => {
               <div>
                 <input
                   name="state"
+                  id="stateInput"
                   type="text"
                   value={state.state}
                   class="form-control"
