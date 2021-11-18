@@ -45,12 +45,13 @@ export default function SimpleMap() {
 
   // Input from the search bar
   const location = useLocation();
-
-  var center = { lat: 31, lng: -100 };
-  var zoomLevel = 6;
-  var stateName = "Texas";
-  var zipcode = "";
+  console.log(location);
+  var center;
+  var zoomLevel;
+  var stateName;
+  var zipcode;
   if (location.state) {
+    console.log('enter');
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
       if (stateName.length === 2) {
@@ -71,8 +72,14 @@ export default function SimpleMap() {
       zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
     }
     if (location.state.zipcode.length > 0) {
-      zipcode = location.state.zipcode;
+      zipcode = parseInt(location.state.zipcode);
     }
+  } else {
+    console.log('enter 2');
+    stateName = "Texas";
+    zoomLevel = 6;
+    center = { lat: 31, lng: -100 }
+    zipcode = "";
   }
   return (
     <div>
@@ -171,7 +178,6 @@ function MapContainer(props) {
   const [child, setChild] = React.useState(null);
   const [clicked, setClicked] = React.useState(false);
   const [center, setCenter] = React.useState(props.center);
-  const [closePopup, setClosePopup] = React.useState(false);
 
   if (!isLoaded) return "Loading Maps";
   if (loadError) return "Error loading maps";
@@ -275,15 +281,12 @@ function MapContainer(props) {
           setClicked={setClicked}
           setButtonPopup={setButtonPopup}
           setCenter={setCenter}
-          closePopup={closePopup}
-          setClosePopup={setClosePopup}
         />
         <PopUp
           trigger={buttonPopup}
           setTrigger={setButtonPopup}
           setChildren={setChild}
           setClick={setClicked}
-          setClosePopup={setClosePopup}
         >
           {clicked ? popupRender() : null}
         </PopUp>

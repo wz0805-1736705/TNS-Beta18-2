@@ -5,9 +5,10 @@ import database from "../firebase.config";
 
 export default function Polygons(props) {
   const [usdata, setUsdata] = React.useState([]);
+  console.log(props.zipCode)
   useEffect(() => {
     var dbRef = null;
-    if (props.zipCode && props.zipCode.length > 0) {
+    if (props.zipCode && props.zipCode > 0) {
       dbRef = ref(database, props.stateName + "/");
       onValue(dbRef, (snapshot) => {
         var data = snapshot
@@ -16,9 +17,11 @@ export default function Polygons(props) {
         if (props.school > 0 || props.married > 0 || props.crime > 0) {
           data = filterRes(data);
         }
-        // console.log(data);
         setUsdata(data);
       });
+      if (usdata.length === 0) {
+        alert("No matches found.");
+      }
     } else if (props.stateName && props.stateName.length > 0) {
       dbRef = ref(database, props.stateName + "/");
       onValue(dbRef, (snapshot) => {
@@ -38,7 +41,7 @@ export default function Polygons(props) {
         setUsdata(data);
       });
     }
-  }, [props.school, props.married, props.crime, props.closePopup]);
+  }, [props.school, props.married, props.crime]);
 
   let rows = [];
   props.setUSData(usdata);
@@ -58,7 +61,6 @@ export default function Polygons(props) {
     ];
 
     function handleOnClick(e) {
-      console.log(this.options);
       this.setOptions({ fillOpacity: 0.85 });
       props.setButtonPopup(true);
       props.setChild(innerData);
@@ -70,13 +72,11 @@ export default function Polygons(props) {
         key={d.neighborhood_name}
         paths={rectCoords}
         options={{
-          fillColor: "#40c7c7",
-          strokeColor: "#329999",
+          fillColor: "#E0786C",
+          strokeColor: "#E0786B",
           strokeWeight: 1,
         }}
         onClick={handleOnClick}
-        //onMouseOver={handleMouseOver}
-        //onMouseOut={handleMouseOut}
       ></Polygon>
     );
   });
