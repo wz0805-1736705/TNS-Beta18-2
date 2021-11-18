@@ -45,7 +45,6 @@ export default function SimpleMap() {
 
   // Input from the search bar
   const location = useLocation();
-  console.log(location);
   var center;
   var zoomLevel;
   var stateName;
@@ -75,7 +74,7 @@ export default function SimpleMap() {
       zipcode = parseInt(location.state.zipcode);
     }
   } else {
-    stateName = "Texas";
+    stateName = "";
     zoomLevel = 6;
     center = { lat: 31, lng: -100 }
     zipcode = "";
@@ -326,7 +325,7 @@ function MapNavBar(props) {
   );
 }
 
-function SideList({ usdata, comparestatus }) {
+function SideList(props) {
   // what's currently displayed in compare function
   const [comparelist, setComparelist] = useState([]);
 
@@ -337,10 +336,10 @@ function SideList({ usdata, comparestatus }) {
   const [showalert, setShowalert] = useState(false);
 
   // check usdata, if empty add a return statement to render a empty div
-  if (usdata === []) {
+  if (props.usdata.length === 0) {
     return <div />;
   }
-
+  
   // console.log("usdata", usdata);
 
   // console.log("button list", checkedstatus);
@@ -353,7 +352,7 @@ function SideList({ usdata, comparestatus }) {
    * @param {String} nname Name of the neighbourhood
    */
   function switchCompare(nname) {
-    const found = usdata.find((item) => item.neighborhood_name === nname);
+    const found = props.usdata.find((item) => item.neighborhood_name === nname);
 
     if (checkedstatus.get(nname) === true) {
       // n exists, substract it
@@ -378,10 +377,10 @@ function SideList({ usdata, comparestatus }) {
     <div>
       <CompareAlert showalert={showalert} setShowalert={setShowalert} />
       <div>
-        {comparestatus ? (
+        {props.comparestatus ? (
           <SideCardsPanel>
             <Page
-              data={usdata}
+              data={props.usdata}
               switchCompare={switchCompare}
               checkedstatus={checkedstatus}
             ></Page>
@@ -671,9 +670,6 @@ class Page extends React.Component {
 
 function CompareAlert({ showalert, setShowalert }) {
   const handleClose = () => setShowalert(false);
-
-  console.log(showalert);
-
   return (
     <div>
       <Modal show={showalert} onHide={handleClose} centered animation={false}>

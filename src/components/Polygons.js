@@ -5,7 +5,6 @@ import database from "../firebase.config";
 
 export default function Polygons(props) {
   const [usdata, setUsdata] = React.useState([]);
-  console.log(props.zipCode)
   useEffect(() => {
     var dbRef = null;
     if (props.zipCode && props.zipCode > 0) {
@@ -18,10 +17,10 @@ export default function Polygons(props) {
           data = filterRes(data);
         }
         setUsdata(data);
+        if (data.length === 0) {
+          alert("No matches found.");
+        }
       });
-      if (usdata.length === 0) {
-        alert("No matches found.");
-      }
     } else if (props.stateName && props.stateName.length > 0) {
       dbRef = ref(database, props.stateName + "/");
       onValue(dbRef, (snapshot) => {
@@ -30,8 +29,12 @@ export default function Polygons(props) {
           data = filterRes(data);
         }
         setUsdata(data);
+        if (data.length === 0) {
+          alert("No matches found.");
+        }
       });
     } else {
+      alert("No valid inputs are detected! Show neighborhoods in Texas as default.");
       dbRef = ref(database, "Texas/");
       onValue(dbRef, (snapshot) => {
         var data = snapshot.val();
@@ -39,6 +42,9 @@ export default function Polygons(props) {
           data = filterRes(data);
         }
         setUsdata(data);
+        if (data.length === 0) {
+          alert("No matches found.");
+        }
       });
     }
   }, [props.school, props.married, props.crime]);
