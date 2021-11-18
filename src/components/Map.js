@@ -75,7 +75,6 @@ export default function SimpleMap() {
       zipcode = parseInt(location.state.zipcode);
     }
   } else {
-    console.log('enter 2');
     stateName = "Texas";
     zoomLevel = 6;
     center = { lat: 31, lng: -100 }
