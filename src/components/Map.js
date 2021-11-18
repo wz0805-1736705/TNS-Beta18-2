@@ -620,19 +620,12 @@ class Page extends React.Component {
     // update state with new page of items
     this.setState({ pageOfItems: pageOfItems });
   }
-  // componentDidUpdate() {
-  //   this.setState({
-  //     exampleItems: sideListRender(this.props.data),
-  //     pageOfItems: [],
-  //   });
-  // }
+
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        exampleItems: sideListRender(this.props.data),
-        pageOfItems: [],
-      });
-    }, 1000);
+    this.setState({
+      exampleItems: sideListRender(this.props.data),
+      pageOfItems: [],
+    });
   }
 
   render() {
