@@ -11,9 +11,9 @@ import {
   Stack,
   CardGroup,
   Navbar,
+  Nav,
+  Modal,
 } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
 import mapStyles from "./mapStyles";
@@ -22,14 +22,15 @@ import "./Map.css";
 import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
 import stateCenter from "../data/stateCenter.js";
-import { ModelTraining } from "@mui/icons-material";
 
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
-  width: "50vw",
-  height: "70vh",
+  width: "45vw",
+  height: "100vh",
 };
+//TODO change it to adjust according to the screen.
+
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
@@ -50,7 +51,7 @@ export default function SimpleMap() {
   var stateName;
   var zipcode;
   if (location.state) {
-    console.log('enter');
+    console.log("enter");
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
       if (stateName.length === 2) {
@@ -76,11 +77,11 @@ export default function SimpleMap() {
   } else {
     stateName = "";
     zoomLevel = 6;
-    center = { lat: 31, lng: -100 }
+    center = { lat: 31, lng: -100 };
     zipcode = "";
   }
   return (
-    <div>
+    <Container fluid>
       <MapNavBar
         setSchoolQuality={setSchoolQuality}
         setPctMarried={setPctMarried}
@@ -91,30 +92,33 @@ export default function SimpleMap() {
             onClick={() => {
               setComparestatus(!comparestatus);
             }}
-            className="compare"
+            variant="outline-danger"
           >
             {comparestatus ? "Compare" : "Back"}
           </Button>{" "}
         </CompareButton>
       </MapNavBar>
-      <Row id="mapAndList">
-        <Col>
-          <MapContainer
-            setUsdata={setUsdata}
-            schoolQuality={schoolQuality}
-            pctMarried={pctMarried}
-            crimeRate={crimeRate}
-            center={center}
-            zoomLevel={zoomLevel}
-            stateName={stateName}
-            zipcode={zipcode}
-          />
-        </Col>
-        <Col>
-          <SideList comparestatus={comparestatus} usdata={usdata} />
-        </Col>
-      </Row>
-    </div>
+      <Container>
+        <Row>
+          {/* id="mapAndList" */}
+          <Col>
+            <MapContainer
+              setUsdata={setUsdata}
+              schoolQuality={schoolQuality}
+              pctMarried={pctMarried}
+              crimeRate={crimeRate}
+              center={center}
+              zoomLevel={zoomLevel}
+              stateName={stateName}
+              zipcode={zipcode}
+            />
+          </Col>
+          <Col>
+            <SideList comparestatus={comparestatus} usdata={usdata} />
+          </Col>
+        </Row>
+      </Container>
+    </Container>
   );
 }
 
@@ -297,30 +301,32 @@ function MapNavBar(props) {
   // console.log(props);
   return (
     <Navbar className="mapnavbar" expand="lg">
-      <Stack direction="horizontal">
+      <Container>
         {/* <SearchBar /> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Filter
-            type={"School Quality"}
-            code={1}
-            setVal={props.setSchoolQuality}
-          />
-          <Filter
-            type={"Percent Married"}
-            code={2}
-            setVal={props.setPctMarried}
-          />
-          <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
-          <ResetFilter
-            resetSchool={props.setSchoolQuality}
-            resetMarried={props.setPctMarried}
-            resetCrime={props.setCrimeRate}
-          />
-          <Save />
-          {props.children}
+          <Nav className="me-auto">
+            <Filter
+              type={"School Quality"}
+              code={1}
+              setVal={props.setSchoolQuality}
+            />
+            <Filter
+              type={"Percent Married"}
+              code={2}
+              setVal={props.setPctMarried}
+            />
+            <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
+            <ResetFilter
+              resetSchool={props.setSchoolQuality}
+              resetMarried={props.setPctMarried}
+              resetCrime={props.setCrimeRate}
+            />
+            <Save />
+          </Nav>
+          <Nav>{props.children}</Nav>
         </Navbar.Collapse>
-      </Stack>
+      </Container>
     </Navbar>
   );
 }
@@ -419,7 +425,7 @@ function SideListCard(props) {
       <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
       <Container>
         <Row>
-          <h1 style={{ alignSelf: "flex-start" }}>
+          <h1 style={{ alignSelf: "flex-start" }} className="cardtitle">
             {props.data.neighborhood_name}
           </h1>
         </Row>
@@ -495,10 +501,10 @@ function CardData(props) {
     }
   }
   return (
-    <>
-      <h3>{props.title}</h3>
-      <h5>{val}</h5>
-    </>
+    <Stack>
+      <h3 className="carddatatitle">{props.title}</h3>
+      <h5 className="carddatabody">{val}</h5>
+    </Stack>
   );
 }
 
@@ -580,6 +586,7 @@ function ResetFilter(props) {
     <>
       <Button
         variant="outline-danger"
+        bsPrefix="mapfilter"
         onClick={() => {
           props.resetSchool(0);
           props.resetMarried(0);
@@ -637,15 +644,16 @@ class Page extends React.Component {
                 key={item.props.data.neighborhood_name}
                 data={item.props.data}
               >
-                <ToggleButton
+                <Button
+                  bsPrefix="plusbutton"
                   onClick={() =>
                     this.props.switchCompare(item.props.data.neighborhood_name)
                   }
-                  id="plus-button"
+                  // id="plus-button"
                   checked={this.props.checkedstatus.get(
                     item.props.data.neighborhood_name
                   )}
-                  type="checkbox"
+                  // type="checkbox"
                   // onChange={(e) => setCheckedbutton(e.currentTarget.checked)}
                 >
                   {this.props.checkedstatus.get(
@@ -653,7 +661,7 @@ class Page extends React.Component {
                   )
                     ? "-"
                     : "+"}
-                </ToggleButton>{" "}
+                </Button>{" "}
               </SideListCard>
             ))}
             <Pagination
