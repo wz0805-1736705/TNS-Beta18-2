@@ -3,7 +3,7 @@ import Main from "./main";
 import Header from "./components/Header";
 import React from "react";
 import QuizButton from "./components/QuizButton";
-import { HashRouter, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (

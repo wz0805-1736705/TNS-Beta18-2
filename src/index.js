@@ -4,15 +4,13 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { HashRouter, Route, Link } from "react-router-dom";
 
 // React.render(WHAT DO I WANT TO RENDER, WHERE DO I WANT TO RENDER IT, document.getElementById('root'))
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter basename="/">
+    <BrowserRouter basename="/">
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -28,6 +28,7 @@ const libraries = ["places"];
 const mapContainerStyle = {
   width: "45vw",
   height: "100vh",
+  "z-index": 0,
 };
 //TODO change it to adjust according to the screen.
 
@@ -345,7 +346,7 @@ function SideList(props) {
   if (props.usdata.length === 0) {
     return <div />;
   }
-  
+
   // console.log("usdata", usdata);
 
   // console.log("button list", checkedstatus);
@@ -421,13 +422,13 @@ function SideListCard(props) {
   // console.log(props.data);
 
   return (
-    <Stack direction="horizontal" className="listcard">
-      <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
-      <Container>
+    <div className="listcard">
+      <Col className="col-2">
+        <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
+      </Col>
+      <Col className="col" style={{ flexDirection: "column" }}>
         <Row>
-          <h1 style={{ alignSelf: "flex-start" }} className="cardtitle">
-            {props.data.neighborhood_name}
-          </h1>
+          <Col className="cardtitle">{props.data.neighborhood_name}</Col>
         </Row>
         <Row>
           <Col>
@@ -459,9 +460,9 @@ function SideListCard(props) {
             />
           </Col>
         </Row>
-      </Container>
+      </Col>
       {props.children}
-    </Stack>
+    </div>
   );
 }
 
