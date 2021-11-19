@@ -1,15 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { HashRouter, Route, Link } from "react-router-dom";
 
 // React.render(WHAT DO I WANT TO RENDER, WHERE DO I WANT TO RENDER IT, document.getElementById('root'))
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <React.StrictMode>
+    <BrowserRouter basename="/">
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
