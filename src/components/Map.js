@@ -26,7 +26,7 @@ import stateCenter from "../data/stateCenter.js";
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
-  width: "45vw",
+  width: "40vw",
   height: "100vh",
 };
 //TODO change it to adjust according to the screen.
@@ -98,26 +98,25 @@ export default function SimpleMap() {
           </Button>{" "}
         </CompareButton>
       </MapNavBar>
-      <Container>
-        <Row>
-          {/* id="mapAndList" */}
-          <Col>
-            <MapContainer
-              setUsdata={setUsdata}
-              schoolQuality={schoolQuality}
-              pctMarried={pctMarried}
-              crimeRate={crimeRate}
-              center={center}
-              zoomLevel={zoomLevel}
-              stateName={stateName}
-              zipcode={zipcode}
-            />
-          </Col>
-          <Col>
-            <SideList comparestatus={comparestatus} usdata={usdata} />
-          </Col>
-        </Row>
-      </Container>
+      <Row style={{marginLeft: '5vw'}}>
+        {/* id="mapAndList" */}
+        <div className="col">
+          <MapContainer
+            setUsdata={setUsdata}
+            schoolQuality={schoolQuality}
+            pctMarried={pctMarried}
+            crimeRate={crimeRate}
+            center={center}
+            zoomLevel={zoomLevel}
+            stateName={stateName}
+            zipcode={zipcode}
+          />
+        </div>
+        <div className="col">
+          <SideList comparestatus={comparestatus} usdata={usdata} />
+        </div>
+      </Row>
+      
     </Container>
   );
 }
@@ -423,7 +422,7 @@ function SideListCard(props) {
   return (
     <Stack direction="horizontal" className="listcard">
       <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
-      <Container>
+      <Container id="cardContent">
         <Row>
           <h1 style={{ alignSelf: "flex-start" }} className="cardtitle">
             {props.data.neighborhood_name}
