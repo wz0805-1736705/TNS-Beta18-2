@@ -1,29 +1,29 @@
 {
   "files": {
     "main.css": "/TNS-Beta18-2/static/css/main.aa8fe0fe.chunk.css",
-    "main.js": "/TNS-Beta18-2/static/js/main.33f5bc3d.chunk.js",
-    "main.js.map": "/TNS-Beta18-2/static/js/main.33f5bc3d.chunk.js.map",
-    "runtime-main.js": "/TNS-Beta18-2/static/js/runtime-main.64735f94.js",
-    "runtime-main.js.map": "/TNS-Beta18-2/static/js/runtime-main.64735f94.js.map",
+    "main.js": "/TNS-Beta18-2/static/js/main.1866b790.chunk.js",
+    "main.js.map": "/TNS-Beta18-2/static/js/main.1866b790.chunk.js.map",
+    "runtime-main.js": "/TNS-Beta18-2/static/js/runtime-main.c13cc0d6.js",
+    "runtime-main.js.map": "/TNS-Beta18-2/static/js/runtime-main.c13cc0d6.js.map",
     "static/css/2.e24d04b0.chunk.css": "/TNS-Beta18-2/static/css/2.e24d04b0.chunk.css",
-    "static/js/2.473b6b1f.chunk.js": "/TNS-Beta18-2/static/js/2.473b6b1f.chunk.js",
-    "static/js/2.473b6b1f.chunk.js.map": "/TNS-Beta18-2/static/js/2.473b6b1f.chunk.js.map",
-    "static/js/3.a70ae73e.chunk.js": "/TNS-Beta18-2/static/js/3.a70ae73e.chunk.js",
-    "static/js/3.a70ae73e.chunk.js.map": "/TNS-Beta18-2/static/js/3.a70ae73e.chunk.js.map",
+    "static/js/2.43ac0835.chunk.js": "/TNS-Beta18-2/static/js/2.43ac0835.chunk.js",
+    "static/js/2.43ac0835.chunk.js.map": "/TNS-Beta18-2/static/js/2.43ac0835.chunk.js.map",
+    "static/js/3.53242467.chunk.js": "/TNS-Beta18-2/static/js/3.53242467.chunk.js",
+    "static/js/3.53242467.chunk.js.map": "/TNS-Beta18-2/static/js/3.53242467.chunk.js.map",
     "index.html": "/TNS-Beta18-2/index.html",
     "static/css/2.e24d04b0.chunk.css.map": "/TNS-Beta18-2/static/css/2.e24d04b0.chunk.css.map",
     "static/css/main.aa8fe0fe.chunk.css.map": "/TNS-Beta18-2/static/css/main.aa8fe0fe.chunk.css.map",
-    "static/js/2.473b6b1f.chunk.js.LICENSE.txt": "/TNS-Beta18-2/static/js/2.473b6b1f.chunk.js.LICENSE.txt",
+    "static/js/2.43ac0835.chunk.js.LICENSE.txt": "/TNS-Beta18-2/static/js/2.43ac0835.chunk.js.LICENSE.txt",
     "static/media/city-1.jpg": "/TNS-Beta18-2/static/media/city-1.8d5b3e7f.jpg",
     "static/media/city-2.jpg": "/TNS-Beta18-2/static/media/city-2.7aef6979.jpg",
     "static/media/city-3.jpg": "/TNS-Beta18-2/static/media/city-3.9f901497.jpg",
     "static/media/index.css": "/TNS-Beta18-2/static/media/search-background.4f09cfba.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.64735f94.js",
+    "static/js/runtime-main.c13cc0d6.js",
     "static/css/2.e24d04b0.chunk.css",
-    "static/js/2.473b6b1f.chunk.js",
+    "static/js/2.43ac0835.chunk.js",
     "static/css/main.aa8fe0fe.chunk.css",
-    "static/js/main.33f5bc3d.chunk.js"
+    "static/js/main.1866b790.chunk.js"
   ]
 }
