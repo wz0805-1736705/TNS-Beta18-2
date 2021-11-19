@@ -7,11 +7,9 @@ import reportWebVitals from "./reportWebVitals";
 
 // React.render(WHAT DO I WANT TO RENDER, WHERE DO I WANT TO RENDER IT, document.getElementById('root'))
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter basename="/">
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById("root")
 );
 

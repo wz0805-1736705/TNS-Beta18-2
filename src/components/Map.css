@@ -57,25 +57,25 @@
   /* identical to box height */
 }
 
-.cardtitle {
+/* .cardtitle {
   font-family: Avenir;
   font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-}
+  font-weight: normal;
+  font-size: 3vw;
+} */
 
 .carddatatitle {
   font-family: Avenir;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 1vw;
 }
 
 .carddatabody {
   font-family: Avenir;
   font-style: normal;
   font-weight: 800;
-  font-size: 16px;
+  font-size: 1vw;
 
   color: #e0786c;
 }
@@ -145,7 +145,6 @@
   background-color: white;
   /* background-image: url("mapplaceholder.png"); */
 }
-
 .sidelist {
   /* background */
 
@@ -181,7 +180,7 @@
   font-family: Avenir;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 1.5vw;
   line-height: 33px;
   /* identical to box height */
 
@@ -190,6 +189,14 @@
 
 .listcardbody {
   align-content: space-around;
+}
+
+.pagination {
+  width: 35vw;
+}
+
+.popup-inner {
+  overflow: scroll;
 }
 
 .plusbutton {

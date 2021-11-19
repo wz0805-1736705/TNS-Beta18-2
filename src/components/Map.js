@@ -26,7 +26,7 @@ import stateCenter from "../data/stateCenter.js";
 const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
-  width: "45vw",
+  width: "40vw",
   height: "100vh",
   "z-index": 0,
 };
@@ -99,26 +99,24 @@ export default function SimpleMap() {
           </Button>{" "}
         </CompareButton>
       </MapNavBar>
-      <Container>
-        <Row>
-          {/* id="mapAndList" */}
-          <Col>
-            <MapContainer
-              setUsdata={setUsdata}
-              schoolQuality={schoolQuality}
-              pctMarried={pctMarried}
-              crimeRate={crimeRate}
-              center={center}
-              zoomLevel={zoomLevel}
-              stateName={stateName}
-              zipcode={zipcode}
-            />
-          </Col>
-          <Col>
-            <SideList comparestatus={comparestatus} usdata={usdata} />
-          </Col>
-        </Row>
-      </Container>
+      <Row style={{ marginLeft: "5vw" }}>
+        {/* id="mapAndList" */}
+        <div className="col">
+          <MapContainer
+            setUsdata={setUsdata}
+            schoolQuality={schoolQuality}
+            pctMarried={pctMarried}
+            crimeRate={crimeRate}
+            center={center}
+            zoomLevel={zoomLevel}
+            stateName={stateName}
+            zipcode={zipcode}
+          />
+        </div>
+        <div className="col">
+          <SideList comparestatus={comparestatus} usdata={usdata} />
+        </div>
+      </Row>
     </Container>
   );
 }
@@ -426,7 +424,7 @@ function SideListCard(props) {
       <Col className="col-2">
         <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
       </Col>
-      <Col className="col" style={{ flexDirection: "column" }}>
+      <Col style={{ flexDirection: "column", justifyContent: "center" }}>
         <Row>
           <Col className="cardtitle">{props.data.neighborhood_name}</Col>
         </Row>
