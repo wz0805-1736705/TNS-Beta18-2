@@ -128,7 +128,14 @@ function ComparePanel({ comparelist }) {
       <CardGroup className="compareCardGroup">
         {comparelist.length > 0 ? (
           comparelist.map((card) => (
-            <CompareCard key={card.neighborhood_name} data={card} />
+            <CompareCard
+              key={card.neighborhood_name}
+              data={card}
+              img={
+                "https://source.unsplash.com/collection/2470439/" +
+                Math.floor(Math.random() * 10)
+              }
+            />
           ))
         ) : (
           <h1>Add something to compare!</h1>
@@ -138,16 +145,11 @@ function ComparePanel({ comparelist }) {
   );
 }
 
-function CompareCard({ data }) {
-  // console.log(data);
+function CompareCard({ data, img }) {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
-        <Card.Img
-          src="CardPlaceHolder.png"
-          alt=""
-          className="listcardimage"
-        ></Card.Img>
+        <Card.Img src={img} alt="" className="listcardimage"></Card.Img>
         <Card.Title>{data.neighborhood_name}</Card.Title>
         <Card.Body>
           <CardData title="Median Home Value" data={[data.median_home_value]} />
