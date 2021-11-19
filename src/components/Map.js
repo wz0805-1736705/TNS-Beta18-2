@@ -417,12 +417,10 @@ function sideListRender(data) {
 }
 
 function SideListCard(props) {
-  // console.log(props.data);
-
   return (
     <div className="listcard">
       <Col className="col-2">
-        <img src="CardPlaceHolder.png" alt="" className="listcardimage" />
+        <img src={props.img} alt="" className="listcardimage" />
       </Col>
       <Col style={{ flexDirection: "column", justifyContent: "center" }}>
         <Row>
@@ -641,6 +639,14 @@ class Page extends React.Component {
             {this.state.pageOfItems.map((item) => (
               <SideListCard
                 key={item.props.data.neighborhood_name}
+                img={
+                  "https://source.unsplash.com/collection/2470439/" +
+                  Math.floor(Math.random() * 10)
+                }
+                // img={
+                //   "https://source.unsplash.com/random?sig=" +
+                //   Math.floor(Math.random() * 10)
+                // }
                 data={item.props.data}
               >
                 <Button

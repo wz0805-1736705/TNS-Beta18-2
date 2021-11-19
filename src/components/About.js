@@ -1,6 +1,7 @@
 import React from "react";
 // import { Form, Button } from "react-bootstrap";
 import YoutubeEmbed from "./Video";
+import QuizButton from "./QuizButton";
 
 function aboutUs() {
   return (
@@ -42,6 +43,7 @@ function aboutUs() {
         </p>
       </div>
       <YoutubeEmbed embedId="mGKxEnLda-A" />
+      <QuizButton />
       <img
         className="footer_logo"
         alt="logo"
