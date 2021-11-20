@@ -56,7 +56,9 @@ export default function SimpleMap() {
     if (location.state.state.length > 0) {
       stateName = location.state.state.toUpperCase();
       if (stateName.length === 2) {
-        stateName = stateCenter[stateName]["state"];
+        if (stateCenter[stateName]) {
+          stateName = stateCenter[stateName]["state"];
+        }
       } else {
         stateName = stateName.toLowerCase();
         var stateNameArr = stateName.split(" ");
@@ -66,11 +68,18 @@ export default function SimpleMap() {
         });
         stateName = stateName.substring(0, stateName.length - 1);
       }
-      center = {
-        lat: parseFloat(stateCenter[stateName]["latitude"]),
-        lng: parseFloat(stateCenter[stateName]["longitude"]),
-      };
-      zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
+      if (!stateCenter[stateName]) {
+        stateName = "";
+        zoomLevel = 6;
+        center = { lat: 31, lng: -100 };
+        zipcode = "";
+      } else {
+        center = {
+          lat: parseFloat(stateCenter[stateName]["latitude"]),
+          lng: parseFloat(stateCenter[stateName]["longitude"]),
+        };
+        zoomLevel = parseInt(stateCenter[stateName]["zoom"]);
+      }
     }
     if (location.state.zipcode.length > 0) {
       zipcode = parseInt(location.state.zipcode);
@@ -100,7 +109,6 @@ export default function SimpleMap() {
         </CompareButton>
       </MapNavBar>
       <Row style={{ marginLeft: "5vw" }}>
-        {/* id="mapAndList" */}
         <div className="col">
           <MapContainer
             setUsdata={setUsdata}
@@ -124,7 +132,6 @@ export default function SimpleMap() {
 function ComparePanel({ comparelist }) {
   return (
     <div>
-      {/* <CardGroup className="compareCardGroup">{children}</CardGroup> */}
       <CardGroup className="compareCardGroup">
         {comparelist.length > 0 ? (
           comparelist.map((card) => (
@@ -299,11 +306,9 @@ function MapContainer(props) {
 }
 
 function MapNavBar(props) {
-  // console.log(props);
   return (
     <Navbar className="mapnavbar" expand="lg">
       <Container>
-        {/* <SearchBar /> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -347,13 +352,6 @@ function SideList(props) {
     return <div />;
   }
 
-  // console.log("usdata", usdata);
-
-  // console.log("button list", checkedstatus);
-
-  //TODO: fix the focus of plus swiching to top when clicked on in lower items
-  //TODO: limit how many cards can be added to compare function
-
   /**
    * Switch the checked status of this neighbourhood and add/substract it to comparelist
    * @param {String} nname Name of the neighbourhood
@@ -394,9 +392,6 @@ function SideList(props) {
           </SideCardsPanel>
         ) : (
           <ComparePanel comparelist={comparelist}>
-            {/* {comparelist.map((card) => (
-              <CompareCard key={card.neighborhood_name} data={card} />
-            ))} */}
           </ComparePanel>
         )}
       </div>
@@ -414,7 +409,6 @@ function sideListRender(data) {
   data.forEach((val) => {
     row.push(<SideListCard data={val} />);
   });
-  // console.log(row);
   return row;
 }
 
@@ -512,7 +506,6 @@ function Filter(props) {
     return (
       <>
         <DropdownButton title={props.type} bsPrefix="mapfilter">
-          {/* bsPrefix="mapfilter" */}
           <Dropdown.Item
             eventKey="1"
             onClick={() => props.setVal(crimeFilterOnClick(1))}
@@ -643,12 +636,8 @@ class Page extends React.Component {
                 key={item.props.data.neighborhood_name}
                 img={
                   "https://source.unsplash.com/collection/2470439/" +
-                  Math.floor(Math.random() * 10)
+                  Math.floor(Math.random() * 15)
                 }
-                // img={
-                //   "https://source.unsplash.com/random?sig=" +
-                //   Math.floor(Math.random() * 10)
-                // }
                 data={item.props.data}
               >
                 <Button
@@ -656,12 +645,10 @@ class Page extends React.Component {
                   onClick={() =>
                     this.props.switchCompare(item.props.data.neighborhood_name)
                   }
-                  // id="plus-button"
                   checked={this.props.checkedstatus.get(
                     item.props.data.neighborhood_name
                   )}
-                  // type="checkbox"
-                  // onChange={(e) => setCheckedbutton(e.currentTarget.checked)}
+                  
                 >
                   {this.props.checkedstatus.get(
                     item.props.data.neighborhood_name
@@ -689,7 +676,6 @@ function CompareAlert({ showalert, setShowalert }) {
     <div>
       <Modal show={showalert} onHide={handleClose} centered animation={false}>
         <Modal.Header closeButton>
-          {/* <Modal.Title>Cannot Enter More Than Two Neighbourhoods</Modal.Title> */}
         </Modal.Header>
 
         <Modal.Body>

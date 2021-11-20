@@ -18,7 +18,7 @@ function MainContent() {
 
       {/* Info Card */}
       {/* TODO: adjust the left padding */}
-      <div className="find-belong mt-4">
+      <div className="find-belong mt-4" style={{marginLeft: '5vw', marginRight: '5vw'}}>
         <h2>Find Where You Belong</h2>
         <p>
           {" "}
@@ -31,9 +31,11 @@ function MainContent() {
       <br />
       <br />
       <br />
-      <h2 className="city-insight">City Insight</h2>
-      <div>
-        <InfoCard />
+      <div style={{marginLeft: '5vw', marginRight: '5vw'}}>
+      <h2 className="city-insight">City Insights</h2>
+        <div>
+          <InfoCard />
+        </div>
       </div>
     </main>
   );

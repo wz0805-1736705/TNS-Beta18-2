@@ -195,7 +195,6 @@ img.footer_logo {
   opacity: 0;
   padding: 18px 8%;
   background-color: white;
-  overflow-y: scroll;
   transition: 0.8s ease;
   text-align: left;
   font-family: "Avenir";
@@ -203,7 +202,7 @@ img.footer_logo {
 
 .card:hover .card-desc {
   top: 70%;
-  height: 100%;
+  height: 30%;
   opacity: 0.8;
 }
 
