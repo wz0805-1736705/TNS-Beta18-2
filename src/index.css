@@ -153,14 +153,6 @@ img.footer_logo {
 
 /* info card */
 
-/* body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: #34495e;
-} */
-
 .cards {
   width: 100%;
   display: flex;
@@ -216,10 +208,6 @@ footer {
 .wrap {
   text-align: center;
 }
-
-/* .copyright {
-  text-align: center;
-} */
 
 .logo {
   height: 4vh;
