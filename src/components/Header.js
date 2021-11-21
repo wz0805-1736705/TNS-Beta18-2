@@ -24,11 +24,7 @@ function Header() {
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           <NavLink href="/signIn">Sign In</NavLink>
-
           <NavLink href="/signUp">Sign Up</NavLink>
-          <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text>
         </Navbar.Collapse>
       </Container>
     </Navbar>
