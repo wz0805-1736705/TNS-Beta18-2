@@ -139,7 +139,9 @@ function ComparePanel({ comparelist }) {
             <CompareCard
               key={card.neighborhood_name}
               data={card}
-              img={`https://source.unsplash.com/collection/2470439/${parseInt(card.neighborhood_name.split('-')[1])}`}
+              img={`https://source.unsplash.com/collection/2470439/${parseInt(
+                card.neighborhood_name.split("-")[1]
+              )}`}
             />
           ))
         ) : (
@@ -329,7 +331,6 @@ function MapNavBar(props) {
             <Save />
             <Nav>{props.children}</Nav>
           </Nav>
-          
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -390,8 +391,7 @@ function SideList(props) {
             ></Page>
           </SideCardsPanel>
         ) : (
-          <ComparePanel comparelist={comparelist}>
-          </ComparePanel>
+          <ComparePanel comparelist={comparelist}></ComparePanel>
         )}
       </div>
     </div>
@@ -509,19 +509,19 @@ function Filter(props) {
             eventKey="1"
             onClick={() => props.setVal(crimeFilterOnClick(1))}
           >
-            Low
+            <h3>Low</h3>
           </Dropdown.Item>
           <Dropdown.Item
             eventKey="2"
             onClick={() => props.setVal(crimeFilterOnClick(2))}
           >
-            Medium
+            <h3>Medium</h3>
           </Dropdown.Item>
           <Dropdown.Item
             eventKey="3"
             onClick={() => props.setVal(crimeFilterOnClick(3))}
           >
-            High
+            <h3>High</h3>
           </Dropdown.Item>
         </DropdownButton>
       </>
@@ -534,19 +534,19 @@ function Filter(props) {
           eventKey="1"
           onClick={() => props.setVal(filterOnClick(1))}
         >
-          Low
+          <h3>Low</h3>
         </Dropdown.Item>
         <Dropdown.Item
           eventKey="2"
           onClick={() => props.setVal(filterOnClick(2))}
         >
-          Medium
+          <h3>Medium</h3>
         </Dropdown.Item>
         <Dropdown.Item
           eventKey="3"
           onClick={() => props.setVal(filterOnClick(3))}
         >
-          High
+          <h3>High</h3>
         </Dropdown.Item>
       </DropdownButton>
     </>
@@ -593,7 +593,9 @@ function ResetFilter(props) {
 function Save() {
   return (
     <>
-      <Button id="saveBtn" variant="outline-primary">Save Search</Button>{" "}
+      <Button id="saveBtn" variant="outline-primary">
+        Save Search
+      </Button>{" "}
     </>
   );
 }
@@ -633,7 +635,9 @@ class Page extends React.Component {
             {this.state.pageOfItems.map((item) => (
               <SideListCard
                 key={item.props.data.neighborhood_name}
-                img={`https://source.unsplash.com/collection/2470439/${parseInt(item.props.data.neighborhood_name.split('-')[1])}`}
+                img={`https://source.unsplash.com/collection/2470439/${parseInt(
+                  item.props.data.neighborhood_name.split("-")[1]
+                )}`}
                 data={item.props.data}
               >
                 <Button
@@ -644,7 +648,6 @@ class Page extends React.Component {
                   checked={this.props.checkedstatus.get(
                     item.props.data.neighborhood_name
                   )}
-                  
                 >
                   {this.props.checkedstatus.get(
                     item.props.data.neighborhood_name
@@ -671,8 +674,7 @@ function CompareAlert({ showalert, setShowalert }) {
   return (
     <div>
       <Modal show={showalert} onHide={handleClose} centered animation={false}>
-        <Modal.Header closeButton>
-        </Modal.Header>
+        <Modal.Header closeButton></Modal.Header>
 
         <Modal.Body>
           <h1>Cannot Compare More Than Two Neighbourhoods</h1>

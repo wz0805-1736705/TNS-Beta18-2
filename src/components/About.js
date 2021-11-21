@@ -7,7 +7,7 @@ function aboutUs() {
   return (
     <>
       <div>
-        <h1 style={{ textAlign: "center" }}>The Neighborhood Score</h1>
+        <h2 style={{ textAlign: "center" }}>The Neighborhood Score</h2>
         <p className="about">
           The Neighborhood Score was born out of one persistent question every
           homebuyer asks: "where will I love living?" <br />
@@ -41,7 +41,7 @@ function aboutUs() {
           text today! Our responsive team would love to help you find your dream
           neighborhood.
         </p>
-        <h1 style={{ textAlign: "center" }}>Why The Neighborhood Score ?</h1>
+        <h2 style={{ textAlign: "center" }}>Why The Neighborhood Score ?</h2>
       </div>
       <YoutubeEmbed embedId="mGKxEnLda-A" />
       <QuizButton />
