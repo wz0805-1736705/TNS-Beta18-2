@@ -13,6 +13,7 @@ import {
   Navbar,
   Nav,
   Modal,
+  Alert,
 } from "react-bootstrap";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
@@ -149,37 +150,44 @@ function ComparePanel({ comparelist }) {
             />
           ))
         ) : (
-          <h1>Add something to compare!</h1>
+          <Alert variant="danger">Add something to compare!</Alert>
         )}
       </CardGroup>
     </div>
   );
 }
 
+// {/* <h1>Add something to compare!</h1> */}
+
 function CompareCard({ data, img }) {
   return (
-    <div>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img src={img} alt="" className="listcardimage"></Card.Img>
-        <Card.Title>{data.neighborhood_name}</Card.Title>
-        <Card.Body>
-          <CardData title="Median Home Value" data={[data.median_home_value]} />
-          <CardData
-            title="Number of Schools"
-            data={[
-              data.elem_number_schools,
-              data.middle_number_schools,
-              data.high_number_schools,
-            ]}
-          />
-          <CardData title="Safety Rate" data={[data.crime_frequency]} />
-          <CardData
-            title="Politics"
-            data={[data.percent_republican, data.percent_democrat]}
-          />
-        </Card.Body>
-      </Card>
-    </div>
+    // <div>
+    <Card style={{ width: "18rem" }}>
+      <Card.Img
+        src={img}
+        variant="top"
+        alt=""
+        className="compareimage"
+      ></Card.Img>
+      <Card.Title className="text-center">{data.neighborhood_name}</Card.Title>
+      <Card.Body className="text-center">
+        <CardData title="Median Home Value" data={[data.median_home_value]} />
+        <CardData
+          title="Number of Schools"
+          data={[
+            data.elem_number_schools,
+            data.middle_number_schools,
+            data.high_number_schools,
+          ]}
+        />
+        <CardData title="Safety Rate" data={[data.crime_frequency]} />
+        <CardData
+          title="Politics"
+          data={[data.percent_republican, data.percent_democrat]}
+        />
+      </Card.Body>
+    </Card>
+    // </div>
   );
 }
 
