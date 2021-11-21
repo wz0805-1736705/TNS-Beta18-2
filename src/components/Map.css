@@ -91,8 +91,10 @@
 }
 .listcard {
   height: 24vh;
+  /* width: 40vw; */
   display: flex;
-  margin: 10px;
+  margin-bottom: 15px;
+  margin-right: 15px;
   background: #ffffff;
   /* Text_Light_Grey */
 
@@ -107,7 +109,7 @@
   background-color: white;
 }
 
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
   #filterMD {
     background-color: white;
     width: 50vw;
@@ -122,12 +124,12 @@
   #toggle-btn {
     position: fixed;
     right: 0;
-    top: 0
+    top: 0;
   }
 }
 @media screen and (min-width: 768px) {
   #compareBtn {
-    height: 5vh;
+    /* height: 5vh; */
     min-height: 32px;
   }
 }
@@ -188,7 +190,6 @@
 
   background-color: #ffffff;
 }
-
 
 #neighborContainer {
   width: 100vw;

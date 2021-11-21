@@ -91,7 +91,7 @@ export default function SimpleMap() {
     zipcode = "";
   }
   return (
-    <Container fluid>
+    <Container>
       <MapNavBar
         setSchoolQuality={setSchoolQuality}
         setPctMarried={setPctMarried}
@@ -103,14 +103,17 @@ export default function SimpleMap() {
             onClick={() => {
               setComparestatus(!comparestatus);
             }}
-            variant="outline-primary"
+            variant="outline-danger"
+            size="lg"
           >
             {comparestatus ? "Compare" : "Back"}
           </Button>{" "}
         </CompareButton>
       </MapNavBar>
-      <Row style={{ marginLeft: "5vw" }}>
-        <div className="col">
+      {/* <Container> */}
+      <Row>
+        {/* style={{ marginLeft: "5vw" }} */}
+        <Col className="justify-content-start">
           <MapContainer
             setUsdata={setUsdata}
             schoolQuality={schoolQuality}
@@ -121,11 +124,12 @@ export default function SimpleMap() {
             stateName={stateName}
             zipcode={zipcode}
           />
-        </div>
-        <div className="col">
+        </Col>
+        <Col className="justify-content-end">
           <SideList comparestatus={comparestatus} usdata={usdata} />
-        </div>
+        </Col>
       </Row>
+      {/* </Container> */}
     </Container>
   );
 }
@@ -139,7 +143,9 @@ function ComparePanel({ comparelist }) {
             <CompareCard
               key={card.neighborhood_name}
               data={card}
-              img={`https://source.unsplash.com/collection/2470439/${parseInt(card.neighborhood_name.split('-')[1])}`}
+              img={`https://source.unsplash.com/collection/2470439/${parseInt(
+                card.neighborhood_name.split("-")[1]
+              )}`}
             />
           ))
         ) : (
@@ -306,32 +312,31 @@ function MapContainer(props) {
 function MapNavBar(props) {
   return (
     <Navbar className="mapnavbar" expand="md">
-      <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" id="toggle-btn" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto" id="filterMD">
-            <Filter
-              type={"School Quality"}
-              code={1}
-              setVal={props.setSchoolQuality}
-            />
-            <Filter
-              type={"Percent Married"}
-              code={2}
-              setVal={props.setPctMarried}
-            />
-            <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
-            <ResetFilter
-              resetSchool={props.setSchoolQuality}
-              resetMarried={props.setPctMarried}
-              resetCrime={props.setCrimeRate}
-            />
-            <Save />
-            <Nav>{props.children}</Nav>
-          </Nav>
-          
-        </Navbar.Collapse>
-      </Container>
+      {/* <Container> */}
+      <Navbar.Toggle aria-controls="basic-navbar-nav" id="toggle-btn" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto gap-3" id="filterMD">
+          <Filter
+            type={"School Quality"}
+            code={1}
+            setVal={props.setSchoolQuality}
+          />
+          <Filter
+            type={"Percent Married"}
+            code={2}
+            setVal={props.setPctMarried}
+          />
+          <Filter type={"Crime Rate"} code={3} setVal={props.setCrimeRate} />
+          <ResetFilter
+            resetSchool={props.setSchoolQuality}
+            resetMarried={props.setPctMarried}
+            resetCrime={props.setCrimeRate}
+          />
+          <Save />
+        </Nav>
+        <Nav>{props.children}</Nav>
+      </Navbar.Collapse>
+      {/* </Container> */}
     </Navbar>
   );
 }
@@ -390,8 +395,7 @@ function SideList(props) {
             ></Page>
           </SideCardsPanel>
         ) : (
-          <ComparePanel comparelist={comparelist}>
-          </ComparePanel>
+          <ComparePanel comparelist={comparelist}></ComparePanel>
         )}
       </div>
     </div>
@@ -504,7 +508,11 @@ function Filter(props) {
   if (props.code === 3) {
     return (
       <>
-        <DropdownButton title={props.type} bsPrefix="mapfilter">
+        <DropdownButton
+          title={props.type}
+          variant="outline-secondary"
+          size="lg"
+        >
           <Dropdown.Item
             eventKey="1"
             onClick={() => props.setVal(crimeFilterOnClick(1))}
@@ -529,7 +537,12 @@ function Filter(props) {
   }
   return (
     <>
-      <DropdownButton title={props.type} bsPrefix="mapfilter">
+      <DropdownButton
+        title={props.type}
+        variant="outline-secondary"
+        className="filter"
+        size="lg"
+      >
         <Dropdown.Item
           eventKey="1"
           onClick={() => props.setVal(filterOnClick(1))}
@@ -576,8 +589,8 @@ function ResetFilter(props) {
   return (
     <>
       <Button
-        variant="outline-danger"
-        bsPrefix="mapfilter"
+        variant="outline-secondary"
+        size="lg"
         onClick={() => {
           props.resetSchool(0);
           props.resetMarried(0);
@@ -593,7 +606,9 @@ function ResetFilter(props) {
 function Save() {
   return (
     <>
-      <Button id="saveBtn" variant="outline-primary">Save Search</Button>{" "}
+      <Button id="saveBtn" variant="outline-danger" size="lg">
+        Save Search
+      </Button>{" "}
     </>
   );
 }
@@ -628,38 +643,37 @@ class Page extends React.Component {
   render() {
     return (
       <div>
-        <div className="container">
-          <div className="text-center">
-            {this.state.pageOfItems.map((item) => (
-              <SideListCard
-                key={item.props.data.neighborhood_name}
-                img={`https://source.unsplash.com/collection/2470439/${parseInt(item.props.data.neighborhood_name.split('-')[1])}`}
-                data={item.props.data}
+        {/* <div className="container"> */}
+        <div className="text-center">
+          {this.state.pageOfItems.map((item) => (
+            <SideListCard
+              key={item.props.data.neighborhood_name}
+              img={`https://source.unsplash.com/collection/2470439/${parseInt(
+                item.props.data.neighborhood_name.split("-")[1]
+              )}`}
+              data={item.props.data}
+            >
+              <Button
+                bsPrefix="plusbutton"
+                onClick={() =>
+                  this.props.switchCompare(item.props.data.neighborhood_name)
+                }
+                checked={this.props.checkedstatus.get(
+                  item.props.data.neighborhood_name
+                )}
               >
-                <Button
-                  bsPrefix="plusbutton"
-                  onClick={() =>
-                    this.props.switchCompare(item.props.data.neighborhood_name)
-                  }
-                  checked={this.props.checkedstatus.get(
-                    item.props.data.neighborhood_name
-                  )}
-                  
-                >
-                  {this.props.checkedstatus.get(
-                    item.props.data.neighborhood_name
-                  )
-                    ? "-"
-                    : "+"}
-                </Button>{" "}
-              </SideListCard>
-            ))}
-            <Pagination
-              items={this.state.exampleItems}
-              onChangePage={this.onChangePage}
-            />
-          </div>
+                {this.props.checkedstatus.get(item.props.data.neighborhood_name)
+                  ? "-"
+                  : "+"}
+              </Button>{" "}
+            </SideListCard>
+          ))}
+          <Pagination
+            items={this.state.exampleItems}
+            onChangePage={this.onChangePage}
+          />
         </div>
+        {/* </div> */}
         <hr />
       </div>
     );
@@ -671,8 +685,7 @@ function CompareAlert({ showalert, setShowalert }) {
   return (
     <div>
       <Modal show={showalert} onHide={handleClose} centered animation={false}>
-        <Modal.Header closeButton>
-        </Modal.Header>
+        <Modal.Header closeButton></Modal.Header>
 
         <Modal.Body>
           <h1>Cannot Compare More Than Two Neighbourhoods</h1>
