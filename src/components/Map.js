@@ -517,19 +517,19 @@ function Filter(props) {
             eventKey="1"
             onClick={() => props.setVal(crimeFilterOnClick(1))}
           >
-            Low
+            <h3>Low</h3>
           </Dropdown.Item>
           <Dropdown.Item
             eventKey="2"
             onClick={() => props.setVal(crimeFilterOnClick(2))}
           >
-            Medium
+            <h3>Medium</h3>
           </Dropdown.Item>
           <Dropdown.Item
             eventKey="3"
             onClick={() => props.setVal(crimeFilterOnClick(3))}
           >
-            High
+            <h3>High</h3>
           </Dropdown.Item>
         </DropdownButton>
       </>
@@ -547,19 +547,19 @@ function Filter(props) {
           eventKey="1"
           onClick={() => props.setVal(filterOnClick(1))}
         >
-          Low
+          <h3>Low</h3>
         </Dropdown.Item>
         <Dropdown.Item
           eventKey="2"
           onClick={() => props.setVal(filterOnClick(2))}
         >
-          Medium
+          <h3>Medium</h3>
         </Dropdown.Item>
         <Dropdown.Item
           eventKey="3"
           onClick={() => props.setVal(filterOnClick(3))}
         >
-          High
+          <h3>High</h3>
         </Dropdown.Item>
       </DropdownButton>
     </>

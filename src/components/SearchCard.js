@@ -10,7 +10,7 @@ const SearchCard = (props) => {
   });
 
   const handleOnSubmit = (event) => {
-    var stateInput = document.querySelector('#stateInput').value;
+    var stateInput = document.querySelector("#stateInput").value;
     if (!stateInput || stateInput.length < 2) {
       alert("Please enter valid state name.");
     } else {
@@ -44,6 +44,7 @@ const SearchCard = (props) => {
                   value={state.city}
                   class="form-control"
                   onChange={handleInputChange}
+                  style={{ fontSize: 12 }}
                   placeholder="City"
                 ></input>
               </div>
@@ -55,6 +56,7 @@ const SearchCard = (props) => {
                   value={state.state}
                   class="form-control"
                   onChange={handleInputChange}
+                  style={{ fontSize: 12 }}
                   placeholder="State"
                 ></input>
               </div>
@@ -65,6 +67,7 @@ const SearchCard = (props) => {
                   value={state.zipcode}
                   class="form-control"
                   onChange={handleInputChange}
+                  style={{ fontSize: 12 }}
                   placeholder="Zipcode"
                 ></input>
               </div>
