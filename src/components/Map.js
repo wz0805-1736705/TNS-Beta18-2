@@ -134,16 +134,14 @@ function ComparePanel({ comparelist }) {
     <div>
       <CardGroup className="compareCardGroup">
         {comparelist.length > 0 ? (
-          comparelist.map((card) => (
-            <CompareCard
+          comparelist.map((card) => {
+            console.log(card)
+            return <CompareCard
               key={card.neighborhood_name}
               data={card}
-              img={
-                "https://source.unsplash.com/collection/2470439/" +
-                Math.floor(Math.random() * 10)
-              }
+              img={`https://source.unsplash.com/collection/2470439/${parseInt(card.neighborhood_name.split('-')[1])}`}
             />
-          ))
+            })
         ) : (
           <h1>Add something to compare!</h1>
         )}
@@ -156,7 +154,7 @@ function CompareCard({ data, img }) {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
-        <Card.Img src={img} alt="" className="listcardimage"></Card.Img>
+        <Card.Img src={img} alt="" className="listcardimage compareimage"></Card.Img>
         <Card.Title>{data.neighborhood_name}</Card.Title>
         <Card.Body>
           <CardData title="Median Home Value" data={[data.median_home_value]} />
@@ -634,10 +632,7 @@ class Page extends React.Component {
             {this.state.pageOfItems.map((item) => (
               <SideListCard
                 key={item.props.data.neighborhood_name}
-                img={
-                  "https://source.unsplash.com/collection/2470439/" +
-                  Math.floor(Math.random() * 15)
-                }
+                img={`https://source.unsplash.com/collection/2470439/${parseInt(item.props.data.neighborhood_name.split('-')[1])}`}
                 data={item.props.data}
               >
                 <Button
@@ -679,7 +674,7 @@ function CompareAlert({ showalert, setShowalert }) {
         </Modal.Header>
 
         <Modal.Body>
-          <h1>Cannot Compare More Than Two Neighbourhoods</h1>
+          <h1>Cannot Compare More Than Two Neighborhoods</h1>
         </Modal.Body>
 
         <Modal.Footer>

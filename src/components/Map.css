@@ -81,6 +81,11 @@
   flex-basis: auto;
   border-radius: 5px;
 }
+
+.compareimage {
+  left: 0;
+}
+
 .col {
   display: flex;
 }
