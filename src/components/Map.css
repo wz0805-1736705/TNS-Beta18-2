@@ -106,6 +106,32 @@
 .mapcontainer {
   background-color: white;
 }
+
+@media screen and (max-width: 767px){
+  #filterMD {
+    background-color: white;
+    width: 50vw;
+  }
+  #compareBtn {
+    margin-left: 2.3vw;
+    width: 13vw;
+  }
+  #saveBtn {
+    width: 13vw;
+  }
+  #toggle-btn {
+    position: fixed;
+    right: 0;
+    top: 0
+  }
+}
+@media screen and (min-width: 768px) {
+  #compareBtn {
+    height: 5vh;
+    min-height: 32px;
+  }
+}
+
 .sidelist {
   /* background */
 

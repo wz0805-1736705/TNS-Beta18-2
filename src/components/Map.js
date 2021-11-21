@@ -99,10 +99,11 @@ export default function SimpleMap() {
       >
         <CompareButton>
           <Button
+            id="compareBtn"
             onClick={() => {
               setComparestatus(!comparestatus);
             }}
-            variant="outline-danger"
+            variant="outline-primary"
           >
             {comparestatus ? "Compare" : "Back"}
           </Button>{" "}
@@ -134,14 +135,13 @@ function ComparePanel({ comparelist }) {
     <div>
       <CardGroup className="compareCardGroup">
         {comparelist.length > 0 ? (
-          comparelist.map((card) => {
-            console.log(card)
-            return <CompareCard
+          comparelist.map((card) => (
+            <CompareCard
               key={card.neighborhood_name}
               data={card}
               img={`https://source.unsplash.com/collection/2470439/${parseInt(card.neighborhood_name.split('-')[1])}`}
             />
-            })
+          ))
         ) : (
           <h1>Add something to compare!</h1>
         )}
@@ -154,7 +154,7 @@ function CompareCard({ data, img }) {
   return (
     <div>
       <Card style={{ width: "18rem" }}>
-        <Card.Img src={img} alt="" className="listcardimage compareimage"></Card.Img>
+        <Card.Img src={img} alt="" className="listcardimage"></Card.Img>
         <Card.Title>{data.neighborhood_name}</Card.Title>
         <Card.Body>
           <CardData title="Median Home Value" data={[data.median_home_value]} />
@@ -305,11 +305,11 @@ function MapContainer(props) {
 
 function MapNavBar(props) {
   return (
-    <Navbar className="mapnavbar" expand="lg">
+    <Navbar className="mapnavbar" expand="md">
       <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" id="toggle-btn" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto" id="filterMD">
             <Filter
               type={"School Quality"}
               code={1}
@@ -327,8 +327,9 @@ function MapNavBar(props) {
               resetCrime={props.setCrimeRate}
             />
             <Save />
+            <Nav>{props.children}</Nav>
           </Nav>
-          <Nav>{props.children}</Nav>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -592,7 +593,7 @@ function ResetFilter(props) {
 function Save() {
   return (
     <>
-      <Button variant="outline-danger">Save Search</Button>{" "}
+      <Button id="saveBtn" variant="outline-primary">Save Search</Button>{" "}
     </>
   );
 }
@@ -674,7 +675,7 @@ function CompareAlert({ showalert, setShowalert }) {
         </Modal.Header>
 
         <Modal.Body>
-          <h1>Cannot Compare More Than Two Neighborhoods</h1>
+          <h1>Cannot Compare More Than Two Neighbourhoods</h1>
         </Modal.Body>
 
         <Modal.Footer>
