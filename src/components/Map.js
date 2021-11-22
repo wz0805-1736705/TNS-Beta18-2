@@ -92,7 +92,7 @@ export default function SimpleMap() {
   }
   return (
     <Container fluid>
-      <Container>
+      <Container className="ms-5">
         <MapNavBar
           setSchoolQuality={setSchoolQuality}
           setPctMarried={setPctMarried}
@@ -112,7 +112,7 @@ export default function SimpleMap() {
           </CompareButton>
         </MapNavBar>
       </Container>
-      <Container>
+      <Container className="ms-5">
         <Row>
           {/* style={{ marginLeft: "5vw" }} */}
           <Col className="justify-content-start">
