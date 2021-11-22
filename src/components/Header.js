@@ -5,7 +5,7 @@ import { Navbar, Container, Nav, NavLink } from "react-bootstrap";
 
 function Header() {
   return (
-    <Navbar bg="light" variant="light">
+    <Navbar variant="light">
       <Container>
         <Navbar.Brand href="/">
           <img

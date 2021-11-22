@@ -24,10 +24,10 @@ p.about {
 .navbar {
   font-size: 18px;
   font-family: "Avenir";
+  background-color: #e5e5e5;
 }
 
 body {
-  background-color: #e5e5e5;
   font-family: "Roboto", sans-serif;
   font-weight: 1000;
   font-size: 24px;
@@ -70,7 +70,7 @@ p.intro {
 .search {
   position: relative;
   box-shadow: 0 0 40px rgba(248, 246, 246, 0.1);
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -83,7 +83,7 @@ p.intro {
   text-indent: 25px;
   border: 2px solid #d6d4d4;
   border-radius: 3px;
-  width: 300%;
+  width: 100%;
 
   order: 0;
   flex: 1 1 auto;
@@ -106,23 +106,22 @@ p.intro {
 }
 
 .search button {
-  position: absolute;
-  right: 1px;
+  position: inline-block;
+  right: 10px;
   top: 10px;
   border: none;
-  height: 45px;
+  height: 40px;
   background: gainsboro;
   width: 90px;
   border-radius: 4px;
 
-  padding: 8px 16px;
+  padding: 10px 16px;
   min-height: 45px;
   min-width: 10px;
   word-wrap: nowrap;
 }
 
 .find-belong {
-  height: 50px;
   width: 40%;
   text-align: left;
   padding-left: 50px;
@@ -215,6 +214,7 @@ img.footer_logo {
 footer {
   padding-top: 8vh;
   padding-bottom: 5vh;
+  width: 100%;
 }
 
 .wrap {

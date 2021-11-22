@@ -46,7 +46,7 @@ function MainContent() {
         </p>
       </div>
 
-      <div style={{ marginLeft: "5vw", marginRight: "5vw", marginTop: "8vw" }}>
+      <div style={{ marginLeft: "5vw", marginRight: "5vw", marginTop: "3vw" }}>
         <h2
           className="city-insight mt-10"
           style={{
