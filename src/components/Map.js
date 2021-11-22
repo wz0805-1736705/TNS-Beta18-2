@@ -172,7 +172,9 @@ function CompareCard({ data, img }) {
         alt=""
         className="compareimage"
       ></Card.Img>
-      <Card.Title className="text-center">{data.neighborhood_name}</Card.Title>
+      <Card.Title className="text-center fs-2">
+        {data.neighborhood_name}
+      </Card.Title>
       <Card.Body className="text-center">
         <CardData title="Median Home Value" data={[data.median_home_value]} />
         <CardData

@@ -2,8 +2,8 @@ import React from "react";
 
 function InfoCard() {
   return (
-    <div class="cards">
-      <div class="card">
+    <div class="infocards">
+      <div class="infocard">
         <img
           src={require("./city_images/city-1.jpg").default}
           alt=""
@@ -13,7 +13,7 @@ function InfoCard() {
           Discover <br /> Houston
         </p>
       </div>
-      <div class="card">
+      <div class="infocard">
         <img
           src={require("./city_images/city-2.jpg").default}
           alt=""
@@ -23,7 +23,7 @@ function InfoCard() {
           Discover <br /> Austin
         </p>
       </div>
-      <div class="card">
+      <div class="infocard">
         <img
           src={require("./city_images/city-3.jpg").default}
           alt=""

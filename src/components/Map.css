@@ -84,7 +84,7 @@
 }
 
 .compareimage {
-  width: 5vw;
+  /* width: 5vw; */
   height: 5vw;
   object-fit: cover;
 }
