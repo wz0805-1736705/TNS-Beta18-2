@@ -125,7 +125,7 @@
     width: 13vw;
   }
   #toggle-btn {
-    position: fixed;
+    position: absolute;
     right: 0;
     top: 0;
   }
