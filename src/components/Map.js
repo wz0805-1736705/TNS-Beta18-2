@@ -92,7 +92,7 @@ export default function SimpleMap() {
     zipcode = "";
   }
   return (
-    <Container>
+    <Container fluid>
       <MapNavBar
         setSchoolQuality={setSchoolQuality}
         setPctMarried={setPctMarried}
