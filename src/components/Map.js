@@ -113,7 +113,7 @@ export default function SimpleMap() {
         </MapNavBar>
       </Container>
       <Container className="ms-5">
-        <Row>
+        <Row className="flex-nowrap">
           {/* style={{ marginLeft: "5vw" }} */}
           <Col className="justify-content-start">
             <MapContainer
