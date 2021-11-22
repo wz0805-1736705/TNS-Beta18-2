@@ -115,7 +115,7 @@ class Pagination extends React.Component {
     }
 
     return (
-      <ul className="pagination">
+      <ul className="pagination" style={{ fontSize: 16 }}>
         <li className={pager.currentPage === 1 ? "disabled" : ""}>
           <a onClick={() => this.setPage(1)}>First</a>
         </li>

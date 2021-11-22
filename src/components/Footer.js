@@ -29,7 +29,7 @@ function Footer() {
           </section>
         </div>
 
-        <div class="text-center p-3">
+        <div class="text-center p-3" style={{ fontSize: 12 }}>
           © 2021 Copyright:
           <a> The Neighborhood Score </a>
         </div>
