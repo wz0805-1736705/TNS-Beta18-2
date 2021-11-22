@@ -93,44 +93,46 @@ export default function SimpleMap() {
   }
   return (
     <Container fluid>
-      <MapNavBar
-        setSchoolQuality={setSchoolQuality}
-        setPctMarried={setPctMarried}
-        setCrimeRate={setCrimeRate}
-      >
-        <CompareButton>
-          <Button
-            id="compareBtn"
-            onClick={() => {
-              setComparestatus(!comparestatus);
-            }}
-            variant="outline-danger"
-            size="lg"
-          >
-            {comparestatus ? "Compare" : "Back"}
-          </Button>{" "}
-        </CompareButton>
-      </MapNavBar>
-      {/* <Container> */}
-      <Row>
-        {/* style={{ marginLeft: "5vw" }} */}
-        <Col className="justify-content-start">
-          <MapContainer
-            setUsdata={setUsdata}
-            schoolQuality={schoolQuality}
-            pctMarried={pctMarried}
-            crimeRate={crimeRate}
-            center={center}
-            zoomLevel={zoomLevel}
-            stateName={stateName}
-            zipcode={zipcode}
-          />
-        </Col>
-        <Col className="justify-content-end">
-          <SideList comparestatus={comparestatus} usdata={usdata} />
-        </Col>
-      </Row>
-      {/* </Container> */}
+      <Container>
+        <MapNavBar
+          setSchoolQuality={setSchoolQuality}
+          setPctMarried={setPctMarried}
+          setCrimeRate={setCrimeRate}
+        >
+          <CompareButton>
+            <Button
+              id="compareBtn"
+              onClick={() => {
+                setComparestatus(!comparestatus);
+              }}
+              variant="outline-danger"
+              size="lg"
+            >
+              {comparestatus ? "Compare" : "Back"}
+            </Button>{" "}
+          </CompareButton>
+        </MapNavBar>
+      </Container>
+      <Container>
+        <Row>
+          {/* style={{ marginLeft: "5vw" }} */}
+          <Col className="justify-content-center">
+            <MapContainer
+              setUsdata={setUsdata}
+              schoolQuality={schoolQuality}
+              pctMarried={pctMarried}
+              crimeRate={crimeRate}
+              center={center}
+              zoomLevel={zoomLevel}
+              stateName={stateName}
+              zipcode={zipcode}
+            />
+          </Col>
+          <Col className="justify-content-center">
+            <SideList comparestatus={comparestatus} usdata={usdata} />
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 }
@@ -322,7 +324,7 @@ function MapNavBar(props) {
     <Navbar className="mapnavbar" expand="md">
       {/* <Container> */}
       <Navbar.Toggle aria-controls="basic-navbar-nav" id="toggle-btn" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <Navbar.Collapse id="basic-navbar-nav" className="pe-0 ps-0">
         <Nav className="me-auto gap-3" id="filterMD">
           <Filter
             type={"School Quality"}
