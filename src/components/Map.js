@@ -13,7 +13,6 @@ import {
   Navbar,
   Nav,
   Modal,
-  Alert,
 } from "react-bootstrap";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import PopUp from "./PopUp";
@@ -116,7 +115,7 @@ export default function SimpleMap() {
       <Container>
         <Row>
           {/* style={{ marginLeft: "5vw" }} */}
-          <Col className="justify-content-center">
+          <Col className="justify-content-start">
             <MapContainer
               setUsdata={setUsdata}
               schoolQuality={schoolQuality}
@@ -128,7 +127,7 @@ export default function SimpleMap() {
               zipcode={zipcode}
             />
           </Col>
-          <Col className="justify-content-center">
+          <Col className="justify-content-end">
             <SideList comparestatus={comparestatus} usdata={usdata} />
           </Col>
         </Row>
@@ -152,12 +151,14 @@ function ComparePanel({ comparelist }) {
             />
           ))
         ) : (
-          <Alert variant="danger">Add something to compare!</Alert>
+          <h1>Add something to compare!</h1>
         )}
       </CardGroup>
     </div>
   );
 }
+
+// <Alert variant="danger">Add something to compare!</Alert>
 
 // {/* <h1>Add something to compare!</h1> */}
 
