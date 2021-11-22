@@ -70,10 +70,13 @@ const SearchCard = (props) => {
                   style={{ fontSize: 12 }}
                   placeholder="Zipcode"
                 ></input>
+              </div>
+              <div>
                 <button
                   type="submit"
                   className="btn btn-default"
                   onClick={handleOnSubmit}
+                  style={{ marginLeft: 20, marginTop: 10 }}
                 >
                   <span
                     className="glyphicon glyphicon-search"

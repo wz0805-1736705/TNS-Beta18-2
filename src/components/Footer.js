@@ -2,9 +2,9 @@ import React from "react";
 
 function Footer() {
   return (
-    <div class="container my-5">
+    <div class="my-5" style={{ marginLeft: "5vw" }}>
       <footer class="text-center text-grey">
-        <div class="container p-4 pb-0">
+        <div class="p-4 pb-0">
           <section class="mb-4">
             <a className="btn btn-floating m-1" href="#">
               <img
