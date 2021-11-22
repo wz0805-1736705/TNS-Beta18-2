@@ -19,26 +19,43 @@ function MainContent() {
 
       {/* Info Card */}
       {/* TODO: adjust the left padding */}
-      <div
-        className="find-belong mt-4"
-        style={{ marginLeft: "5vw", marginRight: "5vw" }}
-      >
+      <div className="find-belong mt-4">
         <QuizButton />
-        <h2>Find Where You Belong</h2>
-        <p className="intro mb-10">
+        <h2
+          style={{
+            marginLeft: "5vw",
+            marginRight: "5vw",
+            fontSize: 24,
+            fontFamily: "Avenir",
+          }}
+        >
+          Find Where You Belong
+        </h2>
+        <p
+          className="intro mb-10"
+          style={{
+            marginLeft: "5vw",
+            marginRight: "5vw",
+            fontSize: 18,
+            fontFamily: "Avenir",
+          }}
+        >
           {" "}
           The most powerful, personalized neighborhood discovery platform. Let
           us empower you to find the community you love for FREE.
         </p>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div style={{ marginLeft: "5vw", marginRight: "5vw" }}>
-        <h2 className="city-insight mt-10">City Insights</h2>
+
+      <div style={{ marginLeft: "5vw", marginRight: "5vw", marginTop: "8vw" }}>
+        <h2
+          className="city-insight mt-10"
+          style={{
+            fontSize: 24,
+            fontFamily: "Avenir",
+          }}
+        >
+          City Insights
+        </h2>
         <div>
           <InfoCard />
         </div>

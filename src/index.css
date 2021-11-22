@@ -107,21 +107,23 @@ p.intro {
 
 .search button {
   position: absolute;
-  top: 5px;
-  right: 45px;
-  height: 50px;
-  width: 10%;
+  right: 1px;
+  top: 10px;
+  border: none;
+  height: 45px;
   background: gainsboro;
+  width: 90px;
+  border-radius: 4px;
 
   padding: 8px 16px;
-  min-height: 48px;
+  min-height: 45px;
   min-width: 10px;
   word-wrap: nowrap;
 }
 
 .find-belong {
   height: 50px;
-  width: 30%;
+  width: 40%;
   text-align: left;
   padding-left: 50px;
   font-family: Avenir;

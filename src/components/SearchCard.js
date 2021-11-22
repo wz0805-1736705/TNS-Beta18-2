@@ -70,8 +70,6 @@ const SearchCard = (props) => {
                   style={{ fontSize: 12 }}
                   placeholder="Zipcode"
                 ></input>
-              </div>
-              <div>
                 <button
                   type="submit"
                   className="btn btn-default"
@@ -83,6 +81,7 @@ const SearchCard = (props) => {
                   ></span>
                 </button>
               </div>
+
               {/* <p className="text-right text-muted">
                 Unsure about your search? Take a <a href="/quiz">free quiz</a>{" "}
                 with us!
