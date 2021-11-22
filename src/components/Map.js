@@ -92,7 +92,7 @@ export default function SimpleMap() {
   }
   return (
     <Container fluid>
-      <Container className="ms-5">
+      <div className="ms-5" style={{ marginRight: "5vw" }}>
         <MapNavBar
           setSchoolQuality={setSchoolQuality}
           setPctMarried={setPctMarried}
@@ -111,8 +111,8 @@ export default function SimpleMap() {
             </Button>{" "}
           </CompareButton>
         </MapNavBar>
-      </Container>
-      <Container className="ms-5">
+      </div>
+      <div className="ms-5" style={{ marginRight: "5vw" }}>
         <Row className="flex-nowrap">
           {/* style={{ marginLeft: "5vw" }} */}
           <Col className="justify-content-start">
@@ -131,7 +131,7 @@ export default function SimpleMap() {
             <SideList comparestatus={comparestatus} usdata={usdata} />
           </Col>
         </Row>
-      </Container>
+      </div>
     </Container>
   );
 }
