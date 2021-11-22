@@ -27,7 +27,7 @@ const apiKey = "AIzaSyByfO2sFqAk7P42urho3gx6GU5ArzeCzpM";
 const libraries = ["places"];
 const mapContainerStyle = {
   width: "40vw",
-  height: "100vh",
+  height: "75vh",
   "z-index": 0,
 };
 //TODO change it to adjust according to the screen.
@@ -139,7 +139,7 @@ export default function SimpleMap() {
 function ComparePanel({ comparelist }) {
   return (
     <div>
-      <CardGroup className="compareCardGroup">
+      <CardGroup className="compareCardGroup gap-3">
         {comparelist.length > 0 ? (
           comparelist.map((card) => (
             <CompareCard
