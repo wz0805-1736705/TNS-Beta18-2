@@ -19,13 +19,13 @@ function Header() {
 
         <Nav className="me-auto">
           <NavLink href="/">Home</NavLink>
-          <NavLink href="/about">About us</NavLink>
+          <NavLink href="/about">About</NavLink>
           <NavLink href="/neighborhood">Neighborhood</NavLink>
           {/* <NavLink href="/quiz">Quiz</NavLink> */}
         </Nav>
         <Navbar.Collapse className="justify-content-end">
-          <NavLink href="/signIn">Sign In</NavLink>
-          <NavLink href="/signUp">Sign Up</NavLink>
+          <NavLink href="/signIn">SignIn</NavLink>
+          <NavLink href="/signUp">SignUp</NavLink>
         </Navbar.Collapse>
       </Container>
     </Navbar>
