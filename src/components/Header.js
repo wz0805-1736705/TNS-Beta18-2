@@ -6,7 +6,7 @@ import { Navbar, Container, Nav, NavLink } from "react-bootstrap";
 function Header() {
   return (
     <Navbar variant="light">
-      <Container>
+      <Container fluid>
         <Navbar.Brand href="/">
           <img
             alt=""
@@ -23,7 +23,10 @@ function Header() {
           <NavLink href="/neighborhood">Neighborhood</NavLink>
           {/* <NavLink href="/quiz">Quiz</NavLink> */}
         </Nav>
-        <Navbar.Collapse className="justify-content-end">
+        <Navbar.Collapse
+          className="justify-content-end"
+          style={{ marginRight: "5vw" }}
+        >
           <NavLink href="/signIn">SignIn</NavLink>
           <NavLink href="/signUp">SignUp</NavLink>
         </Navbar.Collapse>
